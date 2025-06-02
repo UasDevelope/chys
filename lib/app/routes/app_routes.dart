@@ -6,6 +6,7 @@ abstract class AppRoutes {
   static const petOwnership = '/pet-ownership';
   static const petSelection = '/pet-selection';
   static const petProfile = '/pet-profile';
+  static const appearance = '/appearance';
   // Add more routes as needed
 
   // Define the signup flow sequence for easy navigation
@@ -14,6 +15,7 @@ abstract class AppRoutes {
     petOwnership,
     petSelection,
     petProfile,
+    appearance,
   ];
 
   // Helper method to get next route in signup flow

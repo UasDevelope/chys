@@ -144,8 +144,10 @@ class SignupController extends GetxController {
     hasPet.value = value;
     hasSelectedPetOwnership.value = true;
     print('DEBUG: Updated hasPet = ${hasPet.value}');
-    print('DEBUG: Updated hasSelectedPetOwnership = ${hasSelectedPetOwnership.value}');
-    
+    print(
+      'DEBUG: Updated hasSelectedPetOwnership = ${hasSelectedPetOwnership.value}',
+    );
+
     EasyLoading.showToast(
       value ? 'You have a pet' : 'You don\'t have a pet',
       duration: const Duration(milliseconds: 1000),
@@ -192,7 +194,7 @@ class SignupController extends GetxController {
   Future<void> proceedFromPetOwnership() async {
     print('DEBUG: Starting proceedFromPetOwnership');
     print('DEBUG: hasSelectedPetOwnership = ${hasSelectedPetOwnership.value}');
-    
+
     if (!hasSelectedPetOwnership.value) {
       print('DEBUG: No pet ownership selected, returning');
       return;
@@ -201,7 +203,7 @@ class SignupController extends GetxController {
     try {
       print('DEBUG: Setting loading state to true');
       isLoading.value = true;
-      
+
       print('DEBUG: Showing loading indicator');
       EasyLoading.show(
         status: 'Processing...',
@@ -218,7 +220,6 @@ class SignupController extends GetxController {
       // Delay success message until after navigation
       await Future.delayed(const Duration(milliseconds: 300));
       EasyLoading.showSuccess('Great choice!');
-      
     } catch (e) {
       print('DEBUG: Error occurred: $e');
       EasyLoading.showError('Something went wrong');
@@ -234,11 +235,11 @@ class SignupController extends GetxController {
   Future<void> proceedFromPetSelection() async {
     print('DEBUG: Starting proceedFromPetSelection');
     print('DEBUG: Selected pet type: ${selectedPetType.value}');
-    
+
     try {
       print('DEBUG: Setting loading state');
       isLoading.value = true;
-      
+
       print('DEBUG: Showing loading indicator');
       EasyLoading.show(
         status: 'Processing...',
@@ -247,14 +248,13 @@ class SignupController extends GetxController {
 
       // Add a small delay to show loading
       await Future.delayed(const Duration(milliseconds: 500));
-      
+
       print('DEBUG: Dismissing loading');
       EasyLoading.dismiss();
-      
+
       print('DEBUG: Attempting navigation to pet profile');
       Get.toNamed(AppRoutes.petProfile);
       print('DEBUG: Navigation command sent');
-      
     } catch (e) {
       print('DEBUG: Error in proceedFromPetSelection: $e');
       print('DEBUG: Error stack trace: ${e is Error ? e.stackTrace : ''}');
@@ -353,7 +353,7 @@ class SignupController extends GetxController {
         maxWidth: 800,
         maxHeight: 800,
       );
-      
+
       if (image != null) {
         print('DEBUG: Image picked: ${image.path}');
         petPhoto.value = File(image.path);
@@ -364,38 +364,59 @@ class SignupController extends GetxController {
       EasyLoading.showError('Failed to pick image');
     }
   }
-
   Future<void> savePetProfile() async {
+    print('DEBUG: Starting savePetProfile');
+
     if (nameController.text.isEmpty) {
+      print('DEBUG: Name is empty');
       EasyLoading.showError('Please enter pet name');
       return;
     }
 
     try {
+      print('DEBUG: Setting loading state to true');
       isLoading.value = true;
-      await EasyLoading.show(
-        status: 'Saving profile...',
-        maskType: EasyLoadingMaskType.black,
-      );
 
-      // Save the pet profile data
+      print('DEBUG: Showing loading dialog');
+
+
+      // Simulate saving logic
+      print('DEBUG: Saving pet profile data');
       petName.value = nameController.text;
       breed.value = breedController.text;
       bio.value = bioController.text;
 
       await Future.delayed(const Duration(milliseconds: 800));
+
+      print('DEBUG: Showing success message');
       await EasyLoading.showSuccess('Profile saved successfully!');
-      
-      // Navigate to next screen or complete signup
-      //Get.offAllNamed(AppRoutes.home);
-      
-    } catch (e) {
-      EasyLoading.showError('Failed to save profile');
+      await EasyLoading.dismiss();
+
+      // Determine next screen
+      final currentRoute = Get.currentRoute;
+      print('DEBUG: Current route is: $currentRoute');
+
+      final nextRoute = AppRoutes.getNextSignupRoute(currentRoute);
+      print('DEBUG: Next route is: $nextRoute');
+
+      if (nextRoute != null) {
+        print('DEBUG: Navigating to $nextRoute');
+        await Get.offNamed(nextRoute);
+      } else {
+        print('DEBUG: Fallback to appearance route');
+        await Get.offNamed(AppRoutes.appearance);
+      }
+    } catch (e, stackTrace) {
+      print('ERROR: $e');
+      print('STACK TRACE: $stackTrace');
+      await EasyLoading.showError('Failed to save profile');
     } finally {
       isLoading.value = false;
-      EasyLoading.dismiss();
+      await EasyLoading.dismiss();
+      print('DEBUG: Cleanup complete');
     }
   }
+
 
   void removePhoto(int index) {
     if (index >= 0 && index < photos.length) {
@@ -428,10 +449,9 @@ class SignupController extends GetxController {
 
       await Future.delayed(const Duration(milliseconds: 800));
       await EasyLoading.showSuccess('Appearance saved!');
-      
+
       // Navigate to the next screen in the signup flow
       Get.toNamed(AppRoutes.petProfile);
-      
     } catch (e) {
       print('DEBUG: Error saving appearance: $e');
       EasyLoading.showError('Failed to save appearance');
