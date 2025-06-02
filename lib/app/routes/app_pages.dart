@@ -1,26 +1,48 @@
 import 'package:get/get.dart';
+import '../modules/signup/bindings/signup_binding.dart';
+import '../modules/signup/views/signup_view.dart';
+import '../modules/pet_ownership/views/pet_ownership_view.dart';
+import '../modules/pet_selection/views/pet_selection_view.dart';
+import '../modules/pet_profile/views/pet_profile_view.dart';
 
-import '../modules/ home/home_binding.dart';
-import '../modules/ home/home_view.dart';
-import '../modules/signup/signup_controller.dart';
-import '../modules/signup/signup_view.dart';
 import 'app_routes.dart';
 
 class AppPages {
-  static const initial = AppRoutes.signup;
+  static const initial = AppRoutes.petSelection;
 
   static final routes = [
     GetPage(
-      name: AppRoutes.home,
-      page: () => const HomeView(),
-      binding: HomeBinding(),
-    ),
-    GetPage(
       name: AppRoutes.signup,
       page: () => const SignupView(),
-      binding: BindingsBuilder(() {
-        Get.put(SignupController());
-      }),
+      binding: SignupBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.petOwnership,
+      page: () => const PetOwnershipView(),
+      binding: SignupBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.petSelection,
+      page: () => const PetSelectionView(),
+      binding: SignupBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.petProfile,
+      page: () => const PetProfileView(),
+      binding: SignupBinding(),
+      preventDuplicates: true,
+      transition: Transition.rightToLeft,
+      transitionDuration: const Duration(milliseconds: 250),
     ),
   ];
+
+  static String getRoute(String name) {
+    print('DEBUG: Getting route for: $name');
+    final route = routes.firstWhere(
+      (route) => route.name == name,
+      orElse: () => throw Exception('Route $name not found'),
+    );
+    print('DEBUG: Found route: ${route.name}');
+    return route.name;
+  }
 }

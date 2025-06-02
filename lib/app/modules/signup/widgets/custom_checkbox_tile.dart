@@ -14,14 +14,38 @@ class CustomCheckboxTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CheckboxListTile(
-      value: value,
-      onChanged: onChanged,
-      contentPadding: EdgeInsets.zero,
-      controlAffinity: ListTileControlAffinity.leading,
-      title: Text(
-        text,
-        style: TextStyle(color: Theme.of(context).colorScheme.primary),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Transform.translate(
+            offset: const Offset(-8, -4),
+            child: Checkbox(
+              value: value,
+              onChanged: onChanged,
+              activeColor: Theme.of(context).colorScheme.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+              side: BorderSide(
+                color: Theme.of(context).colorScheme.outline.withOpacity(0.5),
+                width: 1.5,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 2),
+              child: Text(
+                text,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onBackground.withOpacity(0.8),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

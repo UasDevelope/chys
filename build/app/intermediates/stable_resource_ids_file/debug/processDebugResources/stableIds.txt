@@ -1,3 +1,4 @@
+com.example.chys:xml/flutter_image_picker_file_paths = 0x7f0e0000
 com.example.chys:styleable/SplitPairFilter = 0x7f0d000a
 com.example.chys:styleable/GradientColor = 0x7f0d0008
 com.example.chys:styleable/Fragment = 0x7f0d0006
