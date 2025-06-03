@@ -7,6 +7,11 @@ abstract class AppRoutes {
   static const petSelection = '/pet-selection';
   static const petProfile = '/pet-profile';
   static const appearance = '/appearance';
+  static const identification = '/identification';
+  static const ownerInfo = '/owner-info';
+  static const dogBreeds = '/dog-breeds';
+  static const behavioral = '/behavioral';
+  static const home = '/home';
   // Add more routes as needed
 
   // Define the signup flow sequence for easy navigation
@@ -16,33 +21,30 @@ abstract class AppRoutes {
     petSelection,
     petProfile,
     appearance,
+    identification,
+    ownerInfo,
+    dogBreeds,
+    behavioral,
+    home,
   ];
 
   // Helper method to get next route in signup flow
   static String? getNextSignupRoute(String currentRoute) {
-    print('DEBUG: Getting next route for: $currentRoute');
     final currentIndex = signupFlow.indexOf(currentRoute);
-    print('DEBUG: Current index in flow: $currentIndex');
-    if (currentIndex != -1 && currentIndex < signupFlow.length - 1) {
-      final nextRoute = signupFlow[currentIndex + 1];
-      print('DEBUG: Next route will be: $nextRoute');
-      return nextRoute;
+    if (currentIndex < 0 || currentIndex >= signupFlow.length - 1) {
+      return null;
     }
-    print('DEBUG: No next route found');
-    return null;
+
+    return signupFlow[currentIndex + 1];
   }
 
   // Helper method to get previous route in signup flow
   static String? getPreviousSignupRoute(String currentRoute) {
-    print('DEBUG: Getting previous route for: $currentRoute');
     final currentIndex = signupFlow.indexOf(currentRoute);
-    print('DEBUG: Current index in flow: $currentIndex');
-    if (currentIndex > 0) {
-      final prevRoute = signupFlow[currentIndex - 1];
-      print('DEBUG: Previous route will be: $prevRoute');
-      return prevRoute;
+    if (currentIndex <= 0) {
+      return null;
     }
-    print('DEBUG: No previous route found');
-    return null;
+
+    return signupFlow[currentIndex - 1];
   }
 }

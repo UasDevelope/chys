@@ -22,7 +22,7 @@ class SignupView extends GetView<SignupController> {
         () => SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Form(
-            key: controller.formKey,
+
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

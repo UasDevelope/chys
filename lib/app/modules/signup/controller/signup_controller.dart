@@ -6,23 +6,25 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SignupController extends GetxController {
-  final formKey = GlobalKey<FormState>();
   final _imagePicker = ImagePicker();
 
   // Loading states
   final isLoading = false.obs;
   final isFormValid = false.obs;
+  final showPassword = false.obs;
 
   // Step tracking
   final currentStep = 0.obs;
 
   // Signup form controllers
-  final usernameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
+  late TextEditingController usernameController;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+  late TextEditingController confirmPasswordController;
   final nameController = TextEditingController();
   final breedController = TextEditingController();
   final bioController = TextEditingController();
@@ -60,8 +62,6 @@ class SignupController extends GetxController {
   // Pet selection step
   final selectedPetType = ''.obs;
 
-  final showPassword = false.obs;
-
   // Pet Profile
   final petPhoto = Rxn<File>();
   final petName = ''.obs;
@@ -71,10 +71,94 @@ class SignupController extends GetxController {
   final weightController = TextEditingController();
   final marksController = TextEditingController();
 
+  // Identification & Safety fields
+  final microchipController = TextEditingController();
+  final tagIdController = TextEditingController();
+  final vetNameController = TextEditingController();
+  final vetContactController = TextEditingController();
+
+  // Behavioral Care Controllers
+  final personalityController = TextEditingController();
+  final allergiesController = TextEditingController();
+  final specialNeedsController = TextEditingController();
+  final feedingController = TextEditingController();
+  final routineController = TextEditingController();
+
+  // Owner Info Controllers
+  final ownerContactController = TextEditingController();
+  final streetController = TextEditingController();
+  final zipCodeController = TextEditingController();
+  final isAddressPrivate = false.obs;
+  final selectedCity = ''.obs;
+  final selectedState = ''.obs;
+  final selectedCountry = ''.obs;
+
+  // Map Related
+  GoogleMapController? mapController;
+  final currentLocation = const LatLng(0, 0).obs;
+  final markers = <Marker>{}.obs;
+
+  // Dropdown Options
+  final cities =
+      ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'].obs;
+  final states = ['New York', 'California', 'Illinois', 'Texas', 'Arizona'].obs;
+  final countries = ['United States', 'Canada', 'Mexico'].obs;
+
+  // Dog Breeds Selection
+  final selectedBreeds = <String>[].obs;
+
+  void toggleBreedSelection(String breed) {
+    if (selectedBreeds.contains(breed)) {
+      selectedBreeds.remove(breed);
+    } else {
+      selectedBreeds.add(breed);
+    }
+  }
+
+  Future<void> saveDogBreedsAndNavigate() async {
+    try {
+      if (selectedBreeds.isEmpty) {
+        EasyLoading.showError('Please select at least one breed');
+        return;
+      }
+
+      isLoading.value = true;
+      await EasyLoading.show(
+        status: 'Saving...',
+        maskType: EasyLoadingMaskType.black,
+      );
+
+      // Save breeds data
+      print('DEBUG: Selected breeds: $selectedBreeds');
+
+      await Future.delayed(const Duration(milliseconds: 800));
+      await EasyLoading.showSuccess('Breeds saved!');
+
+      // Navigate to behavioral page
+      await Get.offNamed(AppRoutes.behavioral);
+    } catch (e) {
+      print('DEBUG: Error saving breeds: $e');
+      await EasyLoading.showError('Failed to save breeds');
+    } finally {
+      isLoading.value = false;
+      await EasyLoading.dismiss();
+    }
+  }
+
   @override
   void onInit() {
     super.onInit();
+    _initializeControllers();
     _setupValidation();
+    _getCurrentLocation();
+    isLoading.value = false;
+  }
+
+  void _initializeControllers() {
+    usernameController = TextEditingController();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
   }
 
   void _setupValidation() {
@@ -88,13 +172,141 @@ class SignupController extends GetxController {
   }
 
   void _validateForm() {
-    isFormValid.value =
-        formKey.currentState?.validate() ??
-        false && agreePolicy1.value && agreePolicy2.value && agreePolicy3.value;
+    final isValid =
+        usernameController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty &&
+        confirmPasswordController.text.isNotEmpty &&
+        passwordController.text == confirmPasswordController.text &&
+        agreePolicy1.value &&
+        agreePolicy2.value &&
+        agreePolicy3.value;
+
+    isFormValid.value = isValid;
   }
 
-  void togglePasswordVisibility() {
-    showPassword.value = !showPassword.value;
+  Future<void> submitSignup() async {
+    if (!isFormValid.value) {
+      EasyLoading.showError('Please fill all required fields');
+      return;
+    }
+
+    try {
+      isLoading.value = true;
+      await EasyLoading.show(
+        status: 'Creating account...',
+        maskType: EasyLoadingMaskType.black,
+      );
+
+      await Future.delayed(const Duration(seconds: 1));
+
+      final nextRoute = AppRoutes.getNextSignupRoute(AppRoutes.signup);
+      if (nextRoute != null) {
+        await EasyLoading.dismiss();
+        isLoading.value = false;
+        await Get.offAndToNamed(nextRoute);
+      }
+    } catch (e) {
+      EasyLoading.showError('Failed to create account');
+    } finally {
+      isLoading.value = false;
+      await EasyLoading.dismiss();
+    }
+  }
+
+  void goBack() {
+    final currentRoute = Get.currentRoute;
+    final previousRoute = AppRoutes.getPreviousSignupRoute(currentRoute);
+
+    if (previousRoute != null) {
+      isLoading.value = false;
+      EasyLoading.dismiss();
+      Get.offAndToNamed(previousRoute);
+    } else {
+      isLoading.value = false;
+      EasyLoading.dismiss();
+      Get.back();
+    }
+  }
+
+  @override
+  void onClose() {
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    nameController.dispose();
+    breedController.dispose();
+    bioController.dispose();
+    dobController.dispose();
+    weightController.dispose();
+    marksController.dispose();
+    microchipController.dispose();
+    tagIdController.dispose();
+    vetNameController.dispose();
+    vetContactController.dispose();
+    personalityController.dispose();
+    allergiesController.dispose();
+    specialNeedsController.dispose();
+    feedingController.dispose();
+    routineController.dispose();
+    ownerContactController.dispose();
+    streetController.dispose();
+    zipCodeController.dispose();
+    mapController?.dispose();
+    EasyLoading.dismiss();
+    super.onClose();
+  }
+
+  // Step 1 variables
+  final name = ''.obs;
+  final email = ''.obs;
+  final phone = ''.obs;
+  final address = ''.obs;
+
+  // Step 2 variables
+  final language = 'en'.obs;
+  final theme = 'system'.obs;
+  final pushNotifications = true.obs;
+  final emailNotifications = true.obs;
+
+  // Step 1 methods
+  void updateName(String value) => name.value = value;
+  void updateEmail(String value) => email.value = value;
+  void updatePhone(String value) => phone.value = value;
+  void updateAddress(String value) => address.value = value;
+
+  // Step 2 methods
+  void updateLanguage(String? value) => language.value = value ?? 'en';
+  void updateTheme(String? value) => theme.value = value ?? 'system';
+  void togglePushNotifications(bool? value) =>
+      pushNotifications.value = value ?? true;
+  void toggleEmailNotifications(bool? value) =>
+      emailNotifications.value = value ?? true;
+
+  // Validation methods
+  bool get isStep1Valid {
+    return name.value.isNotEmpty &&
+        email.value.isNotEmpty &&
+        phone.value.isNotEmpty &&
+        address.value.isNotEmpty;
+  }
+
+  bool get isStep2Valid {
+    return language.value.isNotEmpty && theme.value.isNotEmpty;
+  }
+
+  // Navigation methods
+  void goToStep2() {
+    if (isStep1Valid) {
+      Get.toNamed(AppRoutes.step2);
+    }
+  }
+
+  void goToStep3() {
+    if (isStep2Valid) {
+      Get.toNamed(AppRoutes.petProfile);
+    }
   }
 
   Future<void> pickPhotos() async {
@@ -153,6 +365,7 @@ class SignupController extends GetxController {
       duration: const Duration(milliseconds: 1000),
       toastPosition: EasyLoadingToastPosition.bottom,
     );
+    isLoading.value = false;
   }
 
   void selectPetType(String type) {
@@ -164,183 +377,59 @@ class SignupController extends GetxController {
     );
   }
 
-  Future<void> submitSignup() async {
-    if (!isFormValid.value) {
-      EasyLoading.showError('Please fill all required fields');
+  Future<void> proceedFromPetOwnership() async {
+    if (!hasSelectedPetOwnership.value) {
+      EasyLoading.showError('Please select an option');
       return;
     }
 
     try {
       isLoading.value = true;
       await EasyLoading.show(
-        status: 'Creating account...',
-        maskType: EasyLoadingMaskType.black,
-      );
-
-      await Future.delayed(const Duration(seconds: 1));
-      await EasyLoading.showSuccess('Account created!');
-
-      final nextRoute = AppRoutes.getNextSignupRoute(AppRoutes.signup);
-      if (nextRoute != null) {
-        Get.toNamed(nextRoute);
-      }
-    } catch (e) {
-      EasyLoading.showError('Failed to create account');
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  Future<void> proceedFromPetOwnership() async {
-    print('DEBUG: Starting proceedFromPetOwnership');
-    print('DEBUG: hasSelectedPetOwnership = ${hasSelectedPetOwnership.value}');
-
-    if (!hasSelectedPetOwnership.value) {
-      print('DEBUG: No pet ownership selected, returning');
-      return;
-    }
-
-    try {
-      print('DEBUG: Setting loading state to true');
-      isLoading.value = true;
-
-      print('DEBUG: Showing loading indicator');
-      EasyLoading.show(
         status: 'Processing...',
         maskType: EasyLoadingMaskType.black,
       );
 
-      // Force a small delay to ensure loading is shown
-      await Future.delayed(const Duration(milliseconds: 100));
-
-      print('DEBUG: Before navigation attempt');
-      Get.toNamed(AppRoutes.petSelection);
-      print('DEBUG: After navigation attempt');
-
-      // Delay success message until after navigation
       await Future.delayed(const Duration(milliseconds: 300));
-      EasyLoading.showSuccess('Great choice!');
-    } catch (e) {
-      print('DEBUG: Error occurred: $e');
-      EasyLoading.showError('Something went wrong');
-    } finally {
-      print('DEBUG: Cleaning up - setting loading to false');
+      await EasyLoading.dismiss();
       isLoading.value = false;
-      print('DEBUG: Dismissing loading indicator');
-      await Future.delayed(const Duration(milliseconds: 100));
-      EasyLoading.dismiss();
+
+      // Navigate directly to pet selection
+      await Get.offAndToNamed(AppRoutes.petSelection);
+    } catch (e) {
+      print('DEBUG: Error in proceedFromPetOwnership: $e');
+      await EasyLoading.showError('Something went wrong');
+    } finally {
+      isLoading.value = false;
+      await EasyLoading.dismiss();
     }
   }
 
   Future<void> proceedFromPetSelection() async {
-    print('DEBUG: Starting proceedFromPetSelection');
-    print('DEBUG: Selected pet type: ${selectedPetType.value}');
+    if (selectedPetType.value.isEmpty) {
+      EasyLoading.showError('Please select a pet type');
+      return;
+    }
 
     try {
-      print('DEBUG: Setting loading state');
       isLoading.value = true;
-
-      print('DEBUG: Showing loading indicator');
-      EasyLoading.show(
+      await EasyLoading.show(
         status: 'Processing...',
         maskType: EasyLoadingMaskType.black,
       );
 
-      // Add a small delay to show loading
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 300));
+      await EasyLoading.dismiss();
+      isLoading.value = false;
 
-      print('DEBUG: Dismissing loading');
-      EasyLoading.dismiss();
-
-      print('DEBUG: Attempting navigation to pet profile');
-      Get.toNamed(AppRoutes.petProfile);
-      print('DEBUG: Navigation command sent');
+      // Navigate directly to pet profile
+      await Get.offAndToNamed(AppRoutes.petProfile);
     } catch (e) {
       print('DEBUG: Error in proceedFromPetSelection: $e');
-      print('DEBUG: Error stack trace: ${e is Error ? e.stackTrace : ''}');
-      EasyLoading.showError('Something went wrong');
+      await EasyLoading.showError('Something went wrong');
     } finally {
-      print('DEBUG: Cleaning up');
       isLoading.value = false;
-      EasyLoading.dismiss();
-    }
-  }
-
-  @override
-  void onClose() {
-    usernameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    nameController.dispose();
-    breedController.dispose();
-    bioController.dispose();
-    dobController.dispose();
-    weightController.dispose();
-    marksController.dispose();
-    EasyLoading.dismiss();
-    super.onClose();
-  }
-
-  // Step 1 variables
-  final name = ''.obs;
-  final email = ''.obs;
-  final phone = ''.obs;
-  final address = ''.obs;
-
-  // Step 2 variables
-  final language = 'en'.obs;
-  final theme = 'system'.obs;
-  final pushNotifications = true.obs;
-  final emailNotifications = true.obs;
-
-  // Step 1 methods
-  void updateName(String value) => name.value = value;
-  void updateEmail(String value) => email.value = value;
-  void updatePhone(String value) => phone.value = value;
-  void updateAddress(String value) => address.value = value;
-
-  // Step 2 methods
-  void updateLanguage(String? value) => language.value = value ?? 'en';
-  void updateTheme(String? value) => theme.value = value ?? 'system';
-  void togglePushNotifications(bool? value) =>
-      pushNotifications.value = value ?? true;
-  void toggleEmailNotifications(bool? value) =>
-      emailNotifications.value = value ?? true;
-
-  // Validation methods
-  bool get isStep1Valid {
-    return name.value.isNotEmpty &&
-        email.value.isNotEmpty &&
-        phone.value.isNotEmpty &&
-        address.value.isNotEmpty;
-  }
-
-  bool get isStep2Valid {
-    return language.value.isNotEmpty && theme.value.isNotEmpty;
-  }
-
-  // Navigation methods
-  void goToStep2() {
-    if (isStep1Valid) {
-      Get.toNamed(AppRoutes.step2);
-    }
-  }
-
-  void goToStep3() {
-    if (isStep2Valid) {
-      Get.toNamed(AppRoutes.petProfile);
-    }
-  }
-
-  void goBack() {
-    final currentRoute = Get.currentRoute;
-    final previousRoute = AppRoutes.getPreviousSignupRoute(currentRoute);
-
-    if (previousRoute != null) {
-      Get.toNamed(previousRoute);
-    } else {
-      Get.back();
+      await EasyLoading.dismiss();
     }
   }
 
@@ -364,6 +453,7 @@ class SignupController extends GetxController {
       EasyLoading.showError('Failed to pick image');
     }
   }
+
   Future<void> savePetProfile() async {
     print('DEBUG: Starting savePetProfile');
 
@@ -378,7 +468,6 @@ class SignupController extends GetxController {
       isLoading.value = true;
 
       print('DEBUG: Showing loading dialog');
-
 
       // Simulate saving logic
       print('DEBUG: Saving pet profile data');
@@ -395,7 +484,7 @@ class SignupController extends GetxController {
       // Determine next screen
       final currentRoute = Get.currentRoute;
       print('DEBUG: Current route is: $currentRoute');
-
+      isLoading.value = false;
       final nextRoute = AppRoutes.getNextSignupRoute(currentRoute);
       print('DEBUG: Next route is: $nextRoute');
 
@@ -404,6 +493,7 @@ class SignupController extends GetxController {
         await Get.offNamed(nextRoute);
       } else {
         print('DEBUG: Fallback to appearance route');
+        isLoading.value = false;
         await Get.offNamed(AppRoutes.appearance);
       }
     } catch (e, stackTrace) {
@@ -416,7 +506,6 @@ class SignupController extends GetxController {
       print('DEBUG: Cleanup complete');
     }
   }
-
 
   void removePhoto(int index) {
     if (index >= 0 && index < photos.length) {
@@ -451,7 +540,7 @@ class SignupController extends GetxController {
       await EasyLoading.showSuccess('Appearance saved!');
 
       // Navigate to the next screen in the signup flow
-      Get.toNamed(AppRoutes.petProfile);
+      Get.toNamed(AppRoutes.identification);
     } catch (e) {
       print('DEBUG: Error saving appearance: $e');
       EasyLoading.showError('Failed to save appearance');
@@ -459,5 +548,163 @@ class SignupController extends GetxController {
       isLoading.value = false;
       EasyLoading.dismiss();
     }
+  }
+
+  void updateLostStatus(String value) => lostStatus.value = value;
+  void updateVaccinationStatus(String value) => vaccinationStatus.value = value;
+
+  Future<void> saveIdentification() async {
+    try {
+      isLoading.value = true;
+
+      // Save identification data
+      microchipNumber.value = microchipController.text;
+      tagId.value = tagIdController.text;
+      vetName.value = vetNameController.text;
+      vetContactNumber.value = vetContactController.text;
+
+      await Future.delayed(const Duration(milliseconds: 800));
+      await EasyLoading.showSuccess('Information saved successfully!');
+      isLoading.value = false;
+      // Navigate to behavioral page
+      await Get.offNamed(AppRoutes.behavioral);
+    } catch (e, stackTrace) {
+      print('ERROR: $e');
+      print('STACK TRACE: $stackTrace');
+      await EasyLoading.showError('Failed to save information');
+    } finally {
+      isLoading.value = false;
+      await EasyLoading.dismiss();
+    }
+  }
+
+  Future<void> saveBehavioralAndNavigate() async {
+    try {
+      isLoading.value = true;
+      await EasyLoading.show(
+        status: 'Saving...',
+        maskType: EasyLoadingMaskType.black,
+      );
+
+      // Save behavioral data
+      final behavioralData = {
+        'personality': personalityController.text,
+        'allergies': allergiesController.text,
+        'specialNeeds': specialNeedsController.text,
+        'feeding': feedingController.text,
+        'routine': routineController.text,
+      };
+
+      print('DEBUG: Saving behavioral data: $behavioralData');
+
+      await Future.delayed(const Duration(milliseconds: 800));
+      await EasyLoading.showSuccess('Information saved!');
+
+      // Complete the signup flow
+      isLoading.value = false;
+      await Get.offAllNamed(AppRoutes.ownerInfo);
+    } catch (e) {
+      print('DEBUG: Error saving behavioral data: $e');
+      await EasyLoading.showError('Failed to save information');
+    } finally {
+      isLoading.value = false;
+      await EasyLoading.dismiss();
+    }
+  }
+
+  void togglePasswordVisibility() {
+    showPassword.value = !showPassword.value;
+  }
+
+  Future<void> _getCurrentLocation() async {
+    try {
+      final position = await Geolocator.getCurrentPosition();
+      currentLocation.value = LatLng(position.latitude, position.longitude);
+
+      markers.add(
+        Marker(
+          markerId: const MarkerId('current_location'),
+          position: currentLocation.value,
+          infoWindow: const InfoWindow(title: 'Current Location'),
+        ),
+      );
+
+      mapController?.animateCamera(
+        CameraUpdate.newLatLng(currentLocation.value),
+      );
+    } catch (e) {
+      print('Error getting location: $e');
+    }
+  }
+
+  Future<void> saveOwnerInfoAndNavigate() async {
+    try {
+      if (!_validateOwnerInfo()) {
+        return;
+      }
+
+      isLoading.value = true;
+      await EasyLoading.show(
+        status: 'Saving...',
+        maskType: EasyLoadingMaskType.black,
+      );
+
+      // Save owner info data
+      final ownerData = {
+        'contact': ownerContactController.text,
+        'street': streetController.text,
+        'zipCode': zipCodeController.text,
+        'city': selectedCity.value,
+        'state': selectedState.value,
+        'country': selectedCountry.value,
+        'isPrivate': isAddressPrivate.value,
+        'location': {
+          'lat': currentLocation.value.latitude,
+          'lng': currentLocation.value.longitude,
+        },
+      };
+
+      print('DEBUG: Saving owner info: $ownerData');
+
+      await Future.delayed(const Duration(milliseconds: 800));
+      await EasyLoading.showSuccess('Information saved!');
+      isLoading.value = false;
+      // Navigate to next page
+      await Get.offNamed(AppRoutes.dogBreeds);
+    } catch (e) {
+      print('DEBUG: Error saving owner info: $e');
+      await EasyLoading.showError('Failed to save information');
+    } finally {
+      isLoading.value = false;
+      await EasyLoading.dismiss();
+    }
+  }
+
+  bool _validateOwnerInfo() {
+    if (ownerContactController.text.isEmpty) {
+      EasyLoading.showError('Please enter contact number');
+      return false;
+    }
+    if (streetController.text.isEmpty) {
+      EasyLoading.showError('Please enter street address');
+      return false;
+    }
+    if (zipCodeController.text.isEmpty) {
+      EasyLoading.showError('Please enter zip code');
+      return false;
+    }
+    if (selectedCity.value.isEmpty) {
+      EasyLoading.showError('Please select city');
+      return false;
+    }
+    if (selectedState.value.isEmpty) {
+      EasyLoading.showError('Please select state');
+      return false;
+    }
+    if (selectedCountry.value.isEmpty) {
+      EasyLoading.showError('Please select country');
+      return false;
+    }
+    return true;
   }
 }
