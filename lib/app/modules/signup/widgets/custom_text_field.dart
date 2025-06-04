@@ -16,6 +16,8 @@ class CustomTextField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final void Function(String)? onSubmitted;
   final void Function(String)? onChanged;
+  final VoidCallback? onFieldTap;
+  final bool readOnly;
 
   // Dropdown-specific fields
   final bool isDropdown;
@@ -39,6 +41,8 @@ class CustomTextField extends StatelessWidget {
     this.textInputAction,
     this.onSubmitted,
     this.onChanged,
+    this.onFieldTap,
+    this.readOnly = false,
     this.isDropdown = false,
     this.items,
     this.selectedValue,
@@ -73,7 +77,10 @@ class CustomTextField extends StatelessWidget {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: AppColors.blue, width: 2),
+        borderSide: BorderSide(
+          color: actualBorderColor.withOpacity(0.3),
+          width: 1,
+        ),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -92,18 +99,18 @@ class CustomTextField extends StatelessWidget {
     if (isDropdown) {
       return DropdownButtonFormField<String>(
         value: selectedValue,
-        items: items
-            ?.map((item) => DropdownMenuItem(
-          value: item,
-          child: Text(item),
-        ))
-            .toList(),
+        items:
+            items
+                ?.map(
+                  (item) => DropdownMenuItem(value: item, child: Text(item)),
+                )
+                .toList(),
         onChanged: onDropdownChanged,
         validator: validator,
         decoration: inputDecoration,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          color: AppColors.onBackground,
-        ),
+        style: Theme.of(
+          context,
+        ).textTheme.bodyLarge?.copyWith(color: AppColors.onBackground),
       );
     }
 
@@ -115,12 +122,15 @@ class CustomTextField extends StatelessWidget {
       maxLines: maxLines,
       textInputAction: textInputAction,
       onFieldSubmitted: onSubmitted,
+      onTap: onFieldTap,
+      readOnly: readOnly,
+      cursorColor: AppColors.onBackground, // 👈 cursor color
+
       onChanged: onChanged,
-      style: Theme.of(context)
-          .textTheme
-          .bodyLarge
-          ?.copyWith(color: AppColors.onBackground),
-      decoration: inputDecoration.copyWith(labelText: label),
+      style: Theme.of(
+        context,
+      ).textTheme.bodyLarge?.copyWith(color: AppColors.onBackground),
+      decoration: inputDecoration.copyWith(hintText: label),
       validator: validator,
     );
   }

@@ -9,6 +9,24 @@ import '../modules/pet_identification/views/identification_view.dart';
 import '../modules/pet_behavioral/views/behavioral_view.dart';
 import '../modules/owner_info/views/owner_info_view.dart';
 import '../modules/dog_breeds/views/dog_breeds_view.dart';
+import '../modules/city_view/views/city_view.dart';
+import '../modules/map/views/map_view.dart';
+import '../modules/map/bindings/map_binding.dart';
+import '../modules/add_pet/bindings/add_pet_binding.dart';
+import '../modules/add_pet/views/add_pet_view.dart';
+import '../modules/chat/bindings/chat_binding.dart';
+import '../modules/chat/views/chat_list_view.dart';
+import '../modules/chat/views/chat_detail_view.dart';
+import '../modules/notifications/bindings/notifications_binding.dart';
+import '../modules/notifications/views/notifications_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
+import '../modules/settings/bindings/settings_binding.dart';
+import '../modules/settings/views/settings_view.dart';
+import '../modules/post/bindings/post_binding.dart';
+import '../modules/post/views/add_post_view.dart';
+import '../modules/podcast/bindings/podcast_binding.dart';
+import '../modules/podcast/views/invite_podcast_view.dart';
 
 import 'app_routes.dart';
 
@@ -41,7 +59,6 @@ class AppPages {
       binding: SignupBinding(),
       preventDuplicates: true,
       transition: Transition.rightToLeft,
-      transitionDuration: const Duration(milliseconds: 250),
     ),
     GetPage(
       name: AppRoutes.appearance,
@@ -49,7 +66,6 @@ class AppPages {
       binding: SignupBinding(),
       preventDuplicates: true,
       transition: Transition.rightToLeft,
-      transitionDuration: const Duration(milliseconds: 250),
     ),
     GetPage(
       name: AppRoutes.identification,
@@ -57,7 +73,6 @@ class AppPages {
       binding: SignupBinding(),
       preventDuplicates: true,
       transition: Transition.rightToLeft,
-      transitionDuration: const Duration(milliseconds: 250),
     ),
     GetPage(
       name: AppRoutes.ownerInfo,
@@ -65,7 +80,6 @@ class AppPages {
       binding: SignupBinding(),
       preventDuplicates: true,
       transition: Transition.rightToLeft,
-      transitionDuration: const Duration(milliseconds: 250),
     ),
     GetPage(
       name: AppRoutes.dogBreeds,
@@ -73,7 +87,20 @@ class AppPages {
       binding: SignupBinding(),
       preventDuplicates: true,
       transition: Transition.rightToLeft,
-      transitionDuration: const Duration(milliseconds: 250),
+    ),
+    GetPage(
+      name: AppRoutes.cityView,
+      page: () => const CityView(),
+      binding: SignupBinding(),
+      preventDuplicates: true,
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: AppRoutes.map,
+      page: () => const MapView(),
+      binding: MapBinding(),
+      preventDuplicates: true,
+      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: AppRoutes.behavioral,
@@ -81,15 +108,91 @@ class AppPages {
       binding: SignupBinding(),
       preventDuplicates: true,
       transition: Transition.rightToLeft,
-      transitionDuration: const Duration(milliseconds: 250),
     ),
-    // GetPage(
-    //   name: AppRoutes.home,
-    //   page: () => const HomeView(),
-    //   binding: SignupBinding(),
-    //   preventDuplicates: true,
-    //   transition: Transition.fadeIn,
-    // ),
+    GetPage(
+      name: AppRoutes.settings,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.notifications,
+      page: () => const NotificationsView(),
+      binding: NotificationsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.addPet,
+      page: () => const AddPetView(),
+      binding: AddPetBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.profile,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.chat,
+      page: () => const ChatListView(),
+      binding: ChatBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.chatDetail,
+      page: () => const ChatDetailView(),
+      binding: ChatBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.addPost,
+      page: () => const AddPostView(),
+      binding: PostBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.invitePodcast,
+      page: () => const InvitePodcastView(),
+      binding: PodcastBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.settingsNotifications,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.settingsPrivacy,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.settingsSecurity,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.settingsLanguage,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.settingsHelp,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.settingsAbout,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
+      transition: Transition.cupertino,
+    ),
   ];
 
   static String getRoute(String name) {

@@ -9,6 +9,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../core/const/app_colors.dart';
+import '../../map/bindings/map_binding.dart';
+
 class SignupController extends GetxController {
   final _imagePicker = ImagePicker();
 
@@ -134,11 +137,36 @@ class SignupController extends GetxController {
       await Future.delayed(const Duration(milliseconds: 800));
       await EasyLoading.showSuccess('Breeds saved!');
 
-      // Navigate to behavioral page
-      await Get.offNamed(AppRoutes.behavioral);
+      // Navigate to city view and remove previous routes from stack
+      await Get.offAllNamed(AppRoutes.cityView);
     } catch (e) {
       print('DEBUG: Error saving breeds: $e');
       await EasyLoading.showError('Failed to save breeds');
+    } finally {
+      isLoading.value = false;
+      await EasyLoading.dismiss();
+    }
+  }
+
+  Future<void> finishSignup() async {
+    try {
+      isLoading.value = true;
+      await EasyLoading.show(
+        status: 'Finishing setup...',
+        maskType: EasyLoadingMaskType.black,
+      );
+
+      await Future.delayed(const Duration(milliseconds: 800));
+      await EasyLoading.showSuccess('Welcome!');
+
+      // Navigate to map page with binding and remove previous routes from stack
+      await Get.offAllNamed(
+        AppRoutes.map,
+
+      );
+    } catch (e) {
+      print('DEBUG: Error finishing signup: $e');
+      await EasyLoading.showError('Failed to complete setup');
     } finally {
       isLoading.value = false;
       await EasyLoading.dismiss();
@@ -149,7 +177,6 @@ class SignupController extends GetxController {
   void onInit() {
     super.onInit();
     _initializeControllers();
-    _setupValidation();
     _getCurrentLocation();
     isLoading.value = false;
   }
@@ -159,59 +186,6 @@ class SignupController extends GetxController {
     emailController = TextEditingController();
     passwordController = TextEditingController();
     confirmPasswordController = TextEditingController();
-  }
-
-  void _setupValidation() {
-    usernameController.addListener(_validateForm);
-    emailController.addListener(_validateForm);
-    passwordController.addListener(_validateForm);
-    confirmPasswordController.addListener(_validateForm);
-    agreePolicy1.listen((_) => _validateForm());
-    agreePolicy2.listen((_) => _validateForm());
-    agreePolicy3.listen((_) => _validateForm());
-  }
-
-  void _validateForm() {
-    final isValid =
-        usernameController.text.isNotEmpty &&
-        emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty &&
-        confirmPasswordController.text.isNotEmpty &&
-        passwordController.text == confirmPasswordController.text &&
-        agreePolicy1.value &&
-        agreePolicy2.value &&
-        agreePolicy3.value;
-
-    isFormValid.value = isValid;
-  }
-
-  Future<void> submitSignup() async {
-    if (!isFormValid.value) {
-      EasyLoading.showError('Please fill all required fields');
-      return;
-    }
-
-    try {
-      isLoading.value = true;
-      await EasyLoading.show(
-        status: 'Creating account...',
-        maskType: EasyLoadingMaskType.black,
-      );
-
-      await Future.delayed(const Duration(seconds: 1));
-
-      final nextRoute = AppRoutes.getNextSignupRoute(AppRoutes.signup);
-      if (nextRoute != null) {
-        await EasyLoading.dismiss();
-        isLoading.value = false;
-        await Get.offAndToNamed(nextRoute);
-      }
-    } catch (e) {
-      EasyLoading.showError('Failed to create account');
-    } finally {
-      isLoading.value = false;
-      await EasyLoading.dismiss();
-    }
   }
 
   void goBack() {
@@ -264,6 +238,9 @@ class SignupController extends GetxController {
   final phone = ''.obs;
   final address = ''.obs;
 
+  // Pet Profile variables
+  final isSpayedNeutered = false.obs;
+
   // Step 2 variables
   final language = 'en'.obs;
   final theme = 'system'.obs;
@@ -297,11 +274,11 @@ class SignupController extends GetxController {
   }
 
   // Navigation methods
-  void goToStep2() {
-    if (isStep1Valid) {
-      Get.toNamed(AppRoutes.step2);
-    }
-  }
+  // void goToStep2() {
+  //   if (isStep1Valid) {
+  //     Get.toNamed(AppRoutes.step2);
+  //   }
+  // }
 
   void goToStep3() {
     if (isStep2Valid) {
@@ -338,16 +315,28 @@ class SignupController extends GetxController {
   void updateWeight(String value) => weight.value = value;
   void updateMarks(String value) => marks.value = value;
 
-  void pickDate(BuildContext context) async {
-    final picked = await showDatePicker(
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime(2015),
+      initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme:  ColorScheme.light(
+              primary: AppColors.blue,
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
+    
     if (picked != null) {
-      selectedDate.value = picked;
-      dobController.text = DateFormat('dd / MM / yyyy').format(picked);
+      dobController.text = '${picked.day.toString().padLeft(2, '0')} / '
+          '${picked.month.toString().padLeft(2, '0')} / '
+          '${picked.year}';
     }
   }
 
@@ -638,6 +627,8 @@ class SignupController extends GetxController {
   }
 
   Future<void> saveOwnerInfoAndNavigate() async {
+    await Get.offNamed(AppRoutes.dogBreeds);
+
     try {
       if (!_validateOwnerInfo()) {
         return;
