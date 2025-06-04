@@ -1,3 +1,5 @@
+import 'package:chys/app/core/const/app_text.dart';
+import 'package:chys/app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomCheckboxTile extends StatelessWidget {
@@ -24,7 +26,7 @@ class CustomCheckboxTile extends StatelessWidget {
             child: Checkbox(
               value: value,
               onChanged: onChanged,
-              activeColor: Theme.of(context).colorScheme.primary,
+              activeColor:AppColors.blue,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4),
               ),
@@ -37,12 +39,7 @@ class CustomCheckboxTile extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(top: 2),
-              child: Text(
-                text,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground.withOpacity(0.8),
-                ),
-              ),
+              child: AppText(text: text),
             ),
           ),
         ],
