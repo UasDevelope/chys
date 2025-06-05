@@ -4,8 +4,14 @@ import 'package:get_storage/get_storage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'app/routes/app_pages.dart';
 import 'app/theme/app_theme.dart';
+import 'app/services/network_service.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize NetworkService
+  await Get.putAsync(() => NetworkService().init());
+  
   await GetStorage.init();
   runApp(const MyApp());
   configLoading();

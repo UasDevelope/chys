@@ -4,14 +4,12 @@ import 'package:chys/app/routes/app_routes.dart';
 import 'package:chys/app/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/const/app_colors.dart';
-import '../../map/bindings/map_binding.dart';
 
 class SignupController extends GetxController {
   final _imagePicker = ImagePicker();
@@ -164,7 +162,6 @@ class SignupController extends GetxController {
       // Navigate to map page with binding and remove previous routes from stack
       await Get.offAllNamed(
         AppRoutes.map,
-
       );
     } catch (e) {
       print('DEBUG: Error finishing signup: $e');
@@ -326,7 +323,7 @@ class SignupController extends GetxController {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme:  ColorScheme.light(
+            colorScheme: ColorScheme.light(
               primary: AppColors.blue,
             ),
           ),
@@ -334,7 +331,7 @@ class SignupController extends GetxController {
         );
       },
     );
-    
+
     if (picked != null) {
       dobController.text = '${picked.day.toString().padLeft(2, '0')} / '
           '${picked.month.toString().padLeft(2, '0')} / '
@@ -342,7 +339,7 @@ class SignupController extends GetxController {
     }
   }
 
-  void selectPetOwnership(bool value) {
+  Future<void> selectPetOwnership(bool value) async {
     print('DEBUG: selectPetOwnership called with value: $value');
     hasPet.value = value;
     hasSelectedPetOwnership.value = true;
@@ -386,7 +383,12 @@ class SignupController extends GetxController {
       isLoading.value = false;
 
       // Navigate directly to pet selection
-      await Get.offAndToNamed(AppRoutes.petSelection);
+      if(hasPet==true){
+        await Get.offAndToNamed(AppRoutes.petSelection);
+      }else {
+        await Get.offAndToNamed(AppRoutes.cityView);
+      }
+
     } catch (e) {
       print('DEBUG: Error in proceedFromPetOwnership: $e');
       await EasyLoading.showError('Something went wrong');
@@ -445,7 +447,7 @@ class SignupController extends GetxController {
     }
   }
 
-  Future<void> savePetProfile() async {
+  Future<void> savePetProfile1() async {
     print('DEBUG: Starting savePetProfile');
 
     if (nameController.text.isEmpty) {
@@ -496,6 +498,139 @@ class SignupController extends GetxController {
       await EasyLoading.dismiss();
       print('DEBUG: Cleanup complete');
     }
+  }
+
+  Future<void> savePetProfile() async {
+    print('DEBUG: Starting savePetProfile');
+
+    if (!_validatePetProfile()) return;
+
+    try {
+      print('DEBUG: Setting loading state to true');
+      isLoading.value = true;
+      await EasyLoading.show(
+        status: 'Creating pet profile...',
+        maskType: EasyLoadingMaskType.black,
+      );
+
+      // Prepare the pet profile data according to the API specification
+      print(weightController.text);
+      print(selectedPetType.value);
+      print(dobController.text);
+      final petData = {
+        'isHavePet': hasPet.value,
+        'petType':
+            selectedPetType.value.isNotEmpty ? selectedPetType.value : null,
+        'profilePic': petPhoto.value?.path ?? '',
+        'name': nameController.text.trim().isNotEmpty
+            ? nameController.text.trim()
+            : null,
+        'breed': breedController.text.trim().isNotEmpty
+            ? breedController.text.trim()
+            : null,
+        'sex': selectedSex.value.isNotEmpty
+            ? selectedSex.value.toLowerCase()
+            : null,
+        'dateOfBirth': dobController.text.trim().isNotEmpty
+            ? dobController.text.trim()
+            : null,
+        'bio': bioController.text,
+        'photos': photos.map((file) => file.path).toList(),
+        'color': selectedColor.value.isNotEmpty ? selectedColor.value : null,
+        'size': selectedSize.value.isNotEmpty
+            ? selectedSize.value.toLowerCase()
+            : null,
+        'weight': double.tryParse(weightController.text.trim()) != null
+            ? double.parse(weightController.text.trim())
+            : null,
+        'marks': marksController.text,
+        'microchipNumber': microchipController.text,
+        'tagId': tagIdController.text,
+        'lostStatus': false,
+        'vaccinationStatus': vaccinationStatus.value == 'Yes',
+        'vetName': vetNameController.text,
+        'vetContactNumber': vetContactController.text,
+        'personalityTraits': personalityController.text
+            .split(',')
+            .map((e) => e.trim())
+            .where((e) => e.isNotEmpty)
+            .toList(),
+        'allergies': allergiesController.text
+            .split(',')
+            .map((e) => e.trim())
+            .where((e) => e.isNotEmpty)
+            .toList(),
+        'specialNeeds': specialNeedsController.text,
+        'feedingInstructions': feedingController.text,
+        'dailyRoutine': routineController.text,
+      };
+
+      final result = await _apiService.createPetProfile(petData);
+      print('results heere: ${result} ');
+      if (result['success']) {
+        await EasyLoading.showSuccess('Pet profile created successfully!');
+
+        // Get next route in signup flow
+        final currentRoute = Get.currentRoute;
+        final nextRoute = AppRoutes.getNextSignupRoute(currentRoute);
+
+        await Get.offNamed(AppRoutes.cityView);
+      } else {
+        await EasyLoading.showError(
+            result['message'] ?? 'Failed to create pet profile');
+      }
+    } catch (e, stackTrace) {
+      print('ERROR: $e');
+      print('STACK TRACE: $stackTrace');
+      await EasyLoading.showError('Failed to create pet profile');
+    } finally {
+      isLoading.value = false;
+      await EasyLoading.dismiss();
+    }
+  }
+
+  bool _validatePetProfile() {
+    if (nameController.text.isEmpty) {
+      EasyLoading.showError('Please enter pet name');
+      return false;
+    }
+
+    if (breedController.text.isEmpty) {
+      EasyLoading.showError('Please enter pet breed');
+      return false;
+    }
+
+    if (dobController.text.isEmpty) {
+      EasyLoading.showError('Please select date of birth');
+      return false;
+    }
+
+    if (selectedColor.value.isEmpty) {
+      EasyLoading.showError('Please select pet color');
+      return false;
+    }
+
+    if (selectedSize.value.isEmpty) {
+      EasyLoading.showError('Please select pet size');
+      return false;
+    }
+
+    if (weightController.text.isEmpty) {
+      EasyLoading.showError('Please enter pet weight');
+      return false;
+    }
+
+    if (vetNameController.text.isEmpty) {
+      EasyLoading.showError('Please enter vet name');
+      return false;
+    }
+
+    if (vetContactController.text.isEmpty) {
+      EasyLoading.showError('Please enter vet contact number');
+      return false;
+    }
+
+    return true;
   }
 
   void removePhoto(int index) {
@@ -722,10 +857,12 @@ class SignupController extends GetxController {
         Get.toNamed(AppRoutes.petOwnership);
       } else {
         String errorMessage = result['message'];
-        if (errorMessage.contains('duplicate key error') && errorMessage.contains('username')) {
+        if (errorMessage.contains('duplicate key error') &&
+            errorMessage.contains('username')) {
           // Generate a unique username by adding a timestamp
-          final uniqueName = '${nameController.text.toLowerCase().replaceAll(' ', '_')}_${DateTime.now().millisecondsSinceEpoch}';
-          
+          final uniqueName =
+              '${nameController.text.toLowerCase().replaceAll(' ', '_')}_${DateTime.now().millisecondsSinceEpoch}';
+
           // Try again with the unique username
           final retryResult = await _apiService.register(
             email: emailController.text,

@@ -29,4 +29,4 @@ class StorageService {
   static Future<void> clearStorage() async {
     await _storage.erase();
   }
-} 
+}

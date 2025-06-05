@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widget/app_button.dart';
 import '../../signup/controller/signup_controller.dart';
-import '../../signup/widgets/primary_button.dart';
 
 class PetProfileView extends GetView<SignupController> {
   const PetProfileView({super.key});
@@ -60,22 +59,20 @@ class PetProfileView extends GetView<SignupController> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.grey.shade100,
-                              image:
-                                  photo != null
-                                      ? DecorationImage(
-                                        image: FileImage(photo),
-                                        fit: BoxFit.cover,
-                                      )
-                                      : null,
-                            ),
-                            child:
-                                photo == null
-                                    ? Icon(
-                                      Icons.add_a_photo_outlined,
-                                      size: 40,
-                                      color: AppColors.blue,
+                              image: photo != null
+                                  ? DecorationImage(
+                                      image: FileImage(photo),
+                                      fit: BoxFit.cover,
                                     )
-                                    : null,
+                                  : null,
+                            ),
+                            child: photo == null
+                                ? Icon(
+                                    Icons.add_a_photo_outlined,
+                                    size: 40,
+                                    color: AppColors.blue,
+                                  )
+                                : null,
                           ),
 
                           // Edit icon if image is set
@@ -84,8 +81,8 @@ class PetProfileView extends GetView<SignupController> {
                             right: 4,
                             child: Container(
                               padding: const EdgeInsets.all(6),
-                              decoration:  BoxDecoration(
-                                color:AppColors.blue,
+                              decoration: BoxDecoration(
+                                color: AppColors.blue,
                                 shape: BoxShape.circle,
                               ),
                               child: const Icon(
@@ -103,7 +100,6 @@ class PetProfileView extends GetView<SignupController> {
                   // Pet Name
                   AppText(
                     text: 'Pet Name',
-
                     fontWeight: FontWeight.w400,
                     color: AppColors.purple,
                     fontSize: 14,
@@ -117,7 +113,6 @@ class PetProfileView extends GetView<SignupController> {
                   const SizedBox(height: 24),
                   AppText(
                     text: 'Breed',
-
                     fontWeight: FontWeight.w400,
                     color: AppColors.purple,
                     fontSize: 14,
@@ -174,27 +169,33 @@ class PetProfileView extends GetView<SignupController> {
                   Row(
                     children: [
                       Obx(() => Container(
-                        width: 24,
-                        height: 24,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: controller.isSpayedNeutered.value ? AppColors.blue : Colors.transparent,
-                          border: Border.all(
-                            color: controller.isSpayedNeutered.value ? AppColors.blue : Colors.grey.shade300,
-                            width: 2,
-                          ),
-                        ),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () => controller.isSpayedNeutered.toggle(),
-                            borderRadius: BorderRadius.circular(12),
-                            child: controller.isSpayedNeutered.value
-                                ? const Icon(Icons.check, size: 18, color: Colors.white)
-                                : null,
-                          ),
-                        ),
-                      )),
+                            width: 24,
+                            height: 24,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: controller.isSpayedNeutered.value
+                                  ? AppColors.blue
+                                  : Colors.transparent,
+                              border: Border.all(
+                                color: controller.isSpayedNeutered.value
+                                    ? AppColors.blue
+                                    : Colors.grey.shade300,
+                                width: 2,
+                              ),
+                            ),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () =>
+                                    controller.isSpayedNeutered.toggle(),
+                                borderRadius: BorderRadius.circular(12),
+                                child: controller.isSpayedNeutered.value
+                                    ? const Icon(Icons.check,
+                                        size: 18, color: Colors.white)
+                                    : null,
+                              ),
+                            ),
+                          )),
                       const SizedBox(width: 12),
                       AppText(
                         text: 'Sprayed/Neutered',
@@ -208,7 +209,6 @@ class PetProfileView extends GetView<SignupController> {
                   const SizedBox(height: 24),
                   AppText(
                     text: 'Bio',
-
                     fontWeight: FontWeight.w400,
                     color: AppColors.purple,
                     fontSize: 14,
@@ -229,7 +229,6 @@ class PetProfileView extends GetView<SignupController> {
                           backgroundColor: Colors.white,
                           borderColor: Colors.white,
                           onPressed: () => controller.goBack(),
-
                           label: 'Back',
                         ),
                       ),
@@ -239,7 +238,7 @@ class PetProfileView extends GetView<SignupController> {
                           backgroundColor: Colors.white,
                           borderColor: Colors.white,
                           label: 'Next',
-                          onPressed: () => controller.savePetProfile(),
+                          onPressed: () => controller.savePetProfile1(),
                         ),
                       ),
                     ],
