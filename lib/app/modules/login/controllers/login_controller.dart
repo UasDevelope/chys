@@ -6,7 +6,7 @@ import '../../../services/api_service.dart';
 
 class LoginController extends GetxController {
   final _apiService = ApiService();
-  
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final showPassword = false.obs;
@@ -49,7 +49,7 @@ class LoginController extends GetxController {
       } else {
         // Clear password field on error
         passwordController.clear();
-        
+
         Get.snackbar(
           'Error',
           result['message'],
@@ -132,4 +132,4 @@ class LoginController extends GetxController {
     passwordController.dispose();
     super.onClose();
   }
-} 
+}

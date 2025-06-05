@@ -87,7 +87,7 @@ class DogBreedsView extends GetView<SignupController> {
                       borderWidth: 0,
 
                       label: 'Next',
-                      onPressed: () => controller.saveDogBreedsAndNavigate(),
+                      onPressed: () => controller.savePetProfile(),
                     ),
                   ),
                 ],
