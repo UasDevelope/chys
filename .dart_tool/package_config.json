@@ -188,6 +188,12 @@
       "languageVersion": "2.15"
     },
     {
+      "name": "get_storage",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/get_storage-2.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "google_fonts",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/google_fonts-6.2.1",
       "packageUri": "lib/",
@@ -506,7 +512,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2025-06-04T14:00:02.096606Z",
+  "generated": "2025-06-05T05:26:46.000447Z",
   "generator": "pub",
   "generatorVersion": "3.7.0",
   "flutterRoot": "file:///Users/user/Downloads/flutter%202",

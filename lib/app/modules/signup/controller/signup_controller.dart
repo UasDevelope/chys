@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chys/app/routes/app_routes.dart';
+import 'package:chys/app/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +15,7 @@ import '../../map/bindings/map_binding.dart';
 
 class SignupController extends GetxController {
   final _imagePicker = ImagePicker();
+  final _apiService = ApiService();
 
   // Loading states
   final isLoading = false.obs;
@@ -696,6 +698,86 @@ class SignupController extends GetxController {
       EasyLoading.showError('Please select country');
       return false;
     }
+    return true;
+  }
+
+  Future<void> handleSignup() async {
+    try {
+      if (!_validateSignupForm()) return;
+
+      isLoading.value = true;
+      await EasyLoading.show(
+        status: 'Creating account...',
+        maskType: EasyLoadingMaskType.black,
+      );
+
+      final result = await _apiService.register(
+        email: emailController.text,
+        password: passwordController.text,
+        name: nameController.text,
+      );
+
+      if (result['success']) {
+        await EasyLoading.showSuccess('Account created successfully!');
+        Get.toNamed(AppRoutes.petOwnership);
+      } else {
+        String errorMessage = result['message'];
+        if (errorMessage.contains('duplicate key error') && errorMessage.contains('username')) {
+          // Generate a unique username by adding a timestamp
+          final uniqueName = '${nameController.text.toLowerCase().replaceAll(' ', '_')}_${DateTime.now().millisecondsSinceEpoch}';
+          
+          // Try again with the unique username
+          final retryResult = await _apiService.register(
+            email: emailController.text,
+            password: passwordController.text,
+            name: nameController.text,
+            username: uniqueName,
+          );
+
+          if (retryResult['success']) {
+            await EasyLoading.showSuccess('Account created successfully!');
+            Get.toNamed(AppRoutes.petOwnership);
+            return;
+          }
+          errorMessage = retryResult['message'];
+        }
+        await EasyLoading.showError(errorMessage);
+      }
+    } catch (e) {
+      print('Error during signup: $e');
+      await EasyLoading.showError('Failed to create account');
+    } finally {
+      isLoading.value = false;
+      await EasyLoading.dismiss();
+    }
+  }
+
+  bool _validateSignupForm() {
+    if (nameController.text.isEmpty) {
+      EasyLoading.showInfo('Please enter your name');
+      return false;
+    }
+
+    if (emailController.text.isEmpty) {
+      EasyLoading.showInfo('Please enter your email');
+      return false;
+    }
+
+    if (passwordController.text.isEmpty) {
+      EasyLoading.showInfo('Please enter your password');
+      return false;
+    }
+
+    if (passwordController.text != confirmPasswordController.text) {
+      EasyLoading.showInfo('Passwords do not match');
+      return false;
+    }
+
+    if (!agreePolicy1.value || !agreePolicy2.value || !agreePolicy3.value) {
+      EasyLoading.showInfo('Please agree to all policies');
+      return false;
+    }
+
     return true;
   }
 }

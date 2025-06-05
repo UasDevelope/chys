@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
 import '../modules/pet_ownership/views/pet_ownership_view.dart';
 import '../modules/pet_selection/views/pet_selection_view.dart';
 import '../modules/pet_profile/views/pet_profile_view.dart';
@@ -31,9 +33,16 @@ import '../modules/podcast/views/invite_podcast_view.dart';
 import 'app_routes.dart';
 
 class AppPages {
-  static const initial = AppRoutes.signup;
+  static const initial = AppRoutes.login;
 
   static final routes = [
+    GetPage(
+      name: AppRoutes.login,
+      page: () => LoginView(),
+      binding: LoginBinding(),
+      preventDuplicates: true,
+      transition: Transition.fadeIn,
+    ),
     GetPage(
       name: AppRoutes.signup,
       page: () => SignupView(),
