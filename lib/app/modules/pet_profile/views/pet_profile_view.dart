@@ -3,6 +3,7 @@ import 'package:chys/app/core/validators/form_validators.dart';
 import 'package:chys/app/modules/signup/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widget/app_button.dart';
 import '../../signup/controller/signup_controller.dart';
@@ -238,7 +239,7 @@ class PetProfileView extends GetView<SignupController> {
                           backgroundColor: Colors.white,
                           borderColor: Colors.white,
                           label: 'Next',
-                          onPressed: () => controller.savePetProfile1(),
+                          onPressed: () => controller.savePetProfile(),
                         ),
                       ),
                     ],
