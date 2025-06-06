@@ -18,14 +18,22 @@ class CityView extends GetView<SignupController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Back Button
+              IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => controller.goBack(),
+                padding: EdgeInsets.zero,
+                alignment: Alignment.centerLeft,
+              ),
+
               // Spacer to push content to center
               const Spacer(),
 
               // Center Content
               Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment:MainAxisAlignment.center,
+                  crossAxisAlignment:CrossAxisAlignment.center,
                   children: [
                     // Image
                     Image.asset(
@@ -60,8 +68,8 @@ class CityView extends GetView<SignupController> {
 
               // Let's Go Button
               Appbutton(
-                width: Get.width,
-                borderColor: AppColors.blue,
+                width:Get.width,
+                borderColor:AppColors.blue,
                 backgroundColor: AppColors.blue,
                 borderWidth: 0,
                 label: "Let's Go!",

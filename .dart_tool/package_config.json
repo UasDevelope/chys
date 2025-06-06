@@ -2,12 +2,6 @@
   "configVersion": 2,
   "packages": [
     {
-      "name": "archive",
-      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/archive-4.0.7",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
-    },
-    {
       "name": "args",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/args-2.7.0",
       "packageUri": "lib/",
@@ -44,18 +38,6 @@
       "languageVersion": "3.4"
     },
     {
-      "name": "connectivity_plus",
-      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/connectivity_plus-5.0.2",
-      "packageUri": "lib/",
-      "languageVersion": "2.18"
-    },
-    {
-      "name": "connectivity_plus_platform_interface",
-      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/connectivity_plus_platform_interface-1.2.4",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "cross_file",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/cross_file-0.3.4+2",
       "packageUri": "lib/",
@@ -78,12 +60,6 @@
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.8",
       "packageUri": "lib/",
       "languageVersion": "3.1"
-    },
-    {
-      "name": "dbus",
-      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/dbus-0.7.11",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
     },
     {
       "name": "fake_async",
@@ -164,6 +140,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_svg",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/flutter_svg-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///Users/user/Downloads/flutter%202/packages/flutter_test",
       "packageUri": "lib/",
@@ -216,12 +198,6 @@
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/get-4.7.2",
       "packageUri": "lib/",
       "languageVersion": "2.15"
-    },
-    {
-      "name": "get_storage",
-      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/get_storage-2.1.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.16"
     },
     {
       "name": "google_fonts",
@@ -284,12 +260,6 @@
       "languageVersion": "3.4"
     },
     {
-      "name": "image",
-      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/image-4.5.4",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
-    },
-    {
       "name": "image_picker",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/image_picker-1.1.2",
       "packageUri": "lib/",
@@ -344,12 +314,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "js",
-      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/js-0.6.7",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
-    },
-    {
       "name": "leak_tracker",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/leak_tracker-10.0.8",
       "packageUri": "lib/",
@@ -398,16 +362,16 @@
       "languageVersion": "3.2"
     },
     {
-      "name": "nm",
-      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/nm-0.5.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "path",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/path-1.9.1",
       "packageUri": "lib/",
       "languageVersion": "3.4"
+    },
+    {
+      "name": "path_parsing",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/path_parsing-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
     },
     {
       "name": "path_provider",
@@ -460,12 +424,6 @@
     {
       "name": "plugin_platform_interface",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.8",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
-    },
-    {
-      "name": "posix",
-      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/posix-6.0.2",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -542,6 +500,24 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "vector_graphics",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/vector_graphics-1.1.18",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "vector_graphics_codec",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/vector_graphics_codec-1.1.13",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "vector_graphics_compiler",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/vector_graphics_compiler-1.1.17",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
       "name": "vector_math",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/vector_math-2.1.4",
       "packageUri": "lib/",
@@ -578,7 +554,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2025-06-05T11:07:03.856813Z",
+  "generated": "2025-06-06T10:19:46.457437Z",
   "generator": "pub",
   "generatorVersion": "3.7.0",
   "flutterRoot": "file:///Users/user/Downloads/flutter%202",
