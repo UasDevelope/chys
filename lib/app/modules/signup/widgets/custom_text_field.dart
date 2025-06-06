@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/theme/app_colors.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -21,6 +22,7 @@ class CustomTextField extends StatelessWidget {
 
   // Dropdown-specific fields
   final bool isDropdown;
+  final Color? hintColor;
   final List<String>? items;
   final String? selectedValue;
   final void Function(String?)? onDropdownChanged;
@@ -47,6 +49,7 @@ class CustomTextField extends StatelessWidget {
     this.items,
     this.selectedValue,
     this.onDropdownChanged,
+    this.hintColor,
   });
 
   @override
@@ -57,8 +60,8 @@ class CustomTextField extends StatelessWidget {
     final inputDecoration = InputDecoration(
       hintText: hint,
       hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-        color: AppColors.onBackground.withOpacity(0.5),
-      ),
+            color: AppColors.onBackground.withOpacity(0.5),
+          ),
       filled: filled,
       fillColor: actualFillColor,
       border: OutlineInputBorder(
@@ -99,12 +102,11 @@ class CustomTextField extends StatelessWidget {
     if (isDropdown) {
       return DropdownButtonFormField<String>(
         value: selectedValue,
-        items:
-            items
-                ?.map(
-                  (item) => DropdownMenuItem(value: item, child: Text(item)),
-                )
-                .toList(),
+        items: items
+            ?.map(
+              (item) => DropdownMenuItem(value: item, child: Text(item)),
+            )
+            .toList(),
         onChanged: onDropdownChanged,
         validator: validator,
         decoration: inputDecoration,
@@ -130,7 +132,9 @@ class CustomTextField extends StatelessWidget {
       style: Theme.of(
         context,
       ).textTheme.bodyLarge?.copyWith(color: AppColors.onBackground),
-      decoration: inputDecoration.copyWith(hintText: label),
+      decoration: inputDecoration.copyWith(
+        hintText: label,
+      ),
       validator: validator,
     );
   }

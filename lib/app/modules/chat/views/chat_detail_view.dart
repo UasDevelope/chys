@@ -1,5 +1,10 @@
+import 'package:chys/app/core/const/app_image.dart';
+import 'package:chys/app/core/utils/app_size.dart';
+import 'package:chys/app/modules/signup/widgets/custom_text_field.dart';
+import 'package:chys/app/widget/image/svg_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../core/theme/app_colors.dart';
 import '../controllers/chat_controller.dart';
 
@@ -12,36 +17,50 @@ class ChatDetailView extends GetView<ChatController> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Get.back(),
-        ),
-        title: Row(
-          children: [
-            CircleAvatar(
-              radius: 20,
-              backgroundImage: AssetImage(chatUser['avatar']),
-            ),
-            const SizedBox(width: 12),
-            Text(
-              chatUser['name'],
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 8,
+                offset: const Offset(0, 4), // shadow position
+              ),
+            ],
+          ),
+          child: SafeArea(
+            child: AppBar(
+              backgroundColor: Colors.white,
+              elevation: 0, // keep AppBar itself flat
+              automaticallyImplyLeading: false,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () => Get.back(),
+              ),
+              title: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundImage:
+                        const NetworkImage("https://i.pravatar.cc/150?img=6"),
+                  ),
+                  SizedBox(width: AppSize.h2),
+                  Text(
+                    chatUser['name'],
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.phone_outlined, color: Colors.black),
-            onPressed: () => controller.onCallTap(),
           ),
-        ],
+        ),
       ),
       body: Column(
         children: [
@@ -86,35 +105,48 @@ class ChatDetailView extends GetView<ChatController> {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
+              borderRadius: BorderRadius.circular(
+                  16), // if not circular, remove for full square
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
+                  color: Colors.black
+                      .withOpacity(0.1), // slightly darker for visibility
+                  blurRadius: 12,
+                  spreadRadius: 1,
+                  offset: Offset(0, 4), // subtle bottom shadow
+                ),
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.03),
+                  blurRadius: 4,
+                  spreadRadius: 1,
+                  offset: Offset(0, 1), // soft ambient top shadow
                 ),
               ],
             ),
             child: Row(
+              spacing: AppSize.h2,
               children: [
-                IconButton(
-                  icon: const Icon(Icons.add_circle_outline),
-                  onPressed: () => controller.onAttachmentTap(),
-                  color: Colors.grey[400],
-                ),
                 Expanded(
-                  child: TextField(
+                  child: CustomTextField(
+                    label: "Type a message",
                     controller: controller.messageController,
-                    decoration: InputDecoration(
-                      hintText: 'Type a message',
-                      hintStyle: TextStyle(color: Colors.grey[400]),
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                    ),
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: () => controller.sendMessage(),
-                  color: AppColors.blue,
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: AppColors.blue,
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    icon: AppImages.send.toSvg(
+                        color:
+                            Colors.white), // ensure white icon inside blue bg
+                    onPressed: () => controller.sendMessage(),
+                    iconSize: 20, // optional: tweak size
+                    splashRadius: 24,
+                  ),
                 ),
               ],
             ),
@@ -128,21 +160,33 @@ class ChatDetailView extends GetView<ChatController> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Row(
-        mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment:
+            isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          if (!isMe) ...[
-            CircleAvatar(
-              radius: 16,
-              backgroundImage: AssetImage(Get.arguments['avatar']),
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: Get.width * 0.7, // prevent stretching to full width
             ),
-            const SizedBox(width: 8),
-          ],
-          Flexible(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: isMe ? AppColors.blue : Colors.grey[100],
-                borderRadius: BorderRadius.circular(20),
+                color: isMe ? AppColors.blue : Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(16),
+                  topRight: const Radius.circular(16),
+                  bottomLeft: Radius.circular(isMe ? 16 : 0),
+                  bottomRight: Radius.circular(isMe ? 0 : 16),
+                ),
+                boxShadow: [
+                  if (!isMe)
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1), // soft shadow
+                      blurRadius: 10,
+                      spreadRadius: 1,
+                      offset: const Offset(2, 4),
+                    ),
+                ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,25 +194,28 @@ class ChatDetailView extends GetView<ChatController> {
                   Text(
                     text,
                     style: TextStyle(
-                      color: isMe ? Colors.white : Colors.black,
+                      color: isMe ? Colors.white : Colors.black87,
                       fontSize: 14,
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    time,
-                    style: TextStyle(
-                      color: isMe ? Colors.white70 : Colors.grey[500],
-                      fontSize: 10,
+                  const SizedBox(height: 6),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Text(
+                      time,
+                      style: TextStyle(
+                        color: isMe ? Colors.white70 : Colors.grey[500],
+                        fontSize: 10,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
           ),
-          if (isMe) const SizedBox(width: 40),
+          if (isMe) const SizedBox(width: 8),
         ],
       ),
     );
   }
-} 
+}
