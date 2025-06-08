@@ -11,7 +11,7 @@ import 'app/theme/app_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  CustomApiService();
+
   runApp(const MyApp());
   configLoading();
 }

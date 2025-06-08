@@ -46,6 +46,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^6.2.1
   flutter_dotted: ^0.0.5
+  dotted_border:
   image_picker: ^1.0.4
   flutter_easyloading: ^3.0.5
 dev_dependencies:
