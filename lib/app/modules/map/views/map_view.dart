@@ -1,8 +1,13 @@
+import 'package:chys/app/core/const/app_image.dart';
+import 'package:chys/app/core/utils/app_size.dart';
+import 'package:chys/app/routes/app_routes.dart';
+import 'package:chys/app/widget/image/svg_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../controllers/map_controller.dart';
+
 import '../../../core/theme/app_colors.dart';
+import '../controllers/map_controller.dart';
 
 class MapView extends GetView<MapController> {
   const MapView({super.key});
@@ -14,20 +19,17 @@ class MapView extends GetView<MapController> {
         children: [
           // Google Map
           Obx(() => GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: controller.currentLocation.value,
-              zoom: 15,
-            ),
-            onMapCreated: (GoogleMapController mapController) {
-              controller.mapController = mapController;
-            },
-            markers: controller.markers,
-            myLocationEnabled: true,
-            myLocationButtonEnabled: false,
-            zoomControlsEnabled: false,
-            mapType: MapType.normal,
-          )),
-
+                initialCameraPosition: CameraPosition(
+                  target: controller.currentLocation.value,
+                  zoom: 13,
+                ),
+                onMapCreated: controller.onMapCreated,
+                markers: controller.markers.toSet(),
+                myLocationEnabled: true,
+                myLocationButtonEnabled: false,
+                zoomControlsEnabled: false,
+                mapType: MapType.normal,
+              )),
           // Top Bar with Logo and Settings
           Positioned(
             top: MediaQuery.of(context).padding.top + 16,
@@ -37,25 +39,30 @@ class MapView extends GetView<MapController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // App Logo
-                Container(
-                  height: 48,
-                  width: 48,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(24),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
+                InkWell(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.profile);
+                  },
+                  child: Container(
+                    height: 48,
+                    width: 48,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(24),
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        fit: BoxFit.fill,
                       ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(24),
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
@@ -80,43 +87,69 @@ class MapView extends GetView<MapController> {
 // ahmad
           // Bottom Action Buttons
           Positioned(
-            bottom: 24,
-            right: 24,
+            bottom: AppSize.getHeight(10),
+            right: AppSize.getHeight(14),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              spacing: AppSize.h2,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _buildActionButton(
-                  icon: Icons.add,
-                  backgroundColor: Colors.white,
-                  onTap: () => controller.onAddPetTap(),
+                _buildSvgActionButton(
+                  icon: AppImages.user,
+                  selected: controller.selectedFeature.value == 'user',
+                  onTap: () => controller.selectFeature('user'),
                 ),
-                const SizedBox(height: 12),
-                _buildActionButton(
-                  icon: Icons.person_outline,
-                  backgroundColor: Colors.white,
-                  onTap: () => controller.onProfileTap(),
+                _buildSvgActionButton(
+                  icon: AppImages.map,
+                  selected: controller.selectedFeature.value == 'map',
+                  onTap: () => controller.selectFeature('map'),
                 ),
-                const SizedBox(height: 12),
-                _buildActionButton(
-                  icon: Icons.pets,
-                  backgroundColor: Colors.white,
-                  onTap: () => controller.onPetsTap(),
-                ),
-                const SizedBox(height: 12),
-                _buildActionButton(
-                  icon: Icons.chat_bubble_outline,
-                  backgroundColor: Colors.white,
-                  onTap: () => controller.onChatTap(),
-                ),
-                const SizedBox(height: 12),
-                _buildActionButton(
-                  icon: Icons.my_location,
-                  backgroundColor: AppColors.blue,
-                  iconColor: Colors.white,
-                  onTap: () => controller.centerOnCurrentLocation(),
-                ),
+                // Podcast
               ],
             ),
+          ),
+          Positioned(
+            bottom: 24,
+            right: 24,
+            child: Obx(() {
+              return Column(
+                spacing: AppSize.h2,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Map Button in center (base button)
+
+                  // Add
+                  _buildSvgActionButton(
+                    icon: AppImages.add,
+                    selected: controller.selectedFeature.value == 'add',
+                    onTap: () => controller.selectFeature('add'),
+                  ),
+                  // User
+                  _buildSvgActionButton(
+                    icon: AppImages.podcast,
+                    selected: controller.selectedFeature.value == 'podcast',
+                    onTap: () => controller.selectFeature('podcast'),
+                  ),
+                  // Chat
+                  _buildSvgActionButton(
+                    icon: AppImages.chat,
+                    selected: controller.selectedFeature.value == 'chat',
+                    onTap: () => controller.selectFeature('chat'),
+                  ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: AppColors.purple,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: const Text(
+                      "19.14 ▮ 19.14",
+                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                  ),
+                ],
+              );
+            }),
           ),
         ],
       ),
@@ -174,4 +207,30 @@ class MapView extends GetView<MapController> {
       ),
     );
   }
-} 
+
+  Widget _buildSvgActionButton({
+    required String icon,
+    required VoidCallback onTap,
+    Color backgroundColor = Colors.white,
+    Color iconColor = const Color(0xff4B164C),
+    bool selected = false,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 56,
+        width: 56,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          shape: BoxShape.circle,
+        ),
+        child: icon.toSvg(
+          color: iconColor,
+          width: 24,
+          height: 24,
+        ),
+      ),
+    );
+  }
+}

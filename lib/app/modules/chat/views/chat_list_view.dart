@@ -1,5 +1,9 @@
+import 'package:chys/app/core/const/app_text.dart';
+import 'package:chys/app/core/utils/app_size.dart';
+import 'package:chys/app/modules/signup/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../controllers/chat_controller.dart';
 
 class ChatListView extends GetView<ChatController> {
@@ -27,35 +31,15 @@ class ChatListView extends GetView<ChatController> {
             ),
 
             // Search Bar
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: const Color(0xFFF5F5F5),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.search, color: Colors.grey[400], size: 20),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      controller: controller.searchController,
-                      decoration: InputDecoration(
-                        hintText: 'Search',
-                        hintStyle: TextStyle(
-                          color: Colors.grey[400],
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        border: InputBorder.none,
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(vertical: 8),
-                      ),
-                      onChanged: controller.onSearchChanged,
-                    ),
-                  ),
-                ],
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: CustomTextField(
+                hintColor: Colors.white,
+                label: "Search",
+                controller: TextEditingController(),
+                onChanged: controller.onSearchChanged,
+                fillColor: Colors.grey.withValues(alpha: 0.3),
+                borderColor: Colors.transparent,
               ),
             ),
 
@@ -69,7 +53,8 @@ class ChatListView extends GetView<ChatController> {
                 return ListView.separated(
                   padding: const EdgeInsets.all(16),
                   itemCount: controller.conversations.length,
-                  separatorBuilder: (context, index) => const SizedBox(height: 16),
+                  separatorBuilder: (context, index) =>
+                      SizedBox(height: AppSize.h4),
                   itemBuilder: (context, index) {
                     final chat = controller.conversations[index];
                     return _buildChatTile(chat);
@@ -92,10 +77,10 @@ class ChatListView extends GetView<ChatController> {
           // Avatar
           CircleAvatar(
             radius: 24,
-            backgroundImage: AssetImage(chat['avatar']),
+            backgroundImage: NetworkImage("https://i.pravatar.cc/150?img=6"),
           ),
           const SizedBox(width: 12),
-          
+
           // Message Content
           Expanded(
             child: Column(
@@ -109,7 +94,7 @@ class ChatListView extends GetView<ChatController> {
                       chat['name'],
                       style: const TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w700,
                         color: Colors.black,
                       ),
                     ),
@@ -123,15 +108,12 @@ class ChatListView extends GetView<ChatController> {
                   ],
                 ),
                 const SizedBox(height: 4),
-                
+
                 // Last Message
-                Text(
-                  chat['lastMessage'],
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                    height: 1.2,
-                  ),
+                AppText(
+                  text: chat['lastMessage'],
+                  fontSize: 14,
+                  color: Colors.grey[600]!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -142,4 +124,4 @@ class ChatListView extends GetView<ChatController> {
       ),
     );
   }
-} 
+}

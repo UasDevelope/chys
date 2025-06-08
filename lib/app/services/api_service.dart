@@ -1,16 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:get/get.dart';
 import 'package:image/image.dart' as img;
 import 'package:path_provider/path_provider.dart';
 import 'storage_service.dart';
-import 'network_service.dart';
 import 'package:http_parser/http_parser.dart'; // for MediaType
 
 class ApiService {
   static const String baseUrl = 'https://pet-app-phi.vercel.app/api';
-  final _networkService = Get.find<NetworkService>();
   final _client = http.Client();
   static const _maxRetries = 3;
   static const _retryDelay = Duration(seconds: 1);
@@ -30,7 +27,7 @@ class ApiService {
     try {
       final File imageFile = File(imagePath);
       final bytes = await imageFile.readAsBytes();
-      
+
       // If image is already small enough, return original path
       if (bytes.length <= _maxImageSize) {
         return imagePath;
@@ -62,13 +59,16 @@ class ApiService {
       // Get temporary directory
       final Directory tempDir = await getTemporaryDirectory();
       final String tempPath = tempDir.path;
-      final String targetPath = '$tempPath/${DateTime.now().millisecondsSinceEpoch}.jpg';
+      final String targetPath =
+          '$tempPath/${DateTime.now().millisecondsSinceEpoch}.jpg';
 
       // Encode and save compressed image
       final File compressedFile = File(targetPath);
-      await compressedFile.writeAsBytes(img.encodeJpg(resizedImage, quality: 85));
+      await compressedFile
+          .writeAsBytes(img.encodeJpg(resizedImage, quality: 85));
 
-      print('Original size: ${bytes.length}, Compressed size: ${await compressedFile.length()}');
+      print(
+          'Original size: ${bytes.length}, Compressed size: ${await compressedFile.length()}');
       return targetPath;
     } catch (e) {
       print('Error compressing image: $e');
@@ -79,18 +79,18 @@ class ApiService {
   Future<Map<String, dynamic>> _handleMultipartRequest(
     Future<http.StreamedResponse> Function() request,
   ) async {
-    if (!await _networkService.checkConnection()) {
-      return {
-        'success': false,
-        'message': 'No internet connection',
-      };
-    }
+    // if (!await _networkService.checkConnection()) {
+    //   return {
+    //     'success': false,
+    //     'message': 'No internet connection',
+    //   };
+    // }
 
     int retryCount = 0;
     while (retryCount < _maxRetries) {
       try {
         final response = await request();
-        
+
         if (response.statusCode == 413) {
           return {
             'success': false,
@@ -160,12 +160,12 @@ class ApiService {
   Future<Map<String, dynamic>> _handleRequest(
     Future<http.Response> Function() request,
   ) async {
-    if (!await _networkService.checkConnection()) {
-      return {
-        'success': false,
-        'message': 'No internet connection',
-      };
-    }
+    // if (!await _networkService.checkConnection()) {
+    //   return {
+    //     'success': false,
+    //     'message': 'No internet connection',
+    //   };
+    // }
 
     int retryCount = 0;
     while (retryCount < _maxRetries) {
@@ -180,7 +180,7 @@ class ApiService {
           if (data['user'] != null) {
             await StorageService.saveUser(data['user'] as Map<String, dynamic>);
           }
-          
+
           return {
             'success': true,
             'data': data,
@@ -252,8 +252,8 @@ class ApiService {
 
     // Print token for debugging
     if (result['success']) {
-      final token = StorageService.getToken();
-      print('DEBUG: Token after registration: $token');
+     // final token = StorageService.saveToken(token);
+      //print('DEBUG: Token after registration: $token');
     }
 
     return result;
@@ -300,8 +300,10 @@ class ApiService {
     return result;
   }
 
-  Future<Map<String, dynamic>> createPetProfile(Map<String, dynamic> petData) async {
-    print('DEBUG: Using token for pet profile creation: ${StorageService.getToken()}');
+  Future<Map<String, dynamic>> createPetProfile(
+      Map<String, dynamic> petData) async {
+    print(
+        'DEBUG: Using token for pet profile creation: ${StorageService.getToken()}');
 
     final request = http.MultipartRequest(
       'POST',
@@ -351,14 +353,16 @@ class ApiService {
     // Helper: detect MIME type from file extension
     MediaType? getMimeType(String path) {
       final ext = path.toLowerCase();
-      if (ext.endsWith('.jpg') || ext.endsWith('.jpeg')) return MediaType('image', 'jpeg');
+      if (ext.endsWith('.jpg') || ext.endsWith('.jpeg'))
+        return MediaType('image', 'jpeg');
       if (ext.endsWith('.png')) return MediaType('image', 'png');
       if (ext.endsWith('.mp4')) return MediaType('video', 'mp4');
       return null;
     }
 
     // Handle profilePic
-    if (petData['profilePic'] != null && petData['profilePic'].toString().isNotEmpty) {
+    if (petData['profilePic'] != null &&
+        petData['profilePic'].toString().isNotEmpty) {
       try {
         final compressedPath = await compressImage(petData['profilePic']);
         final mimeType = getMimeType(compressedPath);
@@ -399,12 +403,12 @@ class ApiService {
 
     // Debug
     print('Request fields: ${request.fields}');
-    print('Request files: ${request.files.map((f) => '${f.filename} (${f.contentType})').toList()}');
+    print(
+        'Request files: ${request.files.map((f) => '${f.filename} (${f.contentType})').toList()}');
 
     // Send request
     return _handleMultipartRequest(() => request.send());
   }
-
 
   @override
   void onClose() {

@@ -1,35 +1,43 @@
+import 'package:chys/app/modules/%20home/home_detail.dart';
+import 'package:chys/app/modules/%20home/home_view.dart';
+import 'package:chys/app/modules/adored_posts/adored_post.dart';
+import 'package:chys/app/modules/donate/view/donate_detail.dart';
+import 'package:chys/app/modules/donate/view/donate_now.dart';
+import 'package:chys/app/modules/donate/view/donate_view.dart';
+import 'package:chys/app/modules/invite/invite_podcost.dart';
+import 'package:chys/app/modules/profile/views/edit_profile.dart';
+import 'package:chys/app/modules/subscription/subscription_view.dart';
 import 'package:get/get.dart';
-import '../modules/signup/bindings/signup_binding.dart';
-import '../modules/signup/views/signup_view.dart';
-import '../modules/login/bindings/login_binding.dart';
-import '../modules/login/views/login_view.dart';
-import '../modules/pet_ownership/views/pet_ownership_view.dart';
-import '../modules/pet_selection/views/pet_selection_view.dart';
-import '../modules/pet_profile/views/pet_profile_view.dart';
-import '../modules/pet_appearance/views/appearance_view.dart';
-import '../modules/pet_identification/views/identification_view.dart';
-import '../modules/pet_behavioral/views/behavioral_view.dart';
-import '../modules/owner_info/views/owner_info_view.dart';
-import '../modules/dog_breeds/views/dog_breeds_view.dart';
-import '../modules/city_view/views/city_view.dart';
-import '../modules/map/views/map_view.dart';
-import '../modules/map/bindings/map_binding.dart';
+
 import '../modules/add_pet/bindings/add_pet_binding.dart';
 import '../modules/add_pet/views/add_pet_view.dart';
 import '../modules/chat/bindings/chat_binding.dart';
-import '../modules/chat/views/chat_list_view.dart';
 import '../modules/chat/views/chat_detail_view.dart';
+import '../modules/chat/views/chat_list_view.dart';
+import '../modules/city_view/views/city_view.dart';
+import '../modules/dog_breeds/views/dog_breeds_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
+import '../modules/map/bindings/map_binding.dart';
+import '../modules/map/views/map_view.dart';
 import '../modules/notifications/bindings/notifications_binding.dart';
 import '../modules/notifications/views/notifications_view.dart';
+import '../modules/owner_info/views/owner_info_view.dart';
+import '../modules/pet_appearance/views/appearance_view.dart';
+import '../modules/pet_behavioral/views/behavioral_view.dart';
+import '../modules/pet_identification/views/identification_view.dart';
+import '../modules/pet_ownership/views/pet_ownership_view.dart';
+import '../modules/pet_profile/views/pet_profile_view.dart';
+import '../modules/pet_selection/views/pet_selection_view.dart';
+import '../modules/podcast/bindings/podcast_binding.dart';
+import '../modules/post/bindings/post_binding.dart';
+import '../modules/post/views/add_post_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
-import '../modules/post/bindings/post_binding.dart';
-import '../modules/post/views/add_post_view.dart';
-import '../modules/podcast/bindings/podcast_binding.dart';
-import '../modules/podcast/views/invite_podcast_view.dart';
-
+import '../modules/signup/bindings/signup_binding.dart';
+import '../modules/signup/views/signup_view.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -138,7 +146,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.profile,
-      page: () => const ProfileView(),
+      page: () => ProfileView(),
       binding: ProfileBinding(),
       transition: Transition.cupertino,
     ),
@@ -162,7 +170,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.invitePodcast,
-      page: () => const InvitePodcastView(),
+      page: () => const InvitePodcast(),
       binding: PodcastBinding(),
       transition: Transition.cupertino,
     ),
@@ -200,6 +208,46 @@ class AppPages {
       name: AppRoutes.settingsAbout,
       page: () => const SettingsView(),
       binding: SettingsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.editProfile,
+      page: () => const EditProfile(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.home,
+      page: () => const HomeView(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.homeDetail,
+      page: () => HomeDetail(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.subscription,
+      page: () => const SubscriptionView(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.donate,
+      page: () => const DonateView(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.donateDetail,
+      page: () => const DonateDetail(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.donateNow,
+      page: () => const DonateNow(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.adoredPost,
+      page: () => const AdoredPost(),
       transition: Transition.cupertino,
     ),
   ];

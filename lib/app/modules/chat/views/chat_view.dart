@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/theme/app_colors.dart';
+
 import '../../../core/const/app_text.dart';
+import '../../../core/theme/app_colors.dart';
 import '../controllers/chat_controller.dart';
 
 class ChatView extends GetView<ChatController> {
@@ -197,4 +198,4 @@ class ChatView extends GetView<ChatController> {
       onTap: () => controller.onConversationTap(conversation),
     );
   }
-} 
+}

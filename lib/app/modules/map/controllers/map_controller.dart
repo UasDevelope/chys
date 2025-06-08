@@ -1,10 +1,17 @@
 import 'dart:async';
+import 'dart:developer';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
+
+import 'package:chys/app/data/models/pet_profile.dart';
+import 'package:chys/app/services/http_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../core/utils/map_utils.dart';
 import '../../../routes/app_routes.dart';
 
 class MapController extends GetxController {
@@ -12,21 +19,83 @@ class MapController extends GetxController {
   final currentLocation = const LatLng(0, 0).obs;
   final markers = <Marker>{}.obs;
   final isLoading = false.obs;
+  var petList = <PetModel>[].obs;
+  var isDataLoading = false.obs;
+  RxString selectedFeature = ''.obs; // e.g. 'chat', 'add', etc.
+
+  Future<void> _getCurrentLocation() async {
+    try {
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        permission = await Geolocator.requestPermission();
+      }
+
+      if (permission == LocationPermission.whileInUse ||
+          permission == LocationPermission.always) {
+        final position = await Geolocator.getCurrentPosition();
+        currentLocation.value = LatLng(position.latitude, position.longitude);
+        log("Current location is $currentLocation");
+        centerOnCurrentLocation();
+      } else {
+        Get.snackbar(
+          'Permission Denied',
+          'Location access is required to use the map.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      print('Error getting location: $e');
+    }
+  }
 
   @override
   void onInit() {
     super.onInit();
     _getCurrentLocation();
+    fetchPetProfile();
+  }
+
+  void onMapCreated(GoogleMapController controller) {
+    log("Come here");
+    mapController = controller;
+    centerOnCurrentLocation();
+
+    mapController!.setMapStyle(MapUtils.lightMode);
     _loadPetMarkers();
   }
 
-  Future<void> _getCurrentLocation() async {
+  Future<void> fetchPetProfile() async {
     try {
-      final position = await Geolocator.getCurrentPosition();
-      currentLocation.value = LatLng(position.latitude, position.longitude);
-      centerOnCurrentLocation();
+      isDataLoading.value = true;
+      final response = await ApiClient().get(ApiEndPoints.petProfile);
+      final pet = PetModel.fromJson(response);
+      petList.value = [pet];
     } catch (e) {
-      print('Error getting location: $e');
+      log("Error is $e");
+    } finally {
+      isDataLoading.value = false;
+    }
+  }
+
+  void selectFeature(String feature) {
+    selectedFeature.value = feature;
+    switch (feature) {
+      case 'chat':
+        onChatTap();
+        break;
+      case 'add':
+        onAddPetTap();
+        break;
+      case 'user':
+        onProfileTap();
+        break;
+      case 'podcast':
+        onPetsTap();
+        break;
+      case 'map':
+        centerOnCurrentLocation();
+        break;
     }
   }
 
@@ -34,73 +103,91 @@ class MapController extends GetxController {
     try {
       isLoading.value = true;
 
-      // Load and create custom markers for different pets
-      final dogMarker = await _createCustomMarker(
-        'assets/images/markers/dog_marker.png',
-      );
-      final catMarker = await _createCustomMarker(
-        'assets/images/markers/cat_marker.png',
-      );
+      final position = await Geolocator.getCurrentPosition();
+      final baseLat = position.latitude;
+      final baseLng = position.longitude;
+      debugPrint("Base lat: $baseLat, Base lng: $baseLng");
 
-      // Sample pet locations - Replace with actual data from your backend
-      final pets = [
-        {
-          'id': '1',
-          'type': 'dog',
-          'location': const LatLng(40.7128, -74.0060),
-          'name': 'Max',
-          'image': 'assets/images/pets/dog1.jpg',
-        },
-        {
-          'id': '2',
-          'type': 'cat',
-          'location': const LatLng(40.7129, -74.0061),
-          'name': 'Luna',
-          'image': 'assets/images/pets/cat1.jpg',
-        },
-        // Add more pets here
+      final imageUrls = [
+        'https://i.pravatar.cc/150?img=3',
+        'https://i.pravatar.cc/150?img=4',
+        'https://i.pravatar.cc/150?img=5',
+        'https://i.pravatar.cc/150?img=6',
       ];
 
-      // Create markers for each pet
-      for (final pet in pets) {
+      for (int i = 0; i < imageUrls.length; i++) {
+        final BitmapDescriptor? customIcon =
+            await _getCircularBitmapDescriptor(imageUrls[i], size: 150);
+
         final marker = Marker(
-          markerId: MarkerId(pet['id'] as String),
-          position: pet['location'] as LatLng,
-          icon: pet['type'] == 'dog' ? dogMarker : catMarker,
-          onTap: () => _onMarkerTapped(pet['id'] as String),
-          infoWindow: InfoWindow(
-            title: pet['name'] as String,
-            snippet: 'Tap to view profile',
+          markerId: MarkerId('avatar_$i'),
+          position: LatLng(
+            baseLat + 0.002 * i,
+            baseLng + 0.003 * i,
           ),
+          icon: customIcon ??
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          infoWindow: InfoWindow(
+            title: 'User ${i + 1}',
+          ),
+          onTap: () {
+            Get.toNamed(AppRoutes.homeDetail);
+          },
         );
+
         markers.add(marker);
+        markers.refresh();
       }
     } catch (e) {
-      print('Error loading markers: $e');
+      debugPrint('Error loading markers: $e');
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<BitmapDescriptor> _createCustomMarker(String assetPath) async {
-    final ByteData byteData = await rootBundle.load(assetPath);
-    final Uint8List uint8List = byteData.buffer.asUint8List();
+  Future<BitmapDescriptor?> _getCircularBitmapDescriptor(String imageUrl,
+      {int size = 150}) async {
+    try {
+      final http.Response response = await http.get(Uri.parse(imageUrl));
+      if (response.statusCode == 200) {
+        final Uint8List imageBytes = response.bodyBytes;
 
-    final codec = await ui.instantiateImageCodec(
-      uint8List,
-      targetHeight: 120,
-      targetWidth: 120,
-    );
+        final ui.Codec codec = await ui.instantiateImageCodec(
+          imageBytes,
+          targetWidth: size,
+          targetHeight: size,
+        );
+        final ui.FrameInfo frameInfo = await codec.getNextFrame();
+        final ui.Image image = frameInfo.image;
 
-    final frame = await codec.getNextFrame();
-    final data = await frame.image.toByteData(format: ui.ImageByteFormat.png);
+        final ui.PictureRecorder recorder = ui.PictureRecorder();
+        final Canvas canvas = Canvas(recorder);
+        final Paint paint = Paint()..isAntiAlias = true;
+        final double radius = size / 2;
 
-    return BitmapDescriptor.fromBytes(data!.buffer.asUint8List());
-  }
+        // Draw circular clip
+        canvas.drawCircle(Offset(radius, radius), radius, paint);
 
-  void _onMarkerTapped(String petId) {
-    // Navigate to pet profile or show bottom sheet
-    print('Pet tapped: $petId');
+        // Draw the image within the circular clip
+        paint.shader = ImageShader(
+          image,
+          TileMode.clamp,
+          TileMode.clamp,
+          Matrix4.identity().storage,
+        );
+        canvas.drawCircle(Offset(radius, radius), radius, paint);
+
+        final ui.Image finalImage =
+            await recorder.endRecording().toImage(size, size);
+        final ByteData? byteData =
+            await finalImage.toByteData(format: ui.ImageByteFormat.png);
+
+        return BitmapDescriptor.fromBytes(byteData!.buffer.asUint8List());
+      }
+    } catch (e) {
+      debugPrint('Error creating circular bitmap: $e');
+    }
+    return null;
   }
 
   void centerOnCurrentLocation() {
@@ -114,9 +201,9 @@ class MapController extends GetxController {
   // Action button handlers
   void onSettingsTap() => Get.toNamed(AppRoutes.settings);
   void onNotificationsTap() => Get.toNamed(AppRoutes.notifications);
-  void onAddPetTap() => Get.toNamed(AppRoutes.addPet);
-  void onProfileTap() => Get.toNamed(AppRoutes.profile);
-  void onPetsTap() => Get.toNamed(AppRoutes.pets);
+  void onAddPetTap() => Get.toNamed(AppRoutes.addPost);
+  void onProfileTap() => Get.toNamed(AppRoutes.invitePodcast);
+  void onPetsTap() => Get.toNamed(AppRoutes.home);
   void onChatTap() => Get.toNamed(AppRoutes.chat);
 
   @override

@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 class PetDataController extends GetxController {
   final _petType = ''.obs;
-  
+
   String get petType => _petType.value;
   
   void setPetType(String type) {
