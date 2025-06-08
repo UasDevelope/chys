@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:chys/app/data/models/pet_profile.dart';
+import 'package:chys/app/services/http_service.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -17,6 +19,8 @@ class MapController extends GetxController {
   final currentLocation = const LatLng(0, 0).obs;
   final markers = <Marker>{}.obs;
   final isLoading = false.obs;
+  var petList = <PetModel>[].obs;
+  var isDataLoading = false.obs;
   RxString selectedFeature = ''.obs; // e.g. 'chat', 'add', etc.
 
   Future<void> _getCurrentLocation() async {
@@ -49,6 +53,7 @@ class MapController extends GetxController {
   void onInit() {
     super.onInit();
     _getCurrentLocation();
+    fetchPetProfile();
   }
 
   void onMapCreated(GoogleMapController controller) {
@@ -58,6 +63,19 @@ class MapController extends GetxController {
 
     mapController!.setMapStyle(MapUtils.lightMode);
     _loadPetMarkers();
+  }
+
+  Future<void> fetchPetProfile() async {
+    try {
+      isDataLoading.value = true;
+      final response = await ApiClient().get(ApiEndPoints.petProfile);
+      final pet = PetModel.fromJson(response);
+      petList.value = [pet];
+    } catch (e) {
+      log("Error is $e");
+    } finally {
+      isDataLoading.value = false;
+    }
   }
 
   void selectFeature(String feature) {
@@ -113,7 +131,7 @@ class MapController extends GetxController {
             title: 'User ${i + 1}',
           ),
           onTap: () {
-            debugPrint('Marker $i tapped');
+            Get.toNamed(AppRoutes.homeDetail);
           },
         );
 
@@ -170,11 +188,6 @@ class MapController extends GetxController {
       debugPrint('Error creating circular bitmap: $e');
     }
     return null;
-  }
-
-  void _onMarkerTapped(String petId) {
-    // Navigate to pet profile or show bottom sheet
-    print('Pet tapped: $petId');
   }
 
   void centerOnCurrentLocation() {

@@ -24,7 +24,7 @@ class MapView extends GetView<MapController> {
                   zoom: 13,
                 ),
                 onMapCreated: controller.onMapCreated,
-                markers: controller.markers,
+                markers: controller.markers.toSet(),
                 myLocationEnabled: true,
                 myLocationButtonEnabled: false,
                 zoomControlsEnabled: false,

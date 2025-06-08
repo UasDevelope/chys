@@ -222,7 +222,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.homeDetail,
-      page: () => const HomeDetail(),
+      page: () => HomeDetail(),
       transition: Transition.cupertino,
     ),
     GetPage(

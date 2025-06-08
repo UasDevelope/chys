@@ -252,7 +252,7 @@ class ApiService {
 
     // Print token for debugging
     if (result['success']) {
-      // final token = StorageService.saveToken(token);
+     // final token = StorageService.saveToken(token);
       //print('DEBUG: Token after registration: $token');
     }
 
