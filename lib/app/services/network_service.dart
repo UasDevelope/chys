@@ -3,27 +3,24 @@ import 'package:get/get.dart';
 
 class NetworkService extends GetxService {
   final _connectivity = Connectivity();
-  final _isConnected = true.obs;
-
-  bool get isConnected => _isConnected.value;
+  final isConnected = true.obs;
 
   Future<NetworkService> init() async {
-    // Check initial connection status
-    _isConnected.value = await _checkConnection();
-
     // Listen to connectivity changes
-    _connectivity.onConnectivityChanged.listen((result) async {
-      _isConnected.value = result != ConnectivityResult.none;
-    });
-
+    _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    
+    // Get initial connection status
+    final result = await _connectivity.checkConnectivity();
+    _updateConnectionStatus(result);
+    
     return this;
   }
 
-  Future<bool> checkConnection() async {
-    return _isConnected.value;
+  void _updateConnectionStatus(ConnectivityResult result) {
+    isConnected.value = result != ConnectivityResult.none;
   }
 
-  Future<bool> _checkConnection() async {
+  Future<bool> checkConnection() async {
     final result = await _connectivity.checkConnectivity();
     return result != ConnectivityResult.none;
   }

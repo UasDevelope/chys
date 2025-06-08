@@ -10,6 +10,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/const/app_colors.dart';
+import '../../../services/custom_Api.dart';
+import '../../../services/storage_service.dart';
 
 class SignupController extends GetxController {
   final _imagePicker = ImagePicker();
@@ -837,37 +839,23 @@ class SignupController extends GetxController {
         name: nameController.text,
       );
 
-      if (result['success']) {
+      if (result['success'] == true) {
+        final token = StorageService.getToken();
+
+        if (token == null) {
+          await EasyLoading.showError('Authentication token not saved.');
+          return;
+        }
+
         await EasyLoading.showSuccess('Account created successfully!');
         Get.toNamed(AppRoutes.petOwnership);
       } else {
-        String errorMessage = result['message'];
-        if (errorMessage.contains('duplicate key error') &&
-            errorMessage.contains('username')) {
-          // Generate a unique username by adding a timestamp
-          final uniqueName =
-              '${nameController.text.toLowerCase().replaceAll(' ', '_')}_${DateTime.now().millisecondsSinceEpoch}';
-
-          // Try again with the unique username
-          final retryResult = await _apiService.register(
-            email: emailController.text,
-            password: passwordController.text,
-            name: nameController.text,
-            username: uniqueName,
-          );
-
-          if (retryResult['success']) {
-            await EasyLoading.showSuccess('Account created successfully!');
-            Get.toNamed(AppRoutes.petOwnership);
-            return;
-          }
-          errorMessage = retryResult['message'];
-        }
+        final errorMessage = result['message'] ?? 'Signup failed.';
         await EasyLoading.showError(errorMessage);
       }
     } catch (e) {
-      print('Error during signup: $e');
-      await EasyLoading.showError('Failed to create account');
+      print('❌ Signup error: $e');
+      await EasyLoading.showError('An error occurred during signup.');
     } finally {
       isLoading.value = false;
       await EasyLoading.dismiss();

@@ -9,6 +9,7 @@ import 'dart:io';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../services/api_service.dart';
+import '../../posts/controller/post_controller.dart';
 import '../controllers/post_controller.dart';
 
 class AddPostView extends GetView<PostController> {
@@ -16,8 +17,6 @@ class AddPostView extends GetView<PostController> {
 
   @override
   Widget build(BuildContext context) {
- Get.find<ApiService>();
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -26,7 +25,7 @@ class AddPostView extends GetView<PostController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: AppSize.h2),
-            
+
             // Back Button
             InkWell(
               onTap: () => Get.back(),
@@ -40,9 +39,9 @@ class AddPostView extends GetView<PostController> {
               fontWeight: FontWeight.w600,
               color: Colors.black,
             ),
-            
+
             SizedBox(height: AppSize.h2),
-            
+
             // Media Section
             const Text(
               'Media',
@@ -56,14 +55,14 @@ class AddPostView extends GetView<PostController> {
             SizedBox(height: AppSize.h2),
 
             // Selected Media Preview
-            Obx(() => controller.selectedMedia.isNotEmpty
+            Obx(() => controller.selectedPhotos.isNotEmpty
                 ? Container(
                     height: 120,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: controller.selectedMedia.length,
+                      itemCount: controller.selectedPhotos.length,
                       itemBuilder: (context, index) {
-                        final media = controller.selectedMedia[index];
+                        final media = controller.selectedPhotos[index];
                         return Stack(
                           children: [
                             Container(
@@ -82,7 +81,7 @@ class AddPostView extends GetView<PostController> {
                               top: 4,
                               right: 12,
                               child: GestureDetector(
-                                onTap: () => controller.removeMedia(index),
+                                onTap: () => controller.removePhoto(index),
                                 child: Container(
                                   padding: EdgeInsets.all(4),
                                   decoration: BoxDecoration(
@@ -108,7 +107,7 @@ class AddPostView extends GetView<PostController> {
 
             // Upload Button
             GestureDetector(
-              onTap: () => controller.pickMedia(),
+              onTap: () => controller.pickPhotos(),
               child: DashedContainer(
                 dashColor: AppColors.blue,
                 borderRadius: BorderRadius.circular(15),
@@ -147,9 +146,9 @@ class AddPostView extends GetView<PostController> {
               fontWeight: FontWeight.w400,
               color: Colors.black,
             ),
-            
+
             SizedBox(height: AppSize.h2),
-            
+
             CustomTextField(
               controller: controller.descriptionController,
               maxLines: 3,
@@ -160,20 +159,20 @@ class AddPostView extends GetView<PostController> {
 
             // Post Button
             Obx(() => SizedBox(
-              width: double.infinity,
-              child: Appbutton(
-                borderRadius: 16,
-                textColor: AppColors.onPrimary,
-                backgroundColor: AppColors.blue,
-                onPressed: controller.isLoading.value 
-                    ? null 
-                    : (){
-
-                },
-                label: controller.isLoading.value ? 'Posting...' : 'Post',
-                borderColor: Colors.transparent,
-              ),
-            )),
+                  width: double.infinity,
+                  child: Appbutton(
+                    borderRadius: 16,
+                    textColor: AppColors.onPrimary,
+                    backgroundColor: AppColors.blue,
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : () {
+                            controller.createPost();
+                          },
+                    label: controller.isLoading.value ? 'Posting...' : 'Post',
+                    borderColor: Colors.transparent,
+                  ),
+                )),
           ],
         ),
       ),

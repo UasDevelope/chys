@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -9,28 +10,25 @@ import 'network_service.dart';
 import 'package:http_parser/http_parser.dart'; // for MediaType
 
 class ApiService {
-  static const String baseUrl = 'https://pet-app-phi.vercel.app/api';
-  final _networkService = Get.find<NetworkService>();
+  final String baseUrl = 'https://pet-app-phi.vercel.app/api';
+  final _networkService = Get.put(NetworkService());
   final _client = http.Client();
   static const _maxRetries = 3;
   static const _retryDelay = Duration(seconds: 1);
   static const _maxImageSize = 1 * 1024 * 1024; // 1MB in bytes
 
   // Get auth headers with token
-  Map<String, String> get _headers {
-    final token = StorageService.getToken();
-    print('token here : ${token}');
-    return {
-      if (token != null) 'Authorization': 'Bearer $token',
-    };
-  }
+  Map<String, String> get _headers => {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${StorageService.getToken()}',
+      };
 
   // Helper function to compress image
   Future<String> compressImage(String imagePath) async {
     try {
       final File imageFile = File(imagePath);
       final bytes = await imageFile.readAsBytes();
-      
+
       // If image is already small enough, return original path
       if (bytes.length <= _maxImageSize) {
         return imagePath;
@@ -62,13 +60,16 @@ class ApiService {
       // Get temporary directory
       final Directory tempDir = await getTemporaryDirectory();
       final String tempPath = tempDir.path;
-      final String targetPath = '$tempPath/${DateTime.now().millisecondsSinceEpoch}.jpg';
+      final String targetPath =
+          '$tempPath/${DateTime.now().millisecondsSinceEpoch}.jpg';
 
       // Encode and save compressed image
       final File compressedFile = File(targetPath);
-      await compressedFile.writeAsBytes(img.encodeJpg(resizedImage, quality: 85));
+      await compressedFile
+          .writeAsBytes(img.encodeJpg(resizedImage, quality: 85));
 
-      print('Original size: ${bytes.length}, Compressed size: ${await compressedFile.length()}');
+      print(
+          'Original size: ${bytes.length}, Compressed size: ${await compressedFile.length()}');
       return targetPath;
     } catch (e) {
       print('Error compressing image: $e');
@@ -90,7 +91,7 @@ class ApiService {
     while (retryCount < _maxRetries) {
       try {
         final response = await request();
-        
+
         if (response.statusCode == 413) {
           return {
             'success': false,
@@ -172,7 +173,7 @@ class ApiService {
       try {
         final response = await request();
         final data = jsonDecode(response.body);
-
+       log(data);
         if (response.statusCode == 200 || response.statusCode == 201) {
           if (data['token'] != null) {
             await StorageService.saveToken(data['token']);
@@ -180,7 +181,7 @@ class ApiService {
           if (data['user'] != null) {
             await StorageService.saveUser(data['user'] as Map<String, dynamic>);
           }
-          
+
           return {
             'success': true,
             'data': data,
@@ -237,6 +238,8 @@ class ApiService {
     required String name,
     String? username,
   }) async {
+    log("Hello");
+
     final result = await _handleRequest(() => _client.post(
           Uri.parse('$baseUrl/users/register'),
           headers: {
@@ -251,10 +254,17 @@ class ApiService {
         ));
 
     // Print token for debugging
-    if (result['success']) {
-      final token = StorageService.getToken();
-      print('DEBUG: Token after registration: $token');
-    }
+    // if (result['success']) {
+    //   final data = result['data'];
+    //   log(data);
+    //   if (data != null && data['token'] != null) {
+    //     await StorageService.saveToken(data['token']);
+    //     final token = StorageService.getToken();
+    //     print('DEBUG: Token after registration: $token');
+    //   } else {
+    //     print('DEBUG: No token in response data');
+    //   }
+    // }
 
     return result;
   }
@@ -300,12 +310,16 @@ class ApiService {
     return result;
   }
 
-  Future<Map<String, dynamic>> createPetProfile(Map<String, dynamic> petData) async {
-    print('DEBUG: Using token for pet profile creation: ${StorageService.getToken()}');
+  Future<Map<String, dynamic>> createPetProfile(
+      Map<String, dynamic> petData) async {
+    final token = StorageService.getToken();
+    print(
+        'DEBUG: Using token for pet profile creation: ${token}');
 
     // Validate total number of files before proceeding
     int totalFiles = 0;
-    if (petData['profilePic'] != null && petData['profilePic'].toString().isNotEmpty) {
+    if (petData['profilePic'] != null &&
+        petData['profilePic'].toString().isNotEmpty) {
       totalFiles++;
     }
     if (petData['photos'] != null) {
@@ -315,7 +329,8 @@ class ApiService {
     if (totalFiles > 5) {
       return {
         'success': false,
-        'message': 'Maximum 5 files allowed (including profile picture). Please select fewer images.',
+        'message':
+            'Maximum 5 files allowed (including profile picture). Please select fewer images.',
       };
     }
 
@@ -367,14 +382,16 @@ class ApiService {
     // Helper: detect MIME type from file extension
     MediaType? getMimeType(String path) {
       final ext = path.toLowerCase();
-      if (ext.endsWith('.jpg') || ext.endsWith('.jpeg')) return MediaType('image', 'jpeg');
+      if (ext.endsWith('.jpg') || ext.endsWith('.jpeg'))
+        return MediaType('image', 'jpeg');
       if (ext.endsWith('.png')) return MediaType('image', 'png');
       if (ext.endsWith('.mp4')) return MediaType('video', 'mp4');
       return null;
     }
 
     // Handle profilePic
-    if (petData['profilePic'] != null && petData['profilePic'].toString().isNotEmpty) {
+    if (petData['profilePic'] != null &&
+        petData['profilePic'].toString().isNotEmpty) {
       try {
         final compressedPath = await compressImage(petData['profilePic']);
         final mimeType = getMimeType(compressedPath);
@@ -394,8 +411,11 @@ class ApiService {
 
     // Handle photos - limit to remaining slots after profile pic
     if (petData['photos'] != null && (petData['photos'] as List).isNotEmpty) {
-      final remainingSlots = 5 - (request.files.length); // Calculate remaining slots
-      final photos = (petData['photos'] as List).take(remainingSlots).toList(); // Take only what we can fit
+      final remainingSlots =
+          5 - (request.files.length); // Calculate remaining slots
+      final photos = (petData['photos'] as List)
+          .take(remainingSlots)
+          .toList(); // Take only what we can fit
 
       for (String photoPath in photos) {
         try {
@@ -418,17 +438,175 @@ class ApiService {
 
     // Debug
     print('Request fields: ${request.fields}');
-    print('Request files: ${request.files.map((f) => '${f.filename} (${f.contentType})').toList()}');
+    print(
+        'Request files: ${request.files.map((f) => '${f.filename} (${f.contentType})').toList()}');
     print('Total files being sent: ${request.files.length}');
 
     // Send request
     return _handleMultipartRequest(() => request.send());
   }
 
+  // Posts
+  Future<Map<String, dynamic>> createPost(
+      String description, List<String> mediaPaths) async {
+    try {
+      final request = http.MultipartRequest(
+        'POST',
+        Uri.parse('$baseUrl/posts'),
+      );
+      log("${StorageService.getToken()}");
+      // Add headers
+      request.headers.addAll({
+        'Authorization': 'Bearer ${StorageService.getToken()}',
+      });
+
+      // Add description
+      request.fields['description'] = description;
+
+      // Add media files
+      for (String path in mediaPaths) {
+        final file = await http.MultipartFile.fromPath(
+          'media',
+          path,
+          contentType: MediaType('image', 'jpeg'),
+        );
+        request.files.add(file);
+      }
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return {
+          'success': true,
+          'data': jsonDecode(response.body),
+        };
+      } else {
+        return {
+          'success': false,
+          'message':
+              jsonDecode(response.body)['message'] ?? 'Failed to create post',
+        };
+      }
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Error creating post: $e',
+      };
+    }
+  }
+
+  Future<Map<String, dynamic>> getPosts({int page = 1, int limit = 10}) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/posts?page=$page&limit=$limit'),
+        headers: _headers,
+      );
+
+      if (response.statusCode == 200) {
+        return {
+          'success': true,
+          'data': jsonDecode(response.body),
+        };
+      } else {
+        return {
+          'success': false,
+          'message':
+              jsonDecode(response.body)['message'] ?? 'Failed to fetch posts',
+        };
+      }
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Error fetching posts: $e',
+      };
+    }
+  }
+
+  Future<Map<String, dynamic>> likePost(String postId) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/posts/$postId/like'),
+        headers: _headers,
+      );
+
+      if (response.statusCode == 200) {
+        return {
+          'success': true,
+          'data': jsonDecode(response.body),
+        };
+      } else {
+        return {
+          'success': false,
+          'message':
+              jsonDecode(response.body)['message'] ?? 'Failed to like post',
+        };
+      }
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Error liking post: $e',
+      };
+    }
+  }
+
+  Future<Map<String, dynamic>> addComment(String postId, String comment) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/posts/$postId/comments'),
+        headers: _headers,
+        body: jsonEncode({'comment': comment}),
+      );
+
+      if (response.statusCode == 200) {
+        return {
+          'success': true,
+          'data': jsonDecode(response.body),
+        };
+      } else {
+        return {
+          'success': false,
+          'message':
+              jsonDecode(response.body)['message'] ?? 'Failed to add comment',
+        };
+      }
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Error adding comment: $e',
+      };
+    }
+  }
+
+  Future<Map<String, dynamic>> deletePost(String postId) async {
+    try {
+      final response = await http.delete(
+        Uri.parse('$baseUrl/posts/$postId'),
+        headers: _headers,
+      );
+
+      if (response.statusCode == 200) {
+        return {
+          'success': true,
+          'message': 'Post deleted successfully',
+        };
+      } else {
+        return {
+          'success': false,
+          'message':
+              jsonDecode(response.body)['message'] ?? 'Failed to delete post',
+        };
+      }
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Error deleting post: $e',
+      };
+    }
+  }
 
   @override
   void onClose() {
     _client.close();
   }
 }
- 

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../../posts/controller/post_controller.dart';
 import '../controllers/post_controller.dart';
 
 class PostBinding extends Bindings {
@@ -8,4 +9,4 @@ class PostBinding extends Bindings {
       () => PostController(),
     );
   }
-} 
+}
