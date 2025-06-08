@@ -1,17 +1,19 @@
 import 'dart:io';
 
 import 'package:chys/app/routes/app_routes.dart';
+import 'package:chys/app/services/api_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../../../core/const/app_colors.dart';
 
 class SignupController extends GetxController {
   final _imagePicker = ImagePicker();
+  final _apiService = ApiService();
 
   // Loading states
   final isLoading = false.obs;
@@ -337,7 +339,7 @@ class SignupController extends GetxController {
     }
   }
 
-  void selectPetOwnership(bool value) {
+  Future<void> selectPetOwnership(bool value) async {
     print('DEBUG: selectPetOwnership called with value: $value');
     hasPet.value = value;
     hasSelectedPetOwnership.value = true;
@@ -381,7 +383,11 @@ class SignupController extends GetxController {
       isLoading.value = false;
 
       // Navigate directly to pet selection
-      await Get.offAndToNamed(AppRoutes.petSelection);
+      if (hasPet == true) {
+        await Get.offAndToNamed(AppRoutes.petSelection);
+      } else {
+        await Get.offAndToNamed(AppRoutes.cityView);
+      }
     } catch (e) {
       print('DEBUG: Error in proceedFromPetOwnership: $e');
       await EasyLoading.showError('Something went wrong');
@@ -440,9 +446,7 @@ class SignupController extends GetxController {
     }
   }
 
-  Future<void> savePetProfile() async {
-    print('DEBUG: Starting savePetProfile');
-
+  Future<void> savePetProfile1() async {
     if (nameController.text.isEmpty) {
       print('DEBUG: Name is empty');
       EasyLoading.showError('Please enter pet name');
@@ -450,47 +454,168 @@ class SignupController extends GetxController {
     }
 
     try {
-      print('DEBUG: Setting loading state to true');
       isLoading.value = true;
 
-      print('DEBUG: Showing loading dialog');
-
-      // Simulate saving logic
-      print('DEBUG: Saving pet profile data');
       petName.value = nameController.text;
       breed.value = breedController.text;
       bio.value = bioController.text;
 
       await Future.delayed(const Duration(milliseconds: 800));
 
-      print('DEBUG: Showing success message');
       await EasyLoading.showSuccess('Profile saved successfully!');
       await EasyLoading.dismiss();
 
       // Determine next screen
       final currentRoute = Get.currentRoute;
-      print('DEBUG: Current route is: $currentRoute');
+
       isLoading.value = false;
       final nextRoute = AppRoutes.getNextSignupRoute(currentRoute);
-      print('DEBUG: Next route is: $nextRoute');
 
       if (nextRoute != null) {
-        print('DEBUG: Navigating to $nextRoute');
         await Get.offNamed(nextRoute);
       } else {
-        print('DEBUG: Fallback to appearance route');
         isLoading.value = false;
         await Get.offNamed(AppRoutes.appearance);
       }
     } catch (e, stackTrace) {
-      print('ERROR: $e');
-      print('STACK TRACE: $stackTrace');
       await EasyLoading.showError('Failed to save profile');
     } finally {
       isLoading.value = false;
       await EasyLoading.dismiss();
-      print('DEBUG: Cleanup complete');
     }
+  }
+
+  Future<void> savePetProfile() async {
+    print('DEBUG: Starting savePetProfile');
+
+    if (!_validatePetProfile()) return;
+
+    try {
+      print('DEBUG: Setting loading state to true');
+      isLoading.value = true;
+      await EasyLoading.show(
+        status: 'Creating pet profile...',
+        maskType: EasyLoadingMaskType.black,
+      );
+
+      // Prepare the pet profile data according to the API specification
+      print(weightController.text);
+      print(selectedPetType.value);
+      print(dobController.text);
+      final petData = {
+        'isHavePet': hasPet.value,
+        'petType':
+            selectedPetType.value.isNotEmpty ? selectedPetType.value : null,
+        'profilePic': petPhoto.value?.path ?? '',
+        'name': nameController.text.trim().isNotEmpty
+            ? nameController.text.trim()
+            : null,
+        'breed': breedController.text.trim().isNotEmpty
+            ? breedController.text.trim()
+            : null,
+        'sex': selectedSex.value.isNotEmpty
+            ? selectedSex.value.toLowerCase()
+            : null,
+        'dateOfBirth': dobController.text.trim().isNotEmpty
+            ? dobController.text.trim()
+            : null,
+        'bio': bioController.text,
+        'photos': photos.map((file) => file.path).toList(),
+        'color': selectedColor.value.isNotEmpty ? selectedColor.value : null,
+        'size': selectedSize.value.isNotEmpty
+            ? selectedSize.value.toLowerCase()
+            : null,
+        'weight': double.tryParse(weightController.text.trim()) != null
+            ? double.parse(weightController.text.trim())
+            : null,
+        'marks': marksController.text,
+        'microchipNumber': microchipController.text,
+        'tagId': tagIdController.text,
+        'lostStatus': false,
+        'vaccinationStatus': vaccinationStatus.value == 'Yes',
+        'vetName': vetNameController.text,
+        'vetContactNumber': vetContactController.text,
+        'personalityTraits': personalityController.text
+            .split(',')
+            .map((e) => e.trim())
+            .where((e) => e.isNotEmpty)
+            .toList(),
+        'allergies': allergiesController.text
+            .split(',')
+            .map((e) => e.trim())
+            .where((e) => e.isNotEmpty)
+            .toList(),
+        'specialNeeds': specialNeedsController.text,
+        'feedingInstructions': feedingController.text,
+        'dailyRoutine': routineController.text,
+      };
+
+      final result = await _apiService.createPetProfile(petData);
+      print('results heere: ${result} ');
+      if (result['success']) {
+        await EasyLoading.showSuccess('Pet profile created successfully!');
+
+        // Get next route in signup flow
+        final currentRoute = Get.currentRoute;
+        final nextRoute = AppRoutes.getNextSignupRoute(currentRoute);
+
+        await Get.offNamed(AppRoutes.cityView);
+      } else {
+        await EasyLoading.showError(
+            result['message'] ?? 'Failed to create pet profile');
+      }
+    } catch (e, stackTrace) {
+      print('ERROR: $e');
+      print('STACK TRACE: $stackTrace');
+      await EasyLoading.showError('Failed to create pet profile');
+    } finally {
+      isLoading.value = false;
+      await EasyLoading.dismiss();
+    }
+  }
+
+  bool _validatePetProfile() {
+    if (nameController.text.isEmpty) {
+      EasyLoading.showError('Please enter pet name');
+      return false;
+    }
+
+    if (breedController.text.isEmpty) {
+      EasyLoading.showError('Please enter pet breed');
+      return false;
+    }
+
+    if (dobController.text.isEmpty) {
+      EasyLoading.showError('Please select date of birth');
+      return false;
+    }
+
+    if (selectedColor.value.isEmpty) {
+      EasyLoading.showError('Please select pet color');
+      return false;
+    }
+
+    if (selectedSize.value.isEmpty) {
+      EasyLoading.showError('Please select pet size');
+      return false;
+    }
+
+    if (weightController.text.isEmpty) {
+      EasyLoading.showError('Please enter pet weight');
+      return false;
+    }
+
+    if (vetNameController.text.isEmpty) {
+      EasyLoading.showError('Please enter vet name');
+      return false;
+    }
+
+    if (vetContactController.text.isEmpty) {
+      EasyLoading.showError('Please enter vet contact number');
+      return false;
+    }
+
+    return true;
   }
 
   void removePhoto(int index) {
@@ -693,6 +818,88 @@ class SignupController extends GetxController {
       EasyLoading.showError('Please select country');
       return false;
     }
+    return true;
+  }
+
+  Future<void> handleSignup() async {
+    try {
+      if (!_validateSignupForm()) return;
+
+      isLoading.value = true;
+      await EasyLoading.show(
+        status: 'Creating account...',
+        maskType: EasyLoadingMaskType.black,
+      );
+
+      final result = await _apiService.register(
+        email: emailController.text,
+        password: passwordController.text,
+        name: nameController.text,
+      );
+
+      if (result['success']) {
+        await EasyLoading.showSuccess('Account created successfully!');
+        Get.toNamed(AppRoutes.petOwnership);
+      } else {
+        String errorMessage = result['message'];
+        if (errorMessage.contains('duplicate key error') &&
+            errorMessage.contains('username')) {
+          // Generate a unique username by adding a timestamp
+          final uniqueName =
+              '${nameController.text.toLowerCase().replaceAll(' ', '_')}_${DateTime.now().millisecondsSinceEpoch}';
+
+          // Try again with the unique username
+          final retryResult = await _apiService.register(
+            email: emailController.text,
+            password: passwordController.text,
+            name: nameController.text,
+            username: uniqueName,
+          );
+
+          if (retryResult['success']) {
+            await EasyLoading.showSuccess('Account created successfully!');
+            Get.toNamed(AppRoutes.petOwnership);
+            return;
+          }
+          errorMessage = retryResult['message'];
+        }
+        await EasyLoading.showError(errorMessage);
+      }
+    } catch (e) {
+      print('Error during signup: $e');
+      await EasyLoading.showError('Failed to create account');
+    } finally {
+      isLoading.value = false;
+      await EasyLoading.dismiss();
+    }
+  }
+
+  bool _validateSignupForm() {
+    if (nameController.text.isEmpty) {
+      EasyLoading.showInfo('Please enter your name');
+      return false;
+    }
+
+    if (emailController.text.isEmpty) {
+      EasyLoading.showInfo('Please enter your email');
+      return false;
+    }
+
+    if (passwordController.text.isEmpty) {
+      EasyLoading.showInfo('Please enter your password');
+      return false;
+    }
+
+    if (passwordController.text != confirmPasswordController.text) {
+      EasyLoading.showInfo('Passwords do not match');
+      return false;
+    }
+
+    if (!agreePolicy1.value || !agreePolicy2.value || !agreePolicy3.value) {
+      EasyLoading.showInfo('Please agree to all policies');
+      return false;
+    }
+
     return true;
   }
 }

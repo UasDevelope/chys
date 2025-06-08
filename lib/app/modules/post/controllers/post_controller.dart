@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import '../../../services/api_service.dart';
+import '../../../services/storage_service.dart';
 
 class PostController extends GetxController {
+  // final ApiService _apiService = Get.put(ApiService());
+  final StorageService _storageService = Get.find<StorageService>();
+  
   final descriptionController = TextEditingController();
   final characterCount = 0.obs;
-  final selectedMedia = Rxn<XFile>();
+  final selectedMedia = <XFile>[].obs;
   final isLoading = false.obs;
 
   @override
@@ -21,10 +27,10 @@ class PostController extends GetxController {
   Future<void> pickMedia() async {
     try {
       final ImagePicker picker = ImagePicker();
-      final XFile? media = await picker.pickImage(source: ImageSource.gallery);
+      final List<XFile> media = await picker.pickMultiImage();
       
-      if (media != null) {
-        selectedMedia.value = media;
+      if (media.isNotEmpty) {
+        selectedMedia.addAll(media);
       }
     } catch (e) {
       print('Error picking media: $e');
@@ -36,39 +42,13 @@ class PostController extends GetxController {
     }
   }
 
-  Future<void> submitPost() async {
-    if (descriptionController.text.trim().isEmpty && selectedMedia.value == null) {
-      Get.snackbar(
-        'Error',
-        'Please add a photo/video or write a description',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      return;
-    }
-
-    try {
-      isLoading.value = true;
-      
-      // TODO: Implement post submission logic
-      await Future.delayed(const Duration(seconds: 2)); // Simulate API call
-      
-      Get.back(result: true);
-      Get.snackbar(
-        'Success',
-        'Post created successfully',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    } catch (e) {
-      print('Error submitting post: $e');
-      Get.snackbar(
-        'Error',
-        'Failed to create post. Please try again.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    } finally {
-      isLoading.value = false;
+  void removeMedia(int index) {
+    if (index >= 0 && index < selectedMedia.length) {
+      selectedMedia.removeAt(index);
     }
   }
+
+
 
   @override
   void onClose() {

@@ -16,6 +16,8 @@ import '../modules/chat/views/chat_detail_view.dart';
 import '../modules/chat/views/chat_list_view.dart';
 import '../modules/city_view/views/city_view.dart';
 import '../modules/dog_breeds/views/dog_breeds_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
 import '../modules/map/bindings/map_binding.dart';
 import '../modules/map/views/map_view.dart';
 import '../modules/notifications/bindings/notifications_binding.dart';
@@ -39,9 +41,16 @@ import '../modules/signup/views/signup_view.dart';
 import 'app_routes.dart';
 
 class AppPages {
-  static const initial = AppRoutes.signup;
+  static const initial = AppRoutes.login;
 
   static final routes = [
+    GetPage(
+      name: AppRoutes.login,
+      page: () => LoginView(),
+      binding: LoginBinding(),
+      preventDuplicates: true,
+      transition: Transition.fadeIn,
+    ),
     GetPage(
       name: AppRoutes.signup,
       page: () => SignupView(),

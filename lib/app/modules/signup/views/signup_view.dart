@@ -19,7 +19,7 @@ class SignupView extends GetView<SignupController> {
       child: Scaffold(
         backgroundColor: AppColors.background,
         body: Obx(
-          () => SafeArea(
+              () => SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Form(
@@ -28,25 +28,23 @@ class SignupView extends GetView<SignupController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(Icons.arrow_back_rounded),
+                          const AppText(
+                            text: "Join CHYS!",
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
                           IconButton(
                             icon: Icon(Icons.help_outline,
                                 color: AppColors.gunmetal),
                             onPressed: () {},
                           ),
                         ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      const AppText(
-                        text: "Join CHYS!",
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                        color: Colors.black,
                       ),
                       const SizedBox(height: 8),
                       const AppText(
@@ -75,13 +73,33 @@ class SignupView extends GetView<SignupController> {
                       // ),
                       const SizedBox(height: 20),
                       const AppText(
+                        text: "Full Name",
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.purple,
+                        fontSize: 14,
+                      ),
+                      const SizedBox(height: 10),
+                      CustomTextField(
+                        controller: controller.nameController,
+                        label: 'Full Name',
+                        onChanged: (_) {
+                          isFormvalid.value =
+                              formKey.currentState?.validate() ?? false;
+                        },
+                        fillColor: AppColors.cultured,
+                        borderColor: AppColors.gunmetal,
+                        filled: true,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                      ),
+                      const SizedBox(height: 20),
+                      const AppText(
                         text: "Email",
                         fontWeight: FontWeight.w400,
                         color: AppColors.purple,
                         fontSize: 14,
                       ),
                       const SizedBox(height: 10),
-
                       CustomTextField(
                         controller: controller.emailController,
                         label: 'Email',
@@ -139,9 +157,9 @@ class SignupView extends GetView<SignupController> {
                         obscureText: !controller.showPassword.value,
                         validator: (value) =>
                             FormValidators.validateConfirmPassword(
-                          value,
-                          controller.passwordController.text,
-                        ),
+                              value,
+                              controller.passwordController.text,
+                            ),
                         onChanged: (_) {
                           isFormvalid.value =
                               formKey.currentState?.validate() ?? false;
@@ -159,7 +177,7 @@ class SignupView extends GetView<SignupController> {
                         value: controller.agreePolicy1.value,
                         onChanged: (v) => controller.agreePolicy1.value = v!,
                         text:
-                            "I agree to the data processing policy of the service",
+                        "I agree to the data processing policy of the service",
                       ),
                       CustomCheckboxTile(
                         value: controller.agreePolicy2.value,
@@ -170,7 +188,7 @@ class SignupView extends GetView<SignupController> {
                         value: controller.agreePolicy3.value,
                         onChanged: (v) => controller.agreePolicy3.value = v!,
                         text:
-                            "I agree with the Policy on Child Safety Standards",
+                        "I agree with the Policy on Child Safety Standards",
                       ),
                       const SizedBox(height: 32),
 
@@ -182,12 +200,11 @@ class SignupView extends GetView<SignupController> {
                             label: "Sign Up",
                             onPressed: () {
                               if (formKey.currentState?.validate() ?? false) {
-                                // Call your sign-up logic here
-                                Get.toNamed(AppRoutes.petOwnership);
+                                controller.handleSignup();
                               }
                             },
                             isEnabled: valid,
-                            // isLoading: controller.isLoading.value, // If still using controller for loading
+                            // isLoading: controller.isLoading.value,
                           );
                         },
                       ),
@@ -203,9 +220,9 @@ class SignupView extends GetView<SignupController> {
                               style: Theme.of(
                                 context,
                               ).textTheme.bodyLarge?.copyWith(
-                                    color:
-                                        AppColors.onBackground.withOpacity(0.7),
-                                  ),
+                                color:
+                                AppColors.onBackground.withOpacity(0.7),
+                              ),
                               children: const [
                                 TextSpan(
                                   text: "Log in!",

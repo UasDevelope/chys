@@ -76,7 +76,6 @@ class DogBreedsView extends GetView<SignupController> {
                   Expanded(
                     child: Appbutton(
                       onPressed: () => controller.goBack(),
-
                       label: 'Back',
                     ),
                   ),
@@ -85,9 +84,8 @@ class DogBreedsView extends GetView<SignupController> {
                     child: Appbutton(
                       backgroundColor: AppColors.blue,
                       borderWidth: 0,
-
                       label: 'Next',
-                      onPressed: () => controller.saveDogBreedsAndNavigate(),
+                      onPressed: () => controller.savePetProfile(),
                     ),
                   ),
                 ],
@@ -115,7 +113,6 @@ class DogBreedsView extends GetView<SignupController> {
           ),
           child: AppText(
             text: breed,
-
             color: isSelected ? Colors.white : Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.w500,

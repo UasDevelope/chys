@@ -1,12 +1,18 @@
-import 'package:chys/app/routes/app_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-
+import 'package:get_storage/get_storage.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'app/routes/app_pages.dart';
 import 'app/theme/app_theme.dart';
+import 'app/services/network_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize NetworkService
+  await Get.putAsync(() => NetworkService().init());
+
+  await GetStorage.init();
   runApp(const MyApp());
   configLoading();
 }
@@ -36,7 +42,7 @@ class MyApp extends StatelessWidget {
       title: 'Pet Profile App',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: AppRoutes.map,
+      initialRoute: AppPages.initial,
       getPages: AppPages.routes,
       defaultTransition: Transition.rightToLeft,
       transitionDuration: const Duration(milliseconds: 300),

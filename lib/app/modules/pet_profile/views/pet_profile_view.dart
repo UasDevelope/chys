@@ -239,7 +239,7 @@ class PetProfileView extends GetView<SignupController> {
                           backgroundColor: Colors.white,
                           borderColor: Colors.white,
                           label: 'Next',
-                          onPressed: () => controller.savePetProfile(),
+                          onPressed: () => controller.savePetProfile1(),
                         ),
                       ),
                     ],
