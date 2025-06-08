@@ -1,0 +1,15 @@
+         # Flutter/Dart build outputs
+         build/
+         ios/Flutter/
+         ios/Pods/
+         ios/build/
+         macos/build/
+         macos/Flutter/
+
+         # Android
+         android/.gradle/
+         android/app/build/
+
+         # IDEs
+         .idea/
+         .vscode/
