@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../services/api_service.dart';
 
 class PostController extends GetxController {
-  final CustomApiService _apiService = Get.find<CustomApiService>();
+  final CustomApiService _apiService = Get.put(CustomApiService());
   final descriptionController = TextEditingController();
   final selectedPhotos = <File>[].obs;
   final isLoading = false.obs;

@@ -556,10 +556,10 @@ class SignupController extends GetxController {
       print('results heere: ${result} ');
       if (result['success']) {
         await EasyLoading.showSuccess('Pet profile created successfully!');
-
-        // Get next route in signup flow
-        final currentRoute = Get.currentRoute;
-        final nextRoute = AppRoutes.getNextSignupRoute(currentRoute);
+        //
+        // // Get next route in signup flow
+        // final currentRoute = Get.currentRoute;
+        // final nextRoute = AppRoutes.getNextSignupRoute(currentRoute);
 
         await Get.offNamed(AppRoutes.cityView);
       } else {
