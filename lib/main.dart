@@ -1,8 +1,10 @@
+import 'package:chys/app/data/controllers/location_controller.dart';
 import 'package:chys/app/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
 import 'app/routes/app_pages.dart';
 import 'app/services/custom_Api.dart';
 import 'app/services/storage_service.dart';
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(LocationController(), permanent: true);
     return GetMaterialApp(
       title: 'Pet Profile App',
       debugShowCheckedModeBanner: false,

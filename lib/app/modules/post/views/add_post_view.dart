@@ -1,9 +1,11 @@
+import 'dart:io';
+
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:io';
-import 'package:dotted_border/dotted_border.dart';
+
 import '../../../core/theme/app_colors.dart';
-import '../controllers/post_controller.dart';
+import '../../posts/controller/post_controller.dart';
 
 class AddPostView extends GetView<PostController> {
   const AddPostView({super.key});
@@ -22,14 +24,13 @@ class AddPostView extends GetView<PostController> {
                 children: [
                   // Back arrow
                   GestureDetector(
-
                     child: Image.asset(
                       'assets/images/ArrowLeft.png',
                       width: 24,
                       height: 24,
                       fit: BoxFit.contain,
                     ),
-                    onTap: (){
+                    onTap: () {
                       Get.back();
                     },
                   ),

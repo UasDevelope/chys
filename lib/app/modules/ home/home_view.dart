@@ -98,19 +98,21 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ),
                   Obx(
-                    () => ListView.builder(
-                        physics: const ScrollPhysics(),
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        // padding: const EdgeInsets.all(16),
-                        itemCount: contrroller.posts.length,
-                        itemBuilder: (context, index) {
-                          contrroller.fetchAdoredPosts();
-                          return CatQuoteCard(
-                            posts: contrroller.posts[index],
-                            addoredPostsController: contrroller,
-                          );
-                        }),
+                    () => contrroller.isLoading.value
+                        ? const CircularProgressIndicator()
+                        : ListView.builder(
+                            physics: const ScrollPhysics(),
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            // padding: const EdgeInsets.all(16),
+                            itemCount: contrroller.posts.length,
+                            itemBuilder: (context, index) {
+                              contrroller.fetchAdoredPosts();
+                              return CatQuoteCard(
+                                posts: contrroller.posts[index],
+                                addoredPostsController: contrroller,
+                              );
+                            }),
                   )
                 ],
               ),
@@ -195,7 +197,7 @@ class CatQuoteCard extends StatelessWidget {
               bottom: 80,
               child: Text(
                 posts.description,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   height: 1.4,
@@ -205,32 +207,37 @@ class CatQuoteCard extends StatelessWidget {
             ),
 
             // User Info
-            const Positioned(
+            Positioned(
               left: 20,
               bottom: 20,
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    backgroundImage:
-                        NetworkImage('https://i.pravatar.cc/150?img=12'),
-                    radius: 18,
-                  ),
-                  SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Kitty Jenna",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "STUTTGART",
-                        style: TextStyle(color: Colors.white70, fontSize: 12),
-                      ),
-                    ],
-                  ),
-                ],
+              child: InkWell(
+                onTap: () {
+                  Get.toNamed(AppRoutes.profile, arguments: posts.creatorId);
+                },
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage:
+                          NetworkImage('https://i.pravatar.cc/150?img=12'),
+                      radius: 18,
+                    ),
+                    SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Kitty Jenna",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "STUTTGART",
+                          style: TextStyle(color: Colors.white70, fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
 

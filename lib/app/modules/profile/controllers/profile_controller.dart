@@ -1,8 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:chys/app/data/models/own_profile.dart';
 import 'package:chys/app/services/custom_Api.dart';
 import 'package:get/get.dart';
+
 import '../../../routes/app_routes.dart';
 
 class ProfileController extends GetxController {
@@ -20,17 +22,21 @@ class ProfileController extends GetxController {
   void onInit() {
     super.onInit();
     _loadUserData();
-    fetchProfilee();
   }
 
-  Future<void> fetchProfilee() async {
+  Future<void> fetchProfilee({String? userId}) async {
     try {
       isLoading.value = true;
-      var responsee = await customApiService.getRequest("users/profile");
-      profile.value = OwnProfileModel.fromMap(responsee["user"]);
+
+      final endpoint = (userId == null || userId.trim().isEmpty)
+          ? "users/profile"
+          : "users/profile/$userId";
+
+      var response = await customApiService.getRequest(endpoint);
+
+      profile.value = OwnProfileModel.fromMap(response["user"]);
     } catch (e) {
-      log("Error$e");
-      isLoading.value = false;
+      log("Error: $e");
     } finally {
       isLoading.value = false;
     }

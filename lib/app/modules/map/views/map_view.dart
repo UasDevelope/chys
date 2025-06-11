@@ -14,6 +14,7 @@ class MapView extends GetView<MapController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.fetchNearbyPet();
     return Scaffold(
       body: Stack(
         children: [

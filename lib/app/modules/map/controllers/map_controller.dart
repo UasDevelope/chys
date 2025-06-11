@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:chys/app/data/models/pet_profile.dart';
 import 'package:chys/app/services/http_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -20,8 +20,23 @@ class MapController extends GetxController {
   final markers = <Marker>{}.obs;
   final isLoading = false.obs;
   var petList = <PetModel>[].obs;
+  var nearbyPetList = <PetModel>[].obs;
   var isDataLoading = false.obs;
+  var isNearbyPetLoading = false.obs;
   RxString selectedFeature = ''.obs; // e.g. 'chat', 'add', etc.
+  RxInt currentIndex = 0.obs;
+  Timer? autoSlideTimer;
+
+  void startAutoSlide(int maxIndex) {
+    autoSlideTimer?.cancel();
+    autoSlideTimer = Timer.periodic(const Duration(seconds: 3), (_) {
+      currentIndex.value = (currentIndex.value + 1) % maxIndex;
+    });
+  }
+
+  void onPageChanged(int index) {
+    currentIndex.value = index;
+  }
 
   Future<void> _getCurrentLocation() async {
     try {
@@ -53,7 +68,6 @@ class MapController extends GetxController {
   void onInit() {
     super.onInit();
     _getCurrentLocation();
-    fetchPetProfile();
   }
 
   void onMapCreated(GoogleMapController controller) {
@@ -62,19 +76,66 @@ class MapController extends GetxController {
     centerOnCurrentLocation();
 
     mapController!.setMapStyle(MapUtils.lightMode);
-    _loadPetMarkers();
   }
 
-  Future<void> fetchPetProfile() async {
+  Future<void> fetchPetProfile({String? petId}) async {
     try {
       isDataLoading.value = true;
-      final response = await ApiClient().get(ApiEndPoints.petProfile);
-      final pet = PetModel.fromJson(response);
+
+      // Build URL conditionally
+      String url = petId == null || petId.isEmpty
+          ? ApiEndPoints.petProfile
+          : "${ApiEndPoints.petProfile}/$petId";
+
+      final response = await ApiClient().get(url);
+      final pet = PetModel.fromJson(response["pet"]);
       petList.value = [pet];
     } catch (e) {
       log("Error is $e");
     } finally {
       isDataLoading.value = false;
+    }
+  }
+
+  Future<void> fetchNearbyPet() async {
+    isNearbyPetLoading.value = true;
+
+    try {
+      // Wait until the location is available (with retry + timeout)
+      int retries = 0;
+      while (currentLocation.value.latitude == 0.0 && retries < 5) {
+        log("Waiting for valid location... Attempt ${retries + 1}");
+        await Future.delayed(const Duration(seconds: 1));
+        retries++;
+      }
+
+      if (currentLocation.value.latitude == 0.0) {
+        log("Location not available after retries");
+        nearbyPetList.value = [];
+        return;
+      }
+
+      final response = await ApiClient().get(
+        "${ApiEndPoints.nearbyPet}/?lat=${currentLocation.value.latitude}&lng=${currentLocation.value.longitude}",
+      );
+
+      if (response != null && response['pets'] != null) {
+        final petsJson = response['pets'] as List;
+        log("Pets json is $petsJson");
+
+        final List<PetModel> nearbyPets =
+            petsJson.map((petJson) => PetModel.fromJson(petJson)).toList();
+
+        nearbyPetList.value = nearbyPets;
+        _loadPetMarkers();
+      } else {
+        nearbyPetList.value = [];
+      }
+    } catch (e) {
+      log("Error is==> $e");
+      nearbyPetList.value = [];
+    } finally {
+      isNearbyPetLoading.value = false;
     }
   }
 
@@ -100,94 +161,90 @@ class MapController extends GetxController {
   }
 
   Future<void> _loadPetMarkers() async {
-    try {
-      isLoading.value = true;
+    markers.clear();
+    Set<String> usedLocations = {};
+    log("Length is ${nearbyPetList.length}");
+    for (final pet in nearbyPetList) {
+      final location = pet.userModel?.location?.coordinates;
+      final petName = pet.name ?? 'Unknown';
+      final profileUrl = pet.profilePic ?? '';
+      final petId = pet.id ?? '';
 
-      final position = await Geolocator.getCurrentPosition();
-      final baseLat = position.latitude;
-      final baseLng = position.longitude;
-      debugPrint("Base lat: $baseLat, Base lng: $baseLng");
+      if (location != null && location.length == 2) {
+        double lng = location[0];
+        double lat = location[1];
 
-      final imageUrls = [
-        'https://i.pravatar.cc/150?img=3',
-        'https://i.pravatar.cc/150?img=4',
-        'https://i.pravatar.cc/150?img=5',
-        'https://i.pravatar.cc/150?img=6',
-      ];
+        // Offset step for overlapping markers
+        const double offsetStep = 0.0003;
+        String locKey = '$lat:$lng';
+        int offsetIndex = 1;
+        while (usedLocations.contains(locKey)) {
+          lat += offsetStep * offsetIndex;
+          lng += offsetStep * offsetIndex;
+          locKey = '$lat:$lng';
+          offsetIndex++;
+        }
 
-      for (int i = 0; i < imageUrls.length; i++) {
-        final BitmapDescriptor? customIcon =
-            await _getCircularBitmapDescriptor(imageUrls[i], size: 150);
+        usedLocations.add(locKey);
 
-        final marker = Marker(
-          markerId: MarkerId('avatar_$i'),
-          position: LatLng(
-            baseLat + 0.002 * i,
-            baseLng + 0.003 * i,
-          ),
-          icon: customIcon ??
-              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-          infoWindow: InfoWindow(
-            title: 'User ${i + 1}',
-          ),
-          onTap: () {
-            Get.toNamed(AppRoutes.homeDetail);
-          },
-        );
+        final Uint8List markerIcon =
+            await _getBytesFromNetworkImage(profileUrl);
+
+        final Marker marker = Marker(
+            markerId: MarkerId(pet.id ?? UniqueKey().toString()),
+            position: LatLng(lat, lng),
+            icon: BitmapDescriptor.bytes(markerIcon),
+            infoWindow: InfoWindow(title: petName),
+            onTap: () {
+              log("Pet id is $petId");
+
+              Get.toNamed(AppRoutes.homeDetail, arguments: petId);
+            });
 
         markers.add(marker);
-        markers.refresh();
       }
-    } catch (e) {
-      debugPrint('Error loading markers: $e');
-    } finally {
-      isLoading.value = false;
     }
   }
 
-  Future<BitmapDescriptor?> _getCircularBitmapDescriptor(String imageUrl,
-      {int size = 150}) async {
+  Future<Uint8List> _getBytesFromNetworkImage(String imageUrl,
+      {int size = 80}) async {
     try {
       final http.Response response = await http.get(Uri.parse(imageUrl));
-      if (response.statusCode == 200) {
-        final Uint8List imageBytes = response.bodyBytes;
+      final Uint8List imageData = response.bodyBytes;
+      final ui.Codec codec = await ui.instantiateImageCodec(imageData,
+          targetWidth: size, targetHeight: size);
+      final ui.FrameInfo fi = await codec.getNextFrame();
+      final ui.Image image = fi.image;
 
-        final ui.Codec codec = await ui.instantiateImageCodec(
-          imageBytes,
-          targetWidth: size,
-          targetHeight: size,
-        );
-        final ui.FrameInfo frameInfo = await codec.getNextFrame();
-        final ui.Image image = frameInfo.image;
+      final ui.PictureRecorder recorder = ui.PictureRecorder();
+      final Canvas canvas = Canvas(recorder);
+      final Paint paint = Paint();
 
-        final ui.PictureRecorder recorder = ui.PictureRecorder();
-        final Canvas canvas = Canvas(recorder);
-        final Paint paint = Paint()..isAntiAlias = true;
-        final double radius = size / 2;
+      final double radius = size / 2;
+      final Rect rect = Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble());
 
-        // Draw circular clip
-        canvas.drawCircle(Offset(radius, radius), radius, paint);
+      // Draw circular clip path
+      canvas.drawCircle(Offset(radius, radius), radius, paint);
+      paint.blendMode = BlendMode.srcIn;
 
-        // Draw the image within the circular clip
-        paint.shader = ImageShader(
-          image,
-          TileMode.clamp,
-          TileMode.clamp,
-          Matrix4.identity().storage,
-        );
-        canvas.drawCircle(Offset(radius, radius), radius, paint);
+      canvas.drawImageRect(
+        image,
+        Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
+        rect,
+        paint,
+      );
 
-        final ui.Image finalImage =
-            await recorder.endRecording().toImage(size, size);
-        final ByteData? byteData =
-            await finalImage.toByteData(format: ui.ImageByteFormat.png);
+      final ui.Image circularImage =
+          await recorder.endRecording().toImage(size, size);
+      final ByteData? byteData =
+          await circularImage.toByteData(format: ui.ImageByteFormat.png);
 
-        return BitmapDescriptor.fromBytes(byteData!.buffer.asUint8List());
-      }
+      return byteData!.buffer.asUint8List();
     } catch (e) {
-      debugPrint('Error creating circular bitmap: $e');
+      print('Error loading/cropping image: $e');
+      // Return a transparent placeholder if needed
+      return Uint8List(0);
     }
-    return null;
   }
 
   void centerOnCurrentLocation() {
@@ -209,6 +266,7 @@ class MapController extends GetxController {
   @override
   void onClose() {
     mapController?.dispose();
+    autoSlideTimer?.cancel();
     super.onClose();
   }
 }

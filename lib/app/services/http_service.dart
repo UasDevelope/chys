@@ -7,10 +7,11 @@ import 'package:http/http.dart' as http;
 
 class ApiEndPoints {
   static const String petProfile = "/pet-profile";
+  static const String nearbyPet = "$petProfile/nearby-pets";
 }
 
 class ApiClient {
-  static const String _defaultBaseUrl = "https://pet-app-phi.vercel.app/api";
+  static const String _defaultBaseUrl = "http://44.208.25.60:4000/api";
   final String baseUrl;
 
   ApiClient({this.baseUrl = _defaultBaseUrl});

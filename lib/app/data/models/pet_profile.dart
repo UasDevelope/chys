@@ -27,6 +27,7 @@ class PetModel {
   final String? dailyRoutine;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final UserModel? userModel;
   final int? v;
 
   PetModel({
@@ -58,49 +59,55 @@ class PetModel {
     this.dailyRoutine,
     this.createdAt,
     this.updatedAt,
+    this.userModel,
     this.v,
   });
 
   factory PetModel.fromJson(Map<String, dynamic> json) {
+    final dynamic userField = json['user'];
+
     return PetModel(
-      id: json['_id'],
-      user: json['user'],
-      isHavePet: json['isHavePet'],
-      petType: json['petType'],
-      profilePic: json['profilePic'],
-      name: json['name'],
-      breed: json['breed'],
-      sex: json['sex'],
+      id: json['_id'] as String?,
+      user: userField is String ? userField : null,
+      userModel: userField is Map<String, dynamic>
+          ? UserModel.fromJson(userField)
+          : null,
+      isHavePet: json['isHavePet'] as bool?,
+      petType: json['petType'] as String?,
+      profilePic: json['profilePic'] as String?,
+      name: json['name'] as String?,
+      breed: json['breed'] as String?,
+      sex: json['sex'] as String?,
       dateOfBirth: json['dateOfBirth'] != null
           ? DateTime.tryParse(json['dateOfBirth'])
           : null,
-      bio: json['bio'],
+      bio: json['bio'] as String?,
       photos: (json['photos'] as List?)?.map((e) => e.toString()).toList(),
-      color: json['color'],
-      size: json['size'],
-      weight: json['weight'],
-      marks: json['marks'],
-      microchipNumber: json['microchipNumber'],
-      tagId: json['tagId'],
-      lostStatus: json['lostStatus'],
-      vaccinationStatus: json['vaccinationStatus'],
-      vetName: json['vetName'],
-      vetContactNumber: json['vetContactNumber'],
+      color: json['color'] as String?,
+      size: json['size'] as String?,
+      weight: json['weight'] as num?,
+      marks: json['marks'] as String?,
+      microchipNumber: json['microchipNumber'] as String?,
+      tagId: json['tagId'] as String?,
+      lostStatus: json['lostStatus'] as bool?,
+      vaccinationStatus: json['vaccinationStatus'] as bool?,
+      vetName: json['vetName'] as String?,
+      vetContactNumber: json['vetContactNumber'] as String?,
       personalityTraits: (json['personalityTraits'] as List?)
           ?.map((e) => e.toString())
           .toList(),
       allergies:
           (json['allergies'] as List?)?.map((e) => e.toString()).toList(),
-      specialNeeds: json['specialNeeds'],
-      feedingInstructions: json['feedingInstructions'],
-      dailyRoutine: json['dailyRoutine'],
+      specialNeeds: json['specialNeeds'] as String?,
+      feedingInstructions: json['feedingInstructions'] as String?,
+      dailyRoutine: json['dailyRoutine'] as String?,
       createdAt: json['createdAt'] != null
           ? DateTime.tryParse(json['createdAt'])
           : null,
       updatedAt: json['updatedAt'] != null
           ? DateTime.tryParse(json['updatedAt'])
           : null,
-      v: json['__v'],
+      v: json['__v'] as int?,
     );
   }
 
@@ -135,6 +142,59 @@ class PetModel {
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
       '__v': v,
+      'userModel': userModel?.toJson(),
+    };
+  }
+}
+
+class UserModel {
+  final String? id;
+  final String? name;
+  final String? email;
+  final Location? location;
+
+  UserModel({this.id, this.name, this.email, this.location});
+
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      id: json['_id'] as String?,
+      name: json['name'] as String?,
+      email: json['email'] as String?,
+      location: json['location'] is Map<String, dynamic>
+          ? Location.fromJson(json['location'])
+          : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      '_id': id,
+      'name': name,
+      'email': email,
+      'location': location?.toJson(),
+    };
+  }
+}
+
+class Location {
+  final String? type;
+  final List<double>? coordinates;
+
+  Location({this.type, this.coordinates});
+
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(
+      type: json['type'] as String?,
+      coordinates: (json['coordinates'] as List?)
+          ?.map((e) => (e as num?)?.toDouble() ?? 0.0)
+          .toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'type': type,
+      'coordinates': coordinates,
     };
   }
 }

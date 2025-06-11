@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:chys/app/services/storage_service.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -8,7 +9,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
 
 class CustomApiService extends GetxService {
-  final String baseUrl = 'https://pet-app-phi.vercel.app/api'; // Replace this
+  final String baseUrl = 'http://44.208.25.60:4000/api'; // Replace this
 
   // You can store token here if using Auth
   String? token;

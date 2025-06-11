@@ -15,7 +15,13 @@ class ProfileView extends StatelessWidget {
   ProfileView({super.key});
   @override
   Widget build(BuildContext context) {
-    profileController.fetchProfilee();
+    final argument = Get.arguments;
+    bool isUserId = argument != null;
+    if (isUserId) {
+      profileController.fetchProfilee(userId: argument);
+    } else {
+      profileController.fetchProfilee();
+    }
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(14.0),
@@ -37,22 +43,22 @@ class ProfileView extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
               ),
-              ListTile(
-                horizontalTitleGap: 0,
-                contentPadding: EdgeInsets.zero,
-                leading: CircleAvatar(
-                  radius: 50,
-                  backgroundImage:
-                      NetworkImage("https://i.pravatar.cc/150?img=6"),
-                ),
-                title: AppText(
-                  text:profileController.profile.value!.name,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w700,
-                ),
-                subtitle: AppText(text: "Hamburg, Germany"),
-              ),
-               AppText(
+              Obx(() => ListTile(
+                    horizontalTitleGap: 0,
+                    contentPadding: EdgeInsets.zero,
+                    leading: CircleAvatar(
+                      radius: 50,
+                      backgroundImage:
+                          NetworkImage("https://i.pravatar.cc/150?img=6"),
+                    ),
+                    title: AppText(
+                      text: profileController.profile.value?.name ?? "",
+                      fontSize: 17,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    subtitle: AppText(text: "Hamburg, Germany"),
+                  )),
+              AppText(
                 text: "Bio",
                 fontSize: 18,
                 fontWeight: FontWeight.w700,

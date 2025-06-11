@@ -1,0 +1,263 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.chys"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="35" />
+10    <!--
+11         The INTERNET permission is required for development. Specifically,
+12         the Flutter tool needs it to communicate with the running application
+13         to allow setting breakpoints, to provide hot reload, etc.
+14    -->
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->/Users/zohaib/Downloads/flutter_projects/chys/android/app/src/main/AndroidManifest.xml:6:5-67
+15-->/Users/zohaib/Downloads/flutter_projects/chys/android/app/src/main/AndroidManifest.xml:6:22-64
+16    <!-- Permissions -->
+17    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+17-->/Users/zohaib/Downloads/flutter_projects/chys/android/app/src/main/AndroidManifest.xml:4:5-79
+17-->/Users/zohaib/Downloads/flutter_projects/chys/android/app/src/main/AndroidManifest.xml:4:22-76
+18    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+18-->/Users/zohaib/Downloads/flutter_projects/chys/android/app/src/main/AndroidManifest.xml:5:5-81
+18-->/Users/zohaib/Downloads/flutter_projects/chys/android/app/src/main/AndroidManifest.xml:5:22-78
+19    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+19-->/Users/zohaib/Downloads/flutter_projects/chys/android/app/src/main/AndroidManifest.xml:7:5-79
+19-->/Users/zohaib/Downloads/flutter_projects/chys/android/app/src/main/AndroidManifest.xml:7:22-76
+20    <!--
+21 Required to query activities that can process text, see:
+22         https://developer.android.com/training/package-visibility and
+23         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+24
+25         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin.
+26    -->
+27    <queries>
+27-->/Users/zohaib/Downloads/flutter_projects/chys/android/app/src/main/AndroidManifest.xml:51:5-56:15
+28        <intent>
+28-->/Users/zohaib/Downloads/flutter_projects/chys/android/app/src/main/AndroidManifest.xml:52:9-55:18
+29            <action android:name="android.intent.action.PROCESS_TEXT" />
+29-->/Users/zohaib/Downloads/flutter_projects/chys/android/app/src/main/AndroidManifest.xml:53:13-72
+29-->/Users/zohaib/Downloads/flutter_projects/chys/android/app/src/main/AndroidManifest.xml:53:21-70
+30
+31            <data android:mimeType="text/plain" />
+31-->/Users/zohaib/Downloads/flutter_projects/chys/android/app/src/main/AndroidManifest.xml:54:13-50
+31-->/Users/zohaib/Downloads/flutter_projects/chys/android/app/src/main/AndroidManifest.xml:54:19-48
+32        </intent>
+33        <!-- Needs to be explicitly declared on Android R+ -->
+34        <package android:name="com.google.android.apps.maps" />
+34-->[com.google.android.gms:play-services-maps:18.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/64854c6498590de8e478cf427d77cd0f/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:33:9-64
+34-->[com.google.android.gms:play-services-maps:18.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/64854c6498590de8e478cf427d77cd0f/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:33:18-61
+35    </queries>
+36
+37    <uses-feature
+37-->[com.google.android.gms:play-services-maps:18.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/64854c6498590de8e478cf427d77cd0f/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:26:5-28:35
+38        android:glEsVersion="0x00020000"
+38-->[com.google.android.gms:play-services-maps:18.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/64854c6498590de8e478cf427d77cd0f/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:27:9-41
+39        android:required="true" />
+39-->[com.google.android.gms:play-services-maps:18.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/64854c6498590de8e478cf427d77cd0f/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:28:9-32
+40
+41    <permission
+41-->[androidx.core:core:1.13.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/ffbd0573153513de628b08cdab0f745f/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
+42        android:name="com.example.chys.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+42-->[androidx.core:core:1.13.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/ffbd0573153513de628b08cdab0f745f/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
+43        android:protectionLevel="signature" />
+43-->[androidx.core:core:1.13.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/ffbd0573153513de628b08cdab0f745f/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
+44
+45    <uses-permission android:name="com.example.chys.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+45-->[androidx.core:core:1.13.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/ffbd0573153513de628b08cdab0f745f/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
+45-->[androidx.core:core:1.13.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/ffbd0573153513de628b08cdab0f745f/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
+46
+47    <application
+48        android:name="android.app.Application"
+49        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+49-->[androidx.core:core:1.13.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/ffbd0573153513de628b08cdab0f745f/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
+50        android:debuggable="true"
+51        android:extractNativeLibs="true"
+52        android:icon="@mipmap/ic_launcher"
+53        android:label="chys" >
+54        <activity
+55            android:name="com.example.chys.MainActivity"
+56            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+57            android:exported="true"
+58            android:hardwareAccelerated="true"
+59            android:launchMode="singleTop"
+60            android:taskAffinity=""
+61            android:theme="@style/LaunchTheme"
+62            android:windowSoftInputMode="adjustResize" >
+63
+64            <!--
+65                 Specifies an Android theme to apply to this Activity as soon as
+66                 the Android process has started. This theme is visible to the user
+67                 while the Flutter UI initializes. After that, this theme continues
+68                 to determine the Window background behind the Flutter UI.
+69            -->
+70
+71            <meta-data
+72                android:name="io.flutter.embedding.android.NormalTheme"
+73                android:resource="@style/NormalTheme" />
+74
+75            <intent-filter>
+76                <action android:name="android.intent.action.MAIN" />
+77
+78                <category android:name="android.intent.category.LAUNCHER" />
+79            </intent-filter>
+80        </activity>
+81        <!--
+82             Don't delete the meta-data below.
+83             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+84        -->
+85        <meta-data
+86            android:name="com.google.android.geo.API_KEY"
+87            android:value="AIzaSyAyRXzMpVmmjgaI3U7bZ7XRhU5rrYUb7lk" />
+88        <meta-data
+89            android:name="flutterEmbedding"
+90            android:value="2" />
+91
+92        <provider
+92-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:9-17:20
+93            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+93-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:10:13-82
+94            android:authorities="com.example.chys.flutter.image_provider"
+94-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:13-74
+95            android:exported="false"
+95-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:13-37
+96            android:grantUriPermissions="true" >
+96-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:13:13-47
+97            <meta-data
+97-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:14:13-16:75
+98                android:name="android.support.FILE_PROVIDER_PATHS"
+98-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:15:17-67
+99                android:resource="@xml/flutter_image_picker_file_paths" />
+99-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:16:17-72
+100        </provider> <!-- Trigger Google Play services to install the backported photo picker module. -->
+101        <service
+101-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:19:9-31:19
+102            android:name="com.google.android.gms.metadata.ModuleDependencies"
+102-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:20:13-78
+103            android:enabled="false"
+103-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:21:13-36
+104            android:exported="false" >
+104-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:22:13-37
+105            <intent-filter>
+105-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:24:13-26:29
+106                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
+106-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:25:17-94
+106-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:25:25-91
+107            </intent-filter>
+108
+109            <meta-data
+109-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:28:13-30:36
+110                android:name="photopicker_activity:0:required"
+110-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:29:17-63
+111                android:value="" />
+111-->[:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:30:17-33
+112        </service>
+113        <service
+113-->[:geolocator_android] /Users/zohaib/Downloads/flutter_projects/chys/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:9-12:56
+114            android:name="com.baseflow.geolocator.GeolocatorLocationService"
+114-->[:geolocator_android] /Users/zohaib/Downloads/flutter_projects/chys/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:13-77
+115            android:enabled="true"
+115-->[:geolocator_android] /Users/zohaib/Downloads/flutter_projects/chys/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:10:13-35
+116            android:exported="false"
+116-->[:geolocator_android] /Users/zohaib/Downloads/flutter_projects/chys/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:13-37
+117            android:foregroundServiceType="location" /> <!-- Needs to be explicitly declared on P+ -->
+117-->[:geolocator_android] /Users/zohaib/Downloads/flutter_projects/chys/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:13-53
+118        <uses-library
+118-->[com.google.android.gms:play-services-maps:18.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/64854c6498590de8e478cf427d77cd0f/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:39:9-41:40
+119            android:name="org.apache.http.legacy"
+119-->[com.google.android.gms:play-services-maps:18.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/64854c6498590de8e478cf427d77cd0f/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:40:13-50
+120            android:required="false" />
+120-->[com.google.android.gms:play-services-maps:18.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/64854c6498590de8e478cf427d77cd0f/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:41:13-37
+121
+122        <activity
+122-->[com.google.android.gms:play-services-base:18.3.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/76dbe4b0e8e756424ca696a72743a32a/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:20:9-22:45
+123            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+123-->[com.google.android.gms:play-services-base:18.3.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/76dbe4b0e8e756424ca696a72743a32a/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:20:19-85
+124            android:exported="false"
+124-->[com.google.android.gms:play-services-base:18.3.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/76dbe4b0e8e756424ca696a72743a32a/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:22:19-43
+125            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+125-->[com.google.android.gms:play-services-base:18.3.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/76dbe4b0e8e756424ca696a72743a32a/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:21:19-78
+126
+127        <meta-data
+127-->[com.google.android.gms:play-services-basement:18.3.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/576be312e7bf6e5e2cbafbaa50d4dc55/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:21:9-23:69
+128            android:name="com.google.android.gms.version"
+128-->[com.google.android.gms:play-services-basement:18.3.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/576be312e7bf6e5e2cbafbaa50d4dc55/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:22:13-58
+129            android:value="@integer/google_play_services_version" />
+129-->[com.google.android.gms:play-services-basement:18.3.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/576be312e7bf6e5e2cbafbaa50d4dc55/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:23:13-66
+130
+131        <uses-library
+131-->[androidx.window:window:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/caf52b9872b2fe95e9d7740f67957f0b/transformed/jetified-window-1.2.0/AndroidManifest.xml:23:9-25:40
+132            android:name="androidx.window.extensions"
+132-->[androidx.window:window:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/caf52b9872b2fe95e9d7740f67957f0b/transformed/jetified-window-1.2.0/AndroidManifest.xml:24:13-54
+133            android:required="false" />
+133-->[androidx.window:window:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/caf52b9872b2fe95e9d7740f67957f0b/transformed/jetified-window-1.2.0/AndroidManifest.xml:25:13-37
+134        <uses-library
+134-->[androidx.window:window:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/caf52b9872b2fe95e9d7740f67957f0b/transformed/jetified-window-1.2.0/AndroidManifest.xml:26:9-28:40
+135            android:name="androidx.window.sidecar"
+135-->[androidx.window:window:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/caf52b9872b2fe95e9d7740f67957f0b/transformed/jetified-window-1.2.0/AndroidManifest.xml:27:13-51
+136            android:required="false" />
+136-->[androidx.window:window:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/caf52b9872b2fe95e9d7740f67957f0b/transformed/jetified-window-1.2.0/AndroidManifest.xml:28:13-37
+137
+138        <provider
+138-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/046a72cf4be35ab0c24e6d99244c3b66/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
+139            android:name="androidx.startup.InitializationProvider"
+139-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/046a72cf4be35ab0c24e6d99244c3b66/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:25:13-67
+140            android:authorities="com.example.chys.androidx-startup"
+140-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/046a72cf4be35ab0c24e6d99244c3b66/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:26:13-68
+141            android:exported="false" >
+141-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/046a72cf4be35ab0c24e6d99244c3b66/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:27:13-37
+142            <meta-data
+142-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/046a72cf4be35ab0c24e6d99244c3b66/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+143                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+143-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/046a72cf4be35ab0c24e6d99244c3b66/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+144                android:value="androidx.startup" />
+144-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/046a72cf4be35ab0c24e6d99244c3b66/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+145            <meta-data
+145-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+146                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+146-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+147                android:value="androidx.startup" />
+147-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+148        </provider>
+149
+150        <receiver
+150-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+151            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+151-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+152            android:directBootAware="false"
+152-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+153            android:enabled="true"
+153-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+154            android:exported="true"
+154-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+155            android:permission="android.permission.DUMP" >
+155-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+156            <intent-filter>
+156-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+157                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+157-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+157-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+158            </intent-filter>
+159            <intent-filter>
+159-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+160                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+160-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+160-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+161            </intent-filter>
+162            <intent-filter>
+162-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+163                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+163-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+163-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+164            </intent-filter>
+165            <intent-filter>
+165-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+166                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+166-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+166-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/e4a6fc7f48805eee11ae0b6bf4895ccf/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+167            </intent-filter>
+168        </receiver>
+169    </application>
+170
+171</manifest>

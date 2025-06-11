@@ -1,12 +1,15 @@
+import 'dart:developer';
+
+import 'package:chys/app/core/const/app_colors.dart';
 import 'package:chys/app/core/const/app_image.dart';
 import 'package:chys/app/modules/map/controllers/map_controller.dart';
 import 'package:chys/app/services/common_service.dart';
 import 'package:chys/app/services/date_time_service.dart';
-import 'package:chys/app/widget/image/image_extension.dart';
 import 'package:chys/app/widget/image/svg_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
 import '../../core/const/app_text.dart';
 import '../../core/utils/app_size.dart';
 
@@ -16,14 +19,35 @@ class HomeDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = Get.arguments;
+    if (arguments != null) {
+      String petId = arguments.toString();
+      controller.fetchPetProfile(petId: petId);
+      log("Argument value is $petId");
+    } else {
+      controller.fetchPetProfile();
+    }
     return Scaffold(
       body: Obx(() {
         if (controller.isDataLoading.value) {
           return const Center(child: CircularProgressIndicator());
         } else if (controller.petList.isEmpty) {
-          return const AppText(text: "No pet found please try again");
+          return const Center(
+              child: AppText(text: "No pet found please try again"));
         } else {
           final data = controller.petList[0];
+          final List<String> validPhotos = (data.photos ?? [])
+              .where((url) => url.isNotEmpty)
+              .map((url) => url)
+              .take(5)
+              .toList();
+
+          controller.startAutoSlide(validPhotos.length);
+
+          if (validPhotos.isEmpty) {
+            return const Center(child: Text("No Images Available"));
+          }
+          log("Data is ${data.bio}");
           return Column(
             children: [
               // Top Section with green background
@@ -72,8 +96,50 @@ class HomeDetail extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: AppSize.h4),
-                      data.profilePic!
-                          .toNetworkImage(height: AppSize.getHeight(30))
+                      SizedBox(
+                        height: 200,
+                        child: PageView.builder(
+                          itemCount: validPhotos.length,
+                          onPageChanged: controller.onPageChanged,
+                          controller: PageController(initialPage: 0),
+                          itemBuilder: (context, index) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                validPhotos[index],
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(AppImages.cat,
+                                      fit: BoxFit.cover);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Obx(() => Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children:
+                                List.generate(validPhotos.length, (index) {
+                              return AnimatedContainer(
+                                duration: const Duration(milliseconds: 300),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 4),
+                                height: 8,
+                                width: controller.currentIndex.value == index
+                                    ? 16
+                                    : 8,
+                                decoration: BoxDecoration(
+                                  color: controller.currentIndex.value == index
+                                      ? AppColors.primary
+                                      : AppColors.primary.withOpacity(0.4),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              );
+                            }),
+                          )),
                       // Dog Image
                     ],
                   ),
@@ -227,7 +293,7 @@ class HomeDetail extends StatelessWidget {
                                             text: "${data.size}",
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
-                                            color: Color(0xFF4CAF50),
+                                            color: const Color(0xFF4CAF50),
                                           ),
                                         ],
                                       ),
@@ -253,7 +319,7 @@ class HomeDetail extends StatelessWidget {
                                             text: data.color!,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
-                                            color: Color(0xFFD2691E),
+                                            color: const Color(0xFFD2691E),
                                           ),
                                         ],
                                       ),

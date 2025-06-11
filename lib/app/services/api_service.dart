@@ -1,19 +1,24 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
+
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart'; // for MediaType
 import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+
+import '../data/controllers/location_controller.dart';
 import 'storage_service.dart';
-import 'package:http_parser/http_parser.dart'; // for MediaType
 
 class ApiService {
-  static const String baseUrl = 'https://pet-app-phi.vercel.app/api';
+  static const String baseUrl = 'http://44.208.25.60:4000/api';
   final _client = http.Client();
   static const _maxRetries = 3;
   static const _retryDelay = Duration(seconds: 1);
   static const _maxImageSize = 1 * 1024 * 1024; // 1MB in bytes
-
+  final controller = Get.find<LocationController>();
   // Get auth headers with token
   Map<String, String> get _headers {
     final token = StorageService.getToken();
@@ -247,13 +252,15 @@ class ApiService {
             'email': email,
             'password': password,
             'name': name,
+            'lat': controller.latitude.value,
+            "lng": controller.longitude.value,
             if (username != null) 'username': username,
           }),
         ));
 
     // Print token for debugging
     if (result['success']) {
-     // final token = StorageService.saveToken(token);
+      // final token = StorageService.saveToken(token);
       //print('DEBUG: Token after registration: $token');
     }
 
@@ -281,16 +288,21 @@ class ApiService {
     required String email,
     required String password,
   }) async {
+    final data = {
+      'email': email,
+      'password': password,
+      'lat': controller.latitude.value,
+      "lng": controller.longitude.value,
+    };
+    log("Requested data is ${data}");
     final result = await _handleRequest(() => _client.post(
           Uri.parse('$baseUrl/users/login'),
           headers: {
             'Content-Type': 'application/json',
           },
-          body: jsonEncode({
-            'email': email,
-            'password': password,
-          }),
+          body: jsonEncode(data),
         ));
+    log("Response is ${result}");
 
     // Print token for debugging
     if (result['success']) {
@@ -300,6 +312,7 @@ class ApiService {
 
     return result;
   }
+
   String formatDateForApi(String input) {
     try {
       final parsed = DateFormat('dd / MM / yyyy').parse(input);
