@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '../../../routes/app_routes.dart';
 import '../../../services/api_service.dart';
+import '../../../services/storage_service.dart';
 
 class LoginController extends GetxController {
   final _apiService = ApiService();
@@ -11,6 +12,15 @@ class LoginController extends GetxController {
   final passwordController = TextEditingController();
   final showPassword = false.obs;
   final isLoading = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    // Check if user is already logged in
+    if (StorageService.getToken() != null) {
+      Get.offAllNamed(AppRoutes.map);
+    }
+  }
 
   void togglePasswordVisibility() {
     showPassword.value = !showPassword.value;
@@ -34,6 +44,17 @@ class LoginController extends GetxController {
       await EasyLoading.dismiss();
 
       if (result['success']) {
+        // Clear any existing token and user data
+        await StorageService.clearStorage();
+        
+        // Save new token and user data
+        if (result['data']['token'] != null) {
+          await StorageService.saveToken(result['data']['token']);
+        }
+        if (result['data']['user'] != null) {
+          await StorageService.saveUser(result['data']['user']);
+        }
+
         Get.snackbar(
           'Success',
           'Login successful!',

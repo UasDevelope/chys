@@ -4,8 +4,7 @@ import '../../../core/theme/app_colors.dart';
 import '../controllers/podcast_controller.dart';
 
 class InvitePodcastView extends GetView<PodcastController> {
-  const InvitePodcastView({super.key});
-
+  InvitePodcastView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,4 +128,4 @@ class InvitePodcastView extends GetView<PodcastController> {
       ),
     );
   }
-} 
+}

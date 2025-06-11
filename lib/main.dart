@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
 import 'app/routes/app_pages.dart';
 import 'app/services/custom_Api.dart';
+import 'app/services/storage_service.dart';
 import 'app/theme/app_theme.dart';
 
 void main() async {
@@ -41,7 +41,8 @@ class MyApp extends StatelessWidget {
       title: 'Pet Profile App',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: AppRoutes.login,
+      initialRoute:
+          StorageService.getToken() != null ? AppRoutes.map : AppRoutes.login,
       getPages: AppPages.routes,
       defaultTransition: Transition.rightToLeft,
       transitionDuration: const Duration(milliseconds: 300),

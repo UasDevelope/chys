@@ -1,24 +1,37 @@
-# Flutter/Dart defaults
+# Flutter & Dart
 .dart_tool/
 .packages
 .pub-cache/
 build/
-.idea/
-android/.gradle/
-android/app/build/
-ios/Flutter/Flutter.framework
-ios/Flutter/Flutter.podspec
-ios/Pods/
-ios/Runner.xcworkspace/
-ios/build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.melos_tool/
+
+# IntelliJ / VS Code / Android Studio
 *.iml
+.idea/
+.vscode/
 
 # macOS
 .DS_Store
+
+# Android
+android/.gradle/
+android/app/build/
+
+# iOS
+ios/Pods/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Runner.xcworkspace/
+ios/build/
 
 # Generated files
 *.lock
 *.log
 
-# Optional: prevent asset dumps or user uploads
+# Assets you don’t want to upload
 assets/.DS_Store
+assets/tmp/
+uploads/
+*.tmp

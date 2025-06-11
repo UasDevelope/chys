@@ -501,9 +501,6 @@ class SignupController extends GetxController {
       );
 
       // Prepare the pet profile data according to the API specification
-      print(weightController.text);
-      print(selectedPetType.value);
-      print(dobController.text);
       final petData = {
         'isHavePet': hasPet.value,
         'petType':

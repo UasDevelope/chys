@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../routes/app_routes.dart';
+import '../../../services/storage_service.dart';
 
 class SettingsController extends GetxController {
   final pushNotifications = true.obs;
@@ -20,7 +21,7 @@ class SettingsController extends GetxController {
   void onTermsTap() => Get.toNamed(AppRoutes.terms);
   void onPrivacyPolicyTap() => Get.toNamed(AppRoutes.privacyPolicy);
   
-  Future<void> onLogoutTap() async {
+  Future<void> handleLogout() async {
     final confirmed = await Get.dialog<bool>(
       AlertDialog(
         title: const Text('Logout'),
@@ -42,7 +43,7 @@ class SettingsController extends GetxController {
     );
 
     if (confirmed == true) {
-      // TODO: Implement logout logic
+      await StorageService.clearStorage();
       Get.offAllNamed(AppRoutes.login);
     }
   }

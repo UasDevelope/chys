@@ -1,8 +1,12 @@
+import 'dart:developer';
 import 'dart:io';
+import 'package:chys/app/data/models/own_profile.dart';
+import 'package:chys/app/services/custom_Api.dart';
 import 'package:get/get.dart';
 import '../../../routes/app_routes.dart';
 
 class ProfileController extends GetxController {
+  final CustomApiService customApiService = CustomApiService();
   final isLoading = false.obs;
   final profilePhoto = Rxn<File>();
   final userName = 'John Doe'.obs;
@@ -11,11 +15,25 @@ class ProfileController extends GetxController {
   final followingCount = 150.obs;
   final followerCount = 230.obs;
   final pets = <Map<String, dynamic>>[].obs;
-
+  var profile = Rxn<OwnProfileModel>();
   @override
   void onInit() {
     super.onInit();
     _loadUserData();
+    fetchProfilee();
+  }
+
+  Future<void> fetchProfilee() async {
+    try {
+      isLoading.value = true;
+      var responsee = await customApiService.getRequest("users/profile");
+      profile.value = OwnProfileModel.fromMap(responsee["user"]);
+    } catch (e) {
+      log("Error$e");
+      isLoading.value = false;
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future<void> _loadUserData() async {
@@ -66,4 +84,4 @@ class ProfileController extends GetxController {
       arguments: pet,
     );
   }
-} 
+}

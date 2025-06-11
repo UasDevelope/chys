@@ -4,12 +4,14 @@ abstract class AppRoutes {
   static const signup = '/signup';
   static const home = '/home';
   static const map = '/map';
+
   static const settings = '/settings';
   static const notifications = '/notifications';
   static const addPet = '/add-pet';
   static const profile = '/profile';
   static const editProfile = '/edit-profile';
   static const pets = '/pets';
+
   static const petProfile = '/pet-profile';
   static const chat = '/chat';
   static const chatDetail = '/chat-detail';
@@ -90,7 +92,6 @@ abstract class AppRoutes {
     if (currentIndex < 0 || currentIndex >= signupFlow.length - 1) {
       return null;
     }
-
     return signupFlow[currentIndex + 1];
   }
 
@@ -100,7 +101,6 @@ abstract class AppRoutes {
     if (currentIndex <= 0) {
       return null;
     }
-
     return signupFlow[currentIndex - 1];
   }
 }
