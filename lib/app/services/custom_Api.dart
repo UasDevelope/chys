@@ -67,7 +67,8 @@ class CustomApiService extends GetxService {
     }
   }
 
-  Future<Map<String, dynamic>> uploadImage({
+  /// Upload image with additional fields (Multipart)
+  Future<dynamic> uploadImage({
     required String endpoint,
     required List<File> imageFiles,
     Map<String, String>? fields,
@@ -89,13 +90,13 @@ class CustomApiService extends GetxService {
     // Attach image files
     for (File file in imageFiles) {
       final mimeType = lookupMimeType(file.path);
-      if (mimeType == null || !mimeType.contains('/')) {
-        throw Exception("❌ Invalid MIME type for file: ${file.path}");
-      }
-
-      final mediaType = mimeType.split('/');
+      final mediaType = mimeType?.split('/');
 
       log("📎 [UPLOAD] Adding file: ${file.path} with MIME: $mimeType");
+
+      if (mediaType == null || mediaType.length != 2) {
+        throw Exception("❌ Unable to detect MIME type of file: ${file.path}");
+      }
 
       request.files.add(
         await http.MultipartFile.fromPath(
@@ -105,37 +106,27 @@ class CustomApiService extends GetxService {
         ),
       );
     }
-
-    // Add additional fields if available
+    // Add any additional fields
     if (fields != null && fields.isNotEmpty) {
       request.fields.addAll(fields);
       log("📝 [UPLOAD] Fields: ${jsonEncode(fields)}");
     }
 
-    try {
-      log("🚀 [UPLOAD] Sending request...");
-      final streamedResponse = await request.send();
-      final responseBody = await streamedResponse.stream.bytesToString();
-      final statusCode = streamedResponse.statusCode;
+    // Send the request
+    log("🚀 [UPLOAD] Sending request...");
+    final streamedResponse = await request.send();
+    final responseString = await streamedResponse.stream.bytesToString();
 
-      log("📩 [UPLOAD] Response Code: $statusCode");
-      log("📨 [UPLOAD] Response Body: $responseBody");
+    log("📩 [UPLOAD] Response Code: ${streamedResponse.statusCode}");
+    log("📨 [UPLOAD] Response Body: $responseString");
 
-      final decoded = jsonDecode(responseBody);
-
-      return {
-        'success': statusCode == 200 || statusCode == 201,
-        'code': statusCode,
-        'data': decoded,
-      };
-    } catch (e) {
-      log("❌ [UPLOAD] Error: $e");
-      return {
-        'success': false,
-        'code': 500,
-        'data': {'message': e.toString()},
-      };
+    if (streamedResponse.statusCode == 200 ||
+        streamedResponse.statusCode == 201) {
+      return jsonDecode(responseString);
+    } else {
+      throw Exception(
+        'UPLOAD failed: ${streamedResponse.statusCode} → $responseString',
+      );
     }
   }
-
 }

@@ -1,6 +1,6 @@
 import 'package:chys/app/modules/%20home/home_detail.dart';
 import 'package:chys/app/modules/%20home/home_view.dart';
-import 'package:chys/app/modules/adored_posts/adored_post.dart';
+import 'package:chys/app/modules/adored_posts/view/adored_post.dart';
 import 'package:chys/app/modules/donate/view/donate_detail.dart';
 import 'package:chys/app/modules/donate/view/donate_now.dart';
 import 'package:chys/app/modules/donate/view/donate_view.dart';
@@ -152,7 +152,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.chat,
-      page: () => const ChatListView(),
+      page: () => ChatListView(),
       binding: ChatBinding(),
       transition: Transition.cupertino,
     ),
@@ -217,12 +217,12 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.home,
-      page: () => const HomeView(),
+      page: () => HomeView(),
       transition: Transition.cupertino,
     ),
     GetPage(
       name: AppRoutes.homeDetail,
-      page: () => const HomeDetail(),
+      page: () => HomeDetail(),
       transition: Transition.cupertino,
     ),
     GetPage(
@@ -247,7 +247,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.adoredPost,
-      page: () => const AdoredPost(),
+      page: () => AdoredPost(),
       transition: Transition.cupertino,
     ),
   ];

@@ -13,9 +13,9 @@ class ProfileView extends StatelessWidget {
   final mapController = Get.find<MapController>();
   final profileController = Get.find<ProfileController>();
   ProfileView({super.key});
-
   @override
   Widget build(BuildContext context) {
+    profileController.fetchProfilee();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(14.0),
@@ -32,12 +32,12 @@ class ProfileView extends StatelessWidget {
                     Get.back();
                   },
                   child: const Icon(Icons.arrow_back)),
-              const AppText(
+              AppText(
                 text: "Profile",
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
               ),
-              const ListTile(
+              ListTile(
                 horizontalTitleGap: 0,
                 contentPadding: EdgeInsets.zero,
                 leading: CircleAvatar(
@@ -46,13 +46,13 @@ class ProfileView extends StatelessWidget {
                       NetworkImage("https://i.pravatar.cc/150?img=6"),
                 ),
                 title: AppText(
-                  text: "John Smith",
+                  text:profileController.profile.value!.name,
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
                 ),
                 subtitle: AppText(text: "Hamburg, Germany"),
               ),
-              const AppText(
+               AppText(
                 text: "Bio",
                 fontSize: 18,
                 fontWeight: FontWeight.w700,

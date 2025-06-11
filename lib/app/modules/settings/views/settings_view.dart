@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../core/const/app_text.dart';
+import '../../../services/storage_service.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -54,7 +55,35 @@ class SettingsView extends StatelessWidget {
             _settingTile('About Us', AppImages.about),
           ]),
           const SizedBox(height: 20),
-          _logoutButton(),
+          GestureDetector(
+            onTap: () async {
+              final confirmed = await Get.dialog<bool>(
+                AlertDialog(
+                  title: const Text('Logout'),
+                  content: const Text('Are you sure you want to logout?'),
+                  actions: [
+                    TextButton(
+                      child: const Text('Cancel'),
+                      onPressed: () => Get.back(result: false),
+                    ),
+                    TextButton(
+                      child: const Text(
+                        'Logout',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      onPressed: () => Get.back(result: true),
+                    ),
+                  ],
+                ),
+              );
+
+              if (confirmed == true) {
+                await StorageService.clearStorage();
+                Get.offAllNamed(AppRoutes.login);
+              }
+            },
+            child: _logoutButton(),
+          ),
         ],
       ),
     );
@@ -82,7 +111,7 @@ class SettingsView extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
-      splashColor: const Color(0x0927650D), // your custom splash color
+      splashColor: const Color(0x0927650D),      // your custom splash color
       highlightColor: const Color(0x0927650D),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:image/image.dart' as img;
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'storage_service.dart';
 import 'package:http_parser/http_parser.dart'; // for MediaType
@@ -252,7 +253,7 @@ class ApiService {
 
     // Print token for debugging
     if (result['success']) {
-      // final token = StorageService.saveToken(token);
+     // final token = StorageService.saveToken(token);
       //print('DEBUG: Token after registration: $token');
     }
 
@@ -299,6 +300,14 @@ class ApiService {
 
     return result;
   }
+  String formatDateForApi(String input) {
+    try {
+      final parsed = DateFormat('dd / MM / yyyy').parse(input);
+      return DateFormat('yyyy-MM-dd').format(parsed); // "2012-06-15"
+    } catch (e) {
+      return '';
+    }
+  }
 
   Future<Map<String, dynamic>> createPetProfile(
       Map<String, dynamic> petData) async {
@@ -323,7 +332,9 @@ class ApiService {
       'name': petData['name']?.toString() ?? '',
       'breed': petData['breed']?.toString() ?? '',
       'sex': petData['sex']?.toString()?.toLowerCase() ?? '',
-      'dateOfBirth': petData['dateOfBirth']?.toString() ?? '',
+      'dateOfBirth': petData['dateOfBirth'] != null
+          ? formatDateForApi(petData['dateOfBirth'])
+          : '',
       'bio': petData['bio']?.toString() ?? '',
       'color': petData['color']?.toString() ?? '',
       'size': petData['size']?.toString() ?? '',

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
-
 import '../../../core/theme/app_colors.dart';
 import '../controllers/post_controller.dart';
 
@@ -14,7 +13,7 @@ class AddPostView extends GetView<PostController> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child:Column(
+        child: Column(
           children: [
             SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -22,11 +21,17 @@ class AddPostView extends GetView<PostController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Back arrow
-                  Image.asset(
-                    'assets/images/ArrowLeft.png',
-                    width: 24,
-                    height: 24,
-                    fit: BoxFit.contain,
+                  GestureDetector(
+
+                    child: Image.asset(
+                      'assets/images/ArrowLeft.png',
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.contain,
+                    ),
+                    onTap: (){
+                      Get.back();
+                    },
                   ),
                   const SizedBox(height: 8),
                   // Title
@@ -268,7 +273,7 @@ class AddPostView extends GetView<PostController> {
               bottom: 2,
               child: Container(
                 width: 310,
-                padding:  EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: Obx(() => SizedBox(
                       width: double.infinity,
                       height: 56,

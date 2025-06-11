@@ -1,8 +1,11 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chys/app/core/const/app_image.dart';
 import 'package:chys/app/core/const/app_text.dart';
 import 'package:chys/app/core/utils/app_size.dart';
+import 'package:chys/app/data/models/post.dart';
 import 'package:chys/app/modules/%20home/widget/custom_header.dart';
 import 'package:chys/app/modules/%20home/widget/floating_action_button.dart';
+import 'package:chys/app/modules/adored_posts/controller/controller.dart';
 import 'package:chys/app/routes/app_routes.dart';
 import 'package:chys/app/widget/image/svg_extension.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +15,7 @@ import '../map/controllers/map_controller.dart';
 import 'home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({super.key});
-
+  final contrroller = Get.put(AddoredPostsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,13 +97,21 @@ class HomeView extends GetView<HomeController> {
                       },
                     ),
                   ),
-                  ListView.builder(
-                    physics: const ScrollPhysics(),
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(16),
-                    itemCount: 5,
-                    itemBuilder: (context, index) => const CatQuoteCard(),
-                  ),
+                  Obx(
+                    () => ListView.builder(
+                        physics: const ScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        // padding: const EdgeInsets.all(16),
+                        itemCount: contrroller.posts.length,
+                        itemBuilder: (context, index) {
+                          contrroller.fetchAdoredPosts();
+                          return CatQuoteCard(
+                            posts: contrroller.posts[index],
+                            addoredPostsController: contrroller,
+                          );
+                        }),
+                  )
                 ],
               ),
             ),
@@ -118,28 +128,51 @@ class HomeView extends GetView<HomeController> {
 }
 
 class CatQuoteCard extends StatelessWidget {
-  const CatQuoteCard({super.key});
-
+  Posts posts;
+  AddoredPostsController addoredPostsController;
+  CatQuoteCard({required this.posts, required this.addoredPostsController});
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.toNamed(AppRoutes.homeDetail);
+        // Get.toNamed(AppRoutes.homeDetail);
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 20),
         height: 400,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
-          image: const DecorationImage(
-            image: NetworkImage(
-                'https://www.gstatic.com/flutter-onestack-prototype/genui/example_1.jpg'),
-            // Placeholder
-            fit: BoxFit.cover,
-          ),
-        ),
+        // decoration: BoxDecoration(
+        //   borderRadius: BorderRadius.circular(24),
+        //   image: const DecorationImage(
+        //     image: NetworkImage(
+        //         'https://www.gstatic.com/flutter-onestack-prototype/genui/example_1.jpg'),
+        //     // Placeholder
+        //     fit: BoxFit.cover,
+        //   ),
+        // ),
         child: Stack(
           children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: CarouselSlider(
+                items: posts.media.map((url) {
+                  return Image.network(
+                    url,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  );
+                }).toList(),
+                options: CarouselOptions(
+                  autoPlay: true,
+                  height: 400,
+                  viewportFraction: 1.0,
+                  enableInfiniteScroll: true,
+                  onPageChanged: (index, reason) {
+                    addoredPostsController.updateIndex(index);
+                  },
+                ),
+              ),
+            ),
+
             // Gradient overlay
             Container(
               decoration: BoxDecoration(
@@ -156,12 +189,12 @@ class CatQuoteCard extends StatelessWidget {
             ),
 
             // Text content
-            const Positioned(
+            Positioned(
               left: 20,
               right: 80,
               bottom: 80,
               child: Text(
-                "If you could live anywhere in the world, where would you pick?",
+                posts.description,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
