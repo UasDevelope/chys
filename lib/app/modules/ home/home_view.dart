@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chys/app/core/const/app_image.dart';
 import 'package:chys/app/core/const/app_text.dart';
@@ -107,10 +109,24 @@ class HomeView extends GetView<HomeController> {
                             // padding: const EdgeInsets.all(16),
                             itemCount: contrroller.posts.length,
                             itemBuilder: (context, index) {
-                              contrroller.fetchAdoredPosts();
                               return CatQuoteCard(
                                 posts: contrroller.posts[index],
                                 addoredPostsController: contrroller,
+                                onTapLove: () {
+                                  log("Like tap");
+                                  contrroller
+                                      .likePost(contrroller.posts[index].id);
+                                },
+                                onTapShare: () {
+                                  contrroller
+                                      .sharePost(contrroller.posts[index]);
+                                },
+                                onTapMessage: () {
+                                  final controller =
+                                      Get.find<AddoredPostsController>();
+                                  controller.showCommentsBottomSheet(
+                                      controller.posts[index]);
+                                },
                               );
                             }),
                   )
@@ -132,13 +148,25 @@ class HomeView extends GetView<HomeController> {
 class CatQuoteCard extends StatelessWidget {
   Posts posts;
   AddoredPostsController addoredPostsController;
-  CatQuoteCard({required this.posts, required this.addoredPostsController});
+  final VoidCallback? onTapCard;
+  final VoidCallback? onTapPaw;
+  final VoidCallback? onTapMessage;
+  final VoidCallback? onTapShare;
+  final VoidCallback? onTapLove;
+
+  CatQuoteCard({
+    required this.posts,
+    required this.addoredPostsController,
+    this.onTapCard,
+    this.onTapPaw,
+    this.onTapMessage,
+    this.onTapShare,
+    this.onTapLove,
+  });
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // Get.toNamed(AppRoutes.homeDetail);
-      },
+      onTap: () {},
       child: Container(
         margin: const EdgeInsets.only(bottom: 20),
         height: 400,
@@ -214,7 +242,7 @@ class CatQuoteCard extends StatelessWidget {
                 onTap: () {
                   Get.toNamed(AppRoutes.profile, arguments: posts.creatorId);
                 },
-                child: Row(
+                child: const Row(
                   children: [
                     CircleAvatar(
                       backgroundImage:
@@ -247,13 +275,14 @@ class CatQuoteCard extends StatelessWidget {
               top: AppSize.h10,
               child: Column(
                 children: [
-                  _circleIcon(AppImages.paw),
+                  _circleIcon(AppImages.paw, onTapPaw),
                   const SizedBox(height: 12),
-                  _circleIcon(AppImages.message),
+                  _circleIcon(AppImages.message, onTapMessage),
                   const SizedBox(height: 12),
-                  _circleIcon(AppImages.share),
+                  _circleIcon(AppImages.share, onTapShare),
                   const SizedBox(height: 12),
-                  _circleIcon(AppImages.love),
+                  _circleIcon(AppImages.love, onTapLove,
+                      bgColor: posts.isCurrentUserLiked ? Colors.red : null),
                 ],
               ),
             ),
@@ -263,16 +292,25 @@ class CatQuoteCard extends StatelessWidget {
     );
   }
 
-  static Widget _circleIcon(String icon) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.6),
-        shape: BoxShape.circle,
-      ),
-      child: IconButton(
-        onPressed: () {},
-        icon: icon.toSvg(),
-        color: Colors.black87,
+  static Widget _circleIcon(
+    String icon,
+    VoidCallback? onTap, {
+    Color? bgColor,
+  }) {
+    final Color finalBgColor = bgColor ?? Colors.white.withOpacity(0.6);
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: finalBgColor,
+          shape: BoxShape.circle,
+        ),
+        child: IconButton(
+          onPressed: onTap,
+          icon: icon.toSvg(),
+          color: Colors.black87,
+        ),
       ),
     );
   }

@@ -35,3 +35,4 @@ com.example.chys.app-debug-33 /Users/zohaib/Downloads/flutter_projects/chys/buil
 com.example.chys.app-debug-34 /Users/zohaib/Downloads/flutter_projects/chys/build/google_maps_flutter_android/intermediates/packaged_res/debug/packageDebugResources
 com.example.chys.app-debug-35 /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/packaged_res/debug/packageDebugResources
 com.example.chys.app-debug-36 /Users/zohaib/Downloads/flutter_projects/chys/build/path_provider_android/intermediates/packaged_res/debug/packageDebugResources
+com.example.chys.app-debug-37 /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/packaged_res/debug/packageDebugResources

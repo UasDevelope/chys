@@ -32,7 +32,6 @@ import '../modules/pet_selection/views/pet_selection_view.dart';
 import '../modules/podcast/bindings/podcast_binding.dart';
 import '../modules/post/bindings/post_binding.dart';
 import '../modules/post/views/add_post_view.dart';
-import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
@@ -147,7 +146,6 @@ class AppPages {
     GetPage(
       name: AppRoutes.profile,
       page: () => ProfileView(),
-      binding: ProfileBinding(),
       transition: Transition.cupertino,
     ),
     GetPage(

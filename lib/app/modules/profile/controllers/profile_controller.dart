@@ -22,6 +22,7 @@ class ProfileController extends GetxController {
   void onInit() {
     super.onInit();
     _loadUserData();
+    fetchProfilee();
   }
 
   Future<void> fetchProfilee({String? userId}) async {
@@ -31,7 +32,7 @@ class ProfileController extends GetxController {
       final endpoint = (userId == null || userId.trim().isEmpty)
           ? "users/profile"
           : "users/profile/$userId";
-
+      log("Fetch profile $endpoint");
       var response = await customApiService.getRequest(endpoint);
 
       profile.value = OwnProfileModel.fromMap(response["user"]);

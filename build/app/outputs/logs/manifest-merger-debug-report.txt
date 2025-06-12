@@ -6,6 +6,8 @@ MERGED from [:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chy
 MERGED from [:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chys/build/image_picker_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:5-32:19
 MERGED from [:geolocator_android] /Users/zohaib/Downloads/flutter_projects/chys/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-13:19
 MERGED from [:geolocator_android] /Users/zohaib/Downloads/flutter_projects/chys/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-13:19
+MERGED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-33:19
+MERGED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:7:5-33:19
 MERGED from [com.google.android.gms:play-services-location:21.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/cb52188e814d9dba0c5d2493be39c986/transformed/jetified-play-services-location-21.2.0/AndroidManifest.xml:7:5-20
 MERGED from [com.google.android.gms:play-services-location:21.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/cb52188e814d9dba0c5d2493be39c986/transformed/jetified-play-services-location-21.2.0/AndroidManifest.xml:7:5-20
 MERGED from [com.google.android.gms:play-services-maps:18.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/64854c6498590de8e478cf427d77cd0f/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:36:5-42:19
@@ -48,6 +50,7 @@ MERGED from [:image_picker_android] /Users/zohaib/Downloads/flutter_projects/chy
 MERGED from [:flutter_plugin_android_lifecycle] /Users/zohaib/Downloads/flutter_projects/chys/build/flutter_plugin_android_lifecycle/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
 MERGED from [:geolocator_android] /Users/zohaib/Downloads/flutter_projects/chys/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-15:12
 MERGED from [:path_provider_android] /Users/zohaib/Downloads/flutter_projects/chys/build/path_provider_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
+MERGED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-35:12
 MERGED from [com.google.android.gms:play-services-location:21.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/cb52188e814d9dba0c5d2493be39c986/transformed/jetified-play-services-location-21.2.0/AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.android.gms:play-services-maps:18.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/64854c6498590de8e478cf427d77cd0f/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:17:1-44:12
 MERGED from [com.google.android.gms:play-services-base:18.3.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/76dbe4b0e8e756424ca696a72743a32a/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:16:1-24:12
@@ -55,16 +58,16 @@ MERGED from [com.google.android.gms:play-services-tasks:18.1.0] /Users/zohaib/.g
 MERGED from [com.google.android.gms:play-services-basement:18.3.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/576be312e7bf6e5e2cbafbaa50d4dc55/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:16:1-26:12
 MERGED from [androidx.fragment:fragment:1.7.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/a3b7a2ec25a22b21a4745404f5e6ee91/transformed/fragment-1.7.1/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.activity:activity:1.9.3] /Users/zohaib/.gradle/caches/8.10.2/transforms/e0a36d10280464755c7581026721d139/transformed/jetified-activity-1.9.3/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.window:window:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/caf52b9872b2fe95e9d7740f67957f0b/transformed/jetified-window-1.2.0/AndroidManifest.xml:17:1-31:12
-MERGED from [androidx.window:window-java:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/5a095a4a9432295b8695e81051c1fac6/transformed/jetified-window-java-1.2.0/AndroidManifest.xml:17:1-21:12
 MERGED from [androidx.loader:loader:1.0.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/37b42457533eeed33dc4726aa2dbffee/transformed/loader-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/20d9df75526a72ee15e7e84bf103d7d9/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/3ee2f9edcea89ec81054fa3aeae2edf3/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/e008d1a78a04dbb6daabce5d2680980d/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/432923c241d51d6ecb57b2302d3cee92/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/6c2c7e4fe78acaae2db87b5cf48a628c/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/7a6210aae0d9bc7c491e3bd32944664f/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.core:core-ktx:1.13.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/b64fb5b2c2505f965f73d0e5a7771149/transformed/jetified-core-ktx-1.13.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.window:window:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/caf52b9872b2fe95e9d7740f67957f0b/transformed/jetified-window-1.2.0/AndroidManifest.xml:17:1-31:12
+MERGED from [androidx.window:window-java:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/5a095a4a9432295b8695e81051c1fac6/transformed/jetified-window-java-1.2.0/AndroidManifest.xml:17:1-21:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/20d9df75526a72ee15e7e84bf103d7d9/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.customview:customview:1.0.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/9052c42252f7862aef33bc9263e2260a/transformed/customview-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.core:core:1.13.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/ffbd0573153513de628b08cdab0f745f/transformed/core-1.13.1/AndroidManifest.xml:17:1-30:12
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/005936f07255c04f62869a91f17a862e/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:2:1-7:12
@@ -143,6 +146,8 @@ MERGED from [:geolocator_android] /Users/zohaib/Downloads/flutter_projects/chys/
 MERGED from [:geolocator_android] /Users/zohaib/Downloads/flutter_projects/chys/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
 MERGED from [:path_provider_android] /Users/zohaib/Downloads/flutter_projects/chys/build/path_provider_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
 MERGED from [:path_provider_android] /Users/zohaib/Downloads/flutter_projects/chys/build/path_provider_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-location:21.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/cb52188e814d9dba0c5d2493be39c986/transformed/jetified-play-services-location-21.2.0/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-location:21.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/cb52188e814d9dba0c5d2493be39c986/transformed/jetified-play-services-location-21.2.0/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-maps:18.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/64854c6498590de8e478cf427d77cd0f/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:20:5-44
@@ -157,14 +162,8 @@ MERGED from [androidx.fragment:fragment:1.7.1] /Users/zohaib/.gradle/caches/8.10
 MERGED from [androidx.fragment:fragment:1.7.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/a3b7a2ec25a22b21a4745404f5e6ee91/transformed/fragment-1.7.1/AndroidManifest.xml:5:5-44
 MERGED from [androidx.activity:activity:1.9.3] /Users/zohaib/.gradle/caches/8.10.2/transforms/e0a36d10280464755c7581026721d139/transformed/jetified-activity-1.9.3/AndroidManifest.xml:20:5-44
 MERGED from [androidx.activity:activity:1.9.3] /Users/zohaib/.gradle/caches/8.10.2/transforms/e0a36d10280464755c7581026721d139/transformed/jetified-activity-1.9.3/AndroidManifest.xml:20:5-44
-MERGED from [androidx.window:window:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/caf52b9872b2fe95e9d7740f67957f0b/transformed/jetified-window-1.2.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.window:window:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/caf52b9872b2fe95e9d7740f67957f0b/transformed/jetified-window-1.2.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.window:window-java:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/5a095a4a9432295b8695e81051c1fac6/transformed/jetified-window-java-1.2.0/AndroidManifest.xml:19:5-44
-MERGED from [androidx.window:window-java:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/5a095a4a9432295b8695e81051c1fac6/transformed/jetified-window-java-1.2.0/AndroidManifest.xml:19:5-44
 MERGED from [androidx.loader:loader:1.0.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/37b42457533eeed33dc4726aa2dbffee/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.loader:loader:1.0.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/37b42457533eeed33dc4726aa2dbffee/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/20d9df75526a72ee15e7e84bf103d7d9/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/20d9df75526a72ee15e7e84bf103d7d9/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/3ee2f9edcea89ec81054fa3aeae2edf3/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/3ee2f9edcea89ec81054fa3aeae2edf3/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/e008d1a78a04dbb6daabce5d2680980d/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:20:5-44
@@ -177,6 +176,12 @@ MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/zoh
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/7a6210aae0d9bc7c491e3bd32944664f/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.core:core-ktx:1.13.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/b64fb5b2c2505f965f73d0e5a7771149/transformed/jetified-core-ktx-1.13.1/AndroidManifest.xml:5:5-44
 MERGED from [androidx.core:core-ktx:1.13.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/b64fb5b2c2505f965f73d0e5a7771149/transformed/jetified-core-ktx-1.13.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.window:window:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/caf52b9872b2fe95e9d7740f67957f0b/transformed/jetified-window-1.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.window:window:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/caf52b9872b2fe95e9d7740f67957f0b/transformed/jetified-window-1.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.window:window-java:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/5a095a4a9432295b8695e81051c1fac6/transformed/jetified-window-java-1.2.0/AndroidManifest.xml:19:5-44
+MERGED from [androidx.window:window-java:1.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/5a095a4a9432295b8695e81051c1fac6/transformed/jetified-window-java-1.2.0/AndroidManifest.xml:19:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/20d9df75526a72ee15e7e84bf103d7d9/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/20d9df75526a72ee15e7e84bf103d7d9/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.customview:customview:1.0.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/9052c42252f7862aef33bc9263e2260a/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.customview:customview:1.0.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/9052c42252f7862aef33bc9263e2260a/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.core:core:1.13.1] /Users/zohaib/.gradle/caches/8.10.2/transforms/ffbd0573153513de628b08cdab0f745f/transformed/core-1.13.1/AndroidManifest.xml:20:5-44
@@ -261,6 +266,28 @@ ADDED from [:geolocator_android] /Users/zohaib/Downloads/flutter_projects/chys/b
 		ADDED from [:geolocator_android] /Users/zohaib/Downloads/flutter_projects/chys/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:13-53
 	android:name
 		ADDED from [:geolocator_android] /Users/zohaib/Downloads/flutter_projects/chys/build/geolocator_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:13-77
+provider#dev.fluttercommunity.plus.share.ShareFileProvider
+ADDED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:13:9-21:20
+	android:grantUriPermissions
+		ADDED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:17:13-47
+	android:authorities
+		ADDED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:15:13-74
+	android:exported
+		ADDED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:16:13-37
+	android:name
+		ADDED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:14:13-77
+receiver#dev.fluttercommunity.plus.share.SharePlusPendingIntent
+ADDED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:26:9-32:20
+	android:exported
+		ADDED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:28:13-37
+	android:name
+		ADDED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:27:13-82
+intent-filter#action:name:EXTRA_CHOSEN_COMPONENT
+ADDED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:29:13-31:29
+action#EXTRA_CHOSEN_COMPONENT
+ADDED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:30:17-65
+	android:name
+		ADDED from [:share_plus] /Users/zohaib/Downloads/flutter_projects/chys/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:30:25-62
 uses-feature#0x00020000
 ADDED from [com.google.android.gms:play-services-maps:18.2.0] /Users/zohaib/.gradle/caches/8.10.2/transforms/64854c6498590de8e478cf427d77cd0f/transformed/jetified-play-services-maps-18.2.0/AndroidManifest.xml:26:5-28:35
 	android:glEsVersion

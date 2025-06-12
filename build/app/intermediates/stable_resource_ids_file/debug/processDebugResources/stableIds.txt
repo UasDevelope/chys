@@ -227,6 +227,7 @@ com.example.chys:attr/liteMode = 0x7f030027
 com.example.chys:attr/splitMinHeightDp = 0x7f030035
 com.example.chys:attr/uiMapToolbar = 0x7f03003d
 com.example.chys:attr/uiCompass = 0x7f03003c
+com.example.chys:xml/flutter_share_file_paths = 0x7f0e0001
 com.example.chys:id/fragment_container_view_tag = 0x7f070037
 com.example.chys:drawable/amu_bubble_shadow = 0x7f060001
 com.example.chys:attr/ttcIndex = 0x7f03003b
