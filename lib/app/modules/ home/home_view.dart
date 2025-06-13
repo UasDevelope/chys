@@ -121,6 +121,7 @@ class HomeView extends GetView<HomeController> {
                                   contrroller
                                       .sharePost(contrroller.posts[index]);
                                 },
+                                onTapPaw: () {},
                                 onTapMessage: () {
                                   final controller =
                                       Get.find<AddoredPostsController>();

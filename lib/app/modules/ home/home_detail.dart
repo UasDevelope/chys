@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:chys/app/core/const/app_colors.dart';
 import 'package:chys/app/core/const/app_image.dart';
 import 'package:chys/app/modules/map/controllers/map_controller.dart';
+import 'package:chys/app/routes/app_routes.dart';
 import 'package:chys/app/services/common_service.dart';
 import 'package:chys/app/services/date_time_service.dart';
 import 'package:chys/app/widget/image/svg_extension.dart';
@@ -189,16 +190,26 @@ class HomeDetail extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF2E3A59),
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                                child: Center(
-                                    child: AppImages.message
-                                        .toSvg(width: 28, height: 28))),
+                            InkWell(
+                              onTap: () {
+                                final userData = data.userModel!;
+                                Get.toNamed(AppRoutes.chatDetail, arguments: {
+                                  "id": userData.id,
+                                  "name": userData.name,
+                                  "avatar": "assets/images/avatars/lisa.jpg"
+                                });
+                              },
+                              child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF2E3A59),
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  child: Center(
+                                      child: AppImages.message
+                                          .toSvg(width: 28, height: 28))),
+                            ),
                           ],
                         ),
 

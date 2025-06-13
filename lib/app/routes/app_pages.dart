@@ -156,7 +156,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.chatDetail,
-      page: () => const ChatDetailView(),
+      page: () => ChatDetailView(),
       binding: ChatBinding(),
       transition: Transition.cupertino,
     ),

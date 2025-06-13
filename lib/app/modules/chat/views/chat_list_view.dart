@@ -69,6 +69,14 @@ class ChatListView extends GetView<ChatController> {
   }
 
   Widget _buildChatTile(Map<String, dynamic> chat) {
+    final user = chat['user'] ?? {};
+    final String name = user['name'] ?? 'Unknown';
+    final String lastMessage = chat['lastMessage'] ?? '';
+    final DateTime? timestamp = DateTime.tryParse(chat['timestamp'] ?? '');
+    final String timeText = timestamp != null
+        ? "${timestamp.hour.toString().padLeft(2, '0')}:${timestamp.minute.toString().padLeft(2, '0')}"
+        : '';
+
     return InkWell(
       onTap: () => controller.onConversationTap(chat),
       child: Row(
@@ -91,7 +99,7 @@ class ChatListView extends GetView<ChatController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      chat['name'],
+                      name,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
@@ -99,7 +107,7 @@ class ChatListView extends GetView<ChatController> {
                       ),
                     ),
                     Text(
-                      chat['time'],
+                      timeText,
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[600],
@@ -111,7 +119,7 @@ class ChatListView extends GetView<ChatController> {
 
                 // Last Message
                 AppText(
-                  text: chat['lastMessage'],
+                  text: lastMessage,
                   fontSize: 14,
                   color: Colors.grey[600]!,
                   maxLines: 1,

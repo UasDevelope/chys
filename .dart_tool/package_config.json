@@ -398,6 +398,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "logging",
+      "rootUri": "file:///Users/zohaib/.pub-cache/hosted/pub.dev/logging-1.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "matcher",
       "rootUri": "file:///Users/zohaib/.pub-cache/hosted/pub.dev/matcher-0.12.16+1",
       "packageUri": "lib/",
@@ -528,6 +534,18 @@
       "rootUri": "file:///Users/zohaib/Downloads/sdk/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.2"
+    },
+    {
+      "name": "socket_io_client",
+      "rootUri": "file:///Users/zohaib/.pub-cache/hosted/pub.dev/socket_io_client-3.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "socket_io_common",
+      "rootUri": "file:///Users/zohaib/.pub-cache/hosted/pub.dev/socket_io_common-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "source_span",
@@ -674,7 +692,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2025-06-12T15:02:59.638762Z",
+  "generated": "2025-06-13T05:04:08.447650Z",
   "generator": "pub",
   "generatorVersion": "3.6.2",
   "flutterRoot": "file:///Users/zohaib/Downloads/sdk/flutter",

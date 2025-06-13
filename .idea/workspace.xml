@@ -9,8 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a549d0-e38d-47d4-a0e8-788326448361" name="Changes" comment="conflict">
-      <change beforePath="$PROJECT_DIR$/.dart_tool/dartpad/web_plugin_registrant.dart" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/dartpad/web_plugin_registrant.dart" afterDir="false" />
+    <list default="true" id="55a549d0-e38d-47d4-a0e8-788326448361" name="Changes" comment="files updated">
       <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/.filecache" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/.filecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/app.dill" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/app.dill" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/debug_android_application.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/debug_android_application.stamp" afterDir="false" />
@@ -18,99 +17,33 @@
       <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/kernel_snapshot_program.d" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/kernel_snapshot_program.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/kernel_snapshot_program.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/kernel_snapshot_program.stamp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/program.dill" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/program.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/dart_plugin_registrant.dart" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/dart_plugin_registrant.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config_subset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/NOTICES.Z" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/NOTICES.Z" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/kernel_blob.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/flutter_assets/NOTICES.Z.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/flutter_assets/NOTICES.Z.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/flutter_assets/kernel_blob.bin.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/flutter_assets/kernel_blob.bin.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/desugar_graph/debug/dexBuilderDebug/out/currentProject/dirs_bucket_1/graph.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/desugar_graph/debug/dexBuilderDebug/out/currentProject/dirs_bucket_1/graph.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/dex/debug/mergeLibDexDebug/0/classes.dex" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/dex/debug/mergeLibDexDebug/0/classes.dex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/dex_archive_input_jar_hashes/debug/dexBuilderDebug/out" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/dex_archive_input_jar_hashes/debug/dexBuilderDebug/out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/NOTICES.Z" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/NOTICES.Z" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_build.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_build.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/merge-state" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/merge-state" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/03hWgNeSzg_kkAfxvi+N8s_ahAU=" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/03hWgNeSzg_kkAfxvi+N8s_ahAU=" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/55UQUgTqRbA_VJgnYw4HjNKsGYQ=" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/55UQUgTqRbA_VJgnYw4HjNKsGYQ=" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/9RSjLCKELVs1712oW9Ww62o8RKM=" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/9RSjLCKELVs1712oW9Ww62o8RKM=" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/Lq4uV4+sfUdMcFnDhjiosFOf1uU=" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/Lq4uV4+sfUdMcFnDhjiosFOf1uU=" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/R+K_SyeLctXhZVexBXjt4S9pe6A=" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/R+K_SyeLctXhZVexBXjt4S9pe6A=" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/SP3grqL4_c8uDQr0G+xUqdgyuCA=" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/SP3grqL4_c8uDQr0G+xUqdgyuCA=" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/Y6C6OK7q3Fbiqu4Lv01lFdlZG0I=" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/Y6C6OK7q3Fbiqu4Lv01lFdlZG0I=" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/dNjHReAYam+_DdkS4sv4_N4AUK8=" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/dNjHReAYam+_DdkS4sv4_N4AUK8=" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/isMXo+00nPBMoPLWFpqphMqDaxw=" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/isMXo+00nPBMoPLWFpqphMqDaxw=" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/xWvvnGvV+YxvCfiw5jppaf2gDsg=" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/zip-cache/xWvvnGvV+YxvCfiw5jppaf2gDsg=" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug/mergeDebugResources/compile-file-map.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug/mergeDebugResources/compile-file-map.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug/mergeDebugResources/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug/mergeDebugResources/merger.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/mergeDebugAssets/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/mergeDebugAssets/merger.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/zip-cache/androidResources" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/zip-cache/androidResources" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/javac/debug/compileDebugJavaWithJavac/classes/io/flutter/plugins/GeneratedPluginRegistrant.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/javac/debug/compileDebugJavaWithJavac/classes/io/flutter/plugins/GeneratedPluginRegistrant.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/linked_resources_binary_format/debug/processDebugResources/linked-resources-binary-format-debug.ap_" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/linked_resources_binary_format/debug/processDebugResources/linked-resources-binary-format-debug.ap_" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/manifest_merge_blame_file/debug/processDebugMainManifest/manifest-merger-blame-debug-report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/manifest_merge_blame_file/debug/processDebugMainManifest/manifest-merger-blame-debug-report.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/merged_manifest/debug/processDebugMainManifest/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/merged_manifest/debug/processDebugMainManifest/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/merged_manifests/debug/processDebugManifest/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/merged_manifests/debug/processDebugManifest/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/packaged_manifests/debug/processDebugManifestForPackage/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/packaged_manifests/debug/processDebugManifestForPackage/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/project_dex_archive/debug/dexBuilderDebug/out/a03403b31ef76156ba4b0b7274327e8aa2d4215063ff0f29b00c86b5e58a26a8_0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/project_dex_archive/debug/dexBuilderDebug/out/a03403b31ef76156ba4b0b7274327e8aa2d4215063ff0f29b00c86b5e58a26a8_1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/project_dex_archive/debug/dexBuilderDebug/out/a03403b31ef76156ba4b0b7274327e8aa2d4215063ff0f29b00c86b5e58a26a8_2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/project_dex_archive/debug/dexBuilderDebug/out/a03403b31ef76156ba4b0b7274327e8aa2d4215063ff0f29b00c86b5e58a26a8_3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/project_dex_archive/debug/dexBuilderDebug/out/io/flutter/plugins/GeneratedPluginRegistrant.dex" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/project_dex_archive/debug/dexBuilderDebug/out/io/flutter/plugins/GeneratedPluginRegistrant.dex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/runtime_symbol_list/debug/processDebugResources/R.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/runtime_symbol_list/debug/processDebugResources/R.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/source_set_path_map/debug/mapDebugSourceSetPaths/file-map.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/source_set_path_map/debug/mapDebugSourceSetPaths/file-map.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/stable_resource_ids_file/debug/processDebugResources/stableIds.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/stable_resource_ids_file/debug/processDebugResources/stableIds.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/symbol_list_with_package_name/debug/processDebugResources/package-aware-r.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/symbol_list_with_package_name/debug/processDebugResources/package-aware-r.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/last-build.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/cacheable/last-build.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/local-state/build-history.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/kotlin/compileDebugKotlin/local-state/build-history.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk.sha1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/outputs/logs/manifest-merger-debug-report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/logs/manifest-merger-debug-report.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/app/data/models/post.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/data/models/post.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/app/modules/ home/home_detail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/ home/home_detail.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/app/modules/ home/home_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/ home/home_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/app/modules/adored_posts/controller/controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/adored_posts/controller/controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/app/modules/map/bindings/map_binding.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/map/bindings/map_binding.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/app/modules/profile/controllers/profile_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/profile/controllers/profile_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/app/modules/chat/controllers/chat_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/chat/controllers/chat_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/app/modules/chat/views/chat_detail_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/chat/views/chat_detail_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/app/modules/chat/views/chat_list_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/chat/views/chat_list_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/app/modules/map/controllers/map_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/map/controllers/map_controller.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/app/routes/app_pages.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/routes/app_pages.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/app/services/date_time_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/services/date_time_service.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,11 +127,29 @@
       <option name="presentableId" value="Default" />
       <updated>1749623723509</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="gitignore added">
+      <option name="closed" value="true" />
+      <created>1749756262080</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1749756262080</updated>
+    </task>
+    <task id="LOCAL-00003" summary="files updated">
+      <option name="closed" value="true" />
+      <created>1749756316757</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1749756316757</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="conflict" />
-    <option name="LAST_COMMIT_MESSAGE" value="conflict" />
+    <MESSAGE value="gitignore added" />
+    <MESSAGE value="files updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="files updated" />
   </component>
 </project>

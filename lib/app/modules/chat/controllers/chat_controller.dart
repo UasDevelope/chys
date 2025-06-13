@@ -1,100 +1,92 @@
+import 'dart:developer';
+
+import 'package:chys/app/modules/profile/controllers/profile_controller.dart';
+import 'package:chys/app/services/http_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../routes/app_routes.dart';
+import '../../../services/chat_services.dart';
 
 class ChatController extends GetxController {
   final searchController = TextEditingController();
   final messageController = TextEditingController();
+  final profileController = Get.find<ProfileController>();
+  final SocketService _socketService = Get.put(SocketService());
   final isLoading = false.obs;
+  final RxBool isChatLoading = false.obs;
   final conversations = <Map<String, dynamic>>[].obs;
   final filteredConversations = <Map<String, dynamic>>[].obs;
   final messages = <Map<String, dynamic>>[].obs;
+  RxString receiverId = "".obs;
+  final scrollController = ScrollController();
 
   @override
   void onInit() {
     super.onInit();
     _loadConversations();
+    _socketService.initSocket();
+    _socketService.listenToPrivateMessages(_onPrivateMessageReceived);
   }
 
   Future<void> _loadConversations() async {
     try {
       isLoading.value = true;
-      await Future.delayed(const Duration(seconds: 1)); // Simulate API call
-
-      // Mock data exactly matching the design
-      conversations.value = [
-        {
-          'id': '1',
-          'name': 'Lisa',
-          'avatar': 'assets/images/avatars/lisa.jpg',
-          'lastMessage': 'Thanks a bunch! Have a great day! 😊',
-          'time': '20:10 05/05/2024',
-          'unread': 0,
-        },
-        {
-          'id': '2',
-          'name': 'Lavern',
-          'avatar': 'assets/images/avatars/lavern.jpg',
-          'lastMessage': 'Great, thanks so much! 👋',
-          'time': '20:10 05/05/2024',
-          'unread': 0,
-        },
-        {
-          'id': '3',
-          'name': 'Rey',
-          'avatar': 'assets/images/avatars/rey.jpg',
-          'lastMessage': 'Appreciate it! See you soon! 🚀',
-          'time': '20:10 05/05/2024',
-          'unread': 0,
-        },
-        {
-          'id': '4',
-          'name': 'Sylvia',
-          'avatar': 'assets/images/avatars/sylvia.jpg',
-          'lastMessage': 'Hooray! 🎉',
-          'time': '20:10 05/05/2024',
-          'unread': 0,
-        },
-        {
-          'id': '5',
-          'name': 'Gayle',
-          'avatar': 'assets/images/avatars/gayle.jpg',
-          'lastMessage': 'See you soon!',
-          'time': '20:10 05/05/2024',
-          'unread': 0,
-        },
-        {
-          'id': '6',
-          'name': 'Ignatius',
-          'avatar': 'assets/images/avatars/ignatius.jpg',
-          'lastMessage': 'Appreciate it!',
-          'time': '20:10 05/05/2024',
-          'unread': 0,
-        },
-        {
-          'id': '7',
-          'name': 'Lourdes',
-          'avatar': 'assets/images/avatars/lourdes.jpg',
-          'lastMessage': 'Hooray! 🎉',
-          'time': '20:10 05/05/2024',
-          'unread': 0,
-        },
-        {
-          'id': '8',
-          'name': 'Affie',
-          'avatar': 'assets/images/avatars/affie.jpg',
-          'lastMessage': 'Nice!',
-          'time': '20:10 05/05/2024',
-          'unread': 0,
-        },
-      ];
-
+      final response = await ApiClient().get("/chat/get/users");
+      log("Response for chat is ${response}");
+      conversations.assignAll(List<Map<String, dynamic>>.from(response));
       filteredConversations.value = conversations;
     } catch (e) {
       print('Error loading conversations: $e');
     } finally {
       isLoading.value = false;
     }
+  }
+
+  void scrollToBottom() {
+    Future.delayed(Duration(milliseconds: 100), () {
+      if (scrollController.hasClients) {
+        scrollController.jumpTo(scrollController.position.maxScrollExtent);
+      }
+    });
+  }
+
+  Future<void> loadChat() async {
+    try {
+      isChatLoading.value = true;
+      final response = await ApiClient().get("/chat/${receiverId.value}");
+      log("Response for chat is ${response}");
+      messages.assignAll(List<Map<String, dynamic>>.from(response));
+      scrollToBottom();
+    } finally {
+      isChatLoading.value = false;
+    }
+  }
+
+  void _onPrivateMessageReceived(Map<String, dynamic> data) {
+    log("📥 Private message listener received: $data");
+
+    messages.add({
+      'senderId': data['senderId'],
+      'receiverId': data['receiverId'],
+      'message': data['message'],
+      'timestamp': DateTime.tryParse(data['timestamp'] ?? '') ?? DateTime.now(),
+    });
+
+    log("🆕 Message added to messages: ${messages.last}");
+    scrollToBottom();
+  }
+
+  void sendPrivateMessage() {
+    if (messageController.text.trim().isEmpty) return;
+
+    final text = messageController.text;
+    messageController.clear();
+
+    log("After adding message ${messages.last}");
+    // Example receiverId, replace with actual conversation partner's id
+    _socketService.sendPrivateMessage(receiverId.value, text);
+    scrollToBottom();
   }
 
   void onSearchChanged(String query) {
@@ -127,30 +119,11 @@ class ChatController extends GetxController {
   void onConversationTap(Map<String, dynamic> conversation) {
     Get.toNamed(
       AppRoutes.chatDetail,
-      arguments: conversation,
+      arguments: {
+        "id": conversation["user"]["_id"],
+        "name": conversation["user"]["name"]
+      },
     );
-  }
-
-  void onCallTap() {
-    // Implement call functionality
-  }
-
-  void onAttachmentTap() {
-    // Implement attachment functionality
-  }
-
-  void sendMessage() {
-    if (messageController.text.trim().isEmpty) return;
-
-    final message = {
-      'id': DateTime.now().millisecondsSinceEpoch.toString(),
-      'text': messageController.text,
-      'time': DateTime.now(),
-      'isMe': true,
-    };
-
-    messages.add(message);
-    messageController.clear();
   }
 
   @override
@@ -159,4 +132,4 @@ class ChatController extends GetxController {
     messageController.dispose();
     super.onClose();
   }
-} 
+}

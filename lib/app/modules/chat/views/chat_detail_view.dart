@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:chys/app/core/const/app_image.dart';
 import 'package:chys/app/core/utils/app_size.dart';
 import 'package:chys/app/modules/signup/widgets/custom_text_field.dart';
+import 'package:chys/app/services/date_time_service.dart';
 import 'package:chys/app/widget/image/svg_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,11 +12,15 @@ import '../../../core/theme/app_colors.dart';
 import '../controllers/chat_controller.dart';
 
 class ChatDetailView extends GetView<ChatController> {
-  const ChatDetailView({super.key});
+  ChatDetailView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> chatUser = Get.arguments;
+    log("Chat user is $chatUser");
+
+    controller.receiverId.value = chatUser['id'];
+    controller.loadChat();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -42,10 +49,10 @@ class ChatDetailView extends GetView<ChatController> {
               ),
               title: Row(
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 20,
                     backgroundImage:
-                        const NetworkImage("https://i.pravatar.cc/150?img=6"),
+                        NetworkImage("https://i.pravatar.cc/150?img=6"),
                   ),
                   SizedBox(width: AppSize.h2),
                   Text(
@@ -62,97 +69,93 @@ class ChatDetailView extends GetView<ChatController> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                _buildMessage(
-                  "Hey there! 👋",
-                  "10:10",
-                  isMe: false,
+      body: Obx(() {
+        if (controller.isChatLoading.value) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (controller.messages.isEmpty) {
+          return const Center(
+            child: Text("No messages yet"),
+          );
+        } else {
+          return Column(
+            children: [
+              Expanded(
+                child: Obx(() {
+                  return ListView.builder(
+                    controller: controller.scrollController,
+                    padding: const EdgeInsets.all(16),
+                    itemCount: controller.messages.length,
+                    itemBuilder: (context, index) {
+                      final message = controller.messages[index];
+                      final isMe = message['senderId'] ==
+                          controller.profileController.profile.value?.id;
+
+                      return _buildMessage(
+                        message['message'],
+                        DateTimeService.formatTime(message[
+                            'timestamp']), // Create this method to format time
+                        isMe: isMe,
+                      );
+                    },
+                  );
+                }),
+              ),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(
+                      16), // if not circular, remove for full square
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black
+                          .withOpacity(0.1), // slightly darker for visibility
+                      blurRadius: 12,
+                      spreadRadius: 1,
+                      offset: const Offset(0, 4), // subtle bottom shadow
+                    ),
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.03),
+                      blurRadius: 4,
+                      spreadRadius: 1,
+                      offset: const Offset(0, 1), // soft ambient top shadow
+                    ),
+                  ],
                 ),
-                _buildMessage(
-                  "This is your friend kitty owner speaking. How was your day? 😊",
-                  "10:10",
-                  isMe: false,
+                child: Row(
+                  spacing: AppSize.h2,
+                  children: [
+                    Expanded(
+                      child: CustomTextField(
+                        label: "Type a message",
+                        controller: controller.messageController,
+                      ),
+                    ),
+                    Container(
+                      width: 44,
+                      height: 44,
+                      decoration: const BoxDecoration(
+                        color: AppColors.blue,
+                        shape: BoxShape.circle,
+                      ),
+                      child: IconButton(
+                        icon: AppImages.send.toSvg(
+                            color: Colors
+                                .white), // ensure white icon inside blue bg
+                        onPressed: () => controller.sendPrivateMessage(),
+                        iconSize: 20, // optional: tweak size
+                        splashRadius: 24,
+                      ),
+                    ),
+                  ],
                 ),
-                _buildMessage(
-                  "Hi!",
-                  "10:10",
-                  isMe: true,
-                ),
-                _buildMessage(
-                  "Awesome, thanks for letting me asking! Can't wait to meet kitty. 🐱",
-                  "10:11",
-                  isMe: true,
-                ),
-                _buildMessage(
-                  "No problem at all!\nIt'll be there in about 15 minutes.",
-                  "10:11",
-                  isMe: false,
-                ),
-                _buildMessage(
-                  "I'll text you when kitty is ready.",
-                  "10:11",
-                  isMe: false,
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(
-                  16), // if not circular, remove for full square
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black
-                      .withOpacity(0.1), // slightly darker for visibility
-                  blurRadius: 12,
-                  spreadRadius: 1,
-                  offset: Offset(0, 4), // subtle bottom shadow
-                ),
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.03),
-                  blurRadius: 4,
-                  spreadRadius: 1,
-                  offset: Offset(0, 1), // soft ambient top shadow
-                ),
-              ],
-            ),
-            child: Row(
-              spacing: AppSize.h2,
-              children: [
-                Expanded(
-                  child: CustomTextField(
-                    label: "Type a message",
-                    controller: controller.messageController,
-                  ),
-                ),
-                Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: AppColors.blue,
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    icon: AppImages.send.toSvg(
-                        color:
-                            Colors.white), // ensure white icon inside blue bg
-                    onPressed: () => controller.sendMessage(),
-                    iconSize: 20, // optional: tweak size
-                    splashRadius: 24,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+              ),
+            ],
+          );
+        }
+      }),
     );
   }
 

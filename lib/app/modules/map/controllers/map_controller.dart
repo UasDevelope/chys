@@ -163,21 +163,24 @@ class MapController extends GetxController {
   Future<void> _loadPetMarkers() async {
     markers.clear();
     Set<String> usedLocations = {};
+
     log("Length is ${nearbyPetList.length}");
+
     for (final pet in nearbyPetList) {
       final location = pet.userModel?.location?.coordinates;
       final petName = pet.name ?? 'Unknown';
       final profileUrl = pet.profilePic ?? '';
       final petId = pet.id ?? '';
-
+      log("Pet name is $petName and petId is $petId and location length is ${location!.length}");
       if (location != null && location.length == 2) {
         double lng = location[0];
         double lat = location[1];
 
-        // Offset step for overlapping markers
-        const double offsetStep = 0.0003;
+        // Offset step to avoid overlapping markers
+        const double offsetStep = 0.0009;
         String locKey = '$lat:$lng';
         int offsetIndex = 1;
+
         while (usedLocations.contains(locKey)) {
           lat += offsetStep * offsetIndex;
           lng += offsetStep * offsetIndex;
@@ -191,60 +194,84 @@ class MapController extends GetxController {
             await _getBytesFromNetworkImage(profileUrl);
 
         final Marker marker = Marker(
-            markerId: MarkerId(pet.id ?? UniqueKey().toString()),
-            position: LatLng(lat, lng),
-            icon: BitmapDescriptor.bytes(markerIcon),
-            infoWindow: InfoWindow(title: petName),
-            onTap: () {
-              log("Pet id is $petId");
-
-              Get.toNamed(AppRoutes.homeDetail, arguments: petId);
-            });
+          markerId: MarkerId(petId.isNotEmpty ? petId : UniqueKey().toString()),
+          position: LatLng(lat, lng),
+          icon: BitmapDescriptor.fromBytes(markerIcon),
+          infoWindow: InfoWindow(title: petName),
+          onTap: () {
+            log("Pet name is $petName");
+            Get.toNamed(AppRoutes.homeDetail, arguments: petId);
+          },
+        );
 
         markers.add(marker);
       }
     }
+    log("Markers length is ${markers.length}");
   }
 
   Future<Uint8List> _getBytesFromNetworkImage(String imageUrl,
       {int size = 80}) async {
     try {
+      if (imageUrl.isEmpty) {
+        log("⚠️ Empty imageUrl, using fallback.");
+        return await _getBytesFromAssetImage(
+            'assets/images/fallback.png', size);
+      }
+
       final http.Response response = await http.get(Uri.parse(imageUrl));
-      final Uint8List imageData = response.bodyBytes;
-      final ui.Codec codec = await ui.instantiateImageCodec(imageData,
-          targetWidth: size, targetHeight: size);
-      final ui.FrameInfo fi = await codec.getNextFrame();
-      final ui.Image image = fi.image;
 
-      final ui.PictureRecorder recorder = ui.PictureRecorder();
-      final Canvas canvas = Canvas(recorder);
-      final Paint paint = Paint();
+      if (response.statusCode != 200 || response.bodyBytes.isEmpty) {
+        log("⚠️ Failed to fetch network image, using fallback for $imageUrl");
+        return await _getBytesFromAssetImage(
+            'assets/images/fallback.png', size);
+      }
 
-      final double radius = size / 2;
-      final Rect rect = Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble());
-
-      // Draw circular clip path
-      canvas.drawCircle(Offset(radius, radius), radius, paint);
-      paint.blendMode = BlendMode.srcIn;
-
-      canvas.drawImageRect(
-        image,
-        Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
-        rect,
-        paint,
-      );
-
-      final ui.Image circularImage =
-          await recorder.endRecording().toImage(size, size);
-      final ByteData? byteData =
-          await circularImage.toByteData(format: ui.ImageByteFormat.png);
-
-      return byteData!.buffer.asUint8List();
+      return await _convertToCircularBytes(response.bodyBytes, size);
     } catch (e) {
-      print('Error loading/cropping image: $e');
-      // Return a transparent placeholder if needed
-      return Uint8List(0);
+      log('❌ Error loading network image: $e');
+      return await _getBytesFromAssetImage('assets/images/fallback.png', size);
     }
+  }
+
+  Future<Uint8List> _getBytesFromAssetImage(String path, int size) async {
+    final ByteData byteData = await rootBundle.load(path);
+    return await _convertToCircularBytes(byteData.buffer.asUint8List(), size);
+  }
+
+  Future<Uint8List> _convertToCircularBytes(
+      Uint8List imageData, int size) async {
+    final ui.Codec codec = await ui.instantiateImageCodec(
+      imageData,
+      targetWidth: size,
+      targetHeight: size,
+    );
+    final ui.FrameInfo fi = await codec.getNextFrame();
+    final ui.Image image = fi.image;
+
+    final ui.PictureRecorder recorder = ui.PictureRecorder();
+    final Canvas canvas = Canvas(recorder);
+    final Paint paint = Paint();
+
+    final double radius = size / 2;
+    final Rect rect = Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble());
+
+    canvas.drawCircle(Offset(radius, radius), radius, paint);
+    paint.blendMode = BlendMode.srcIn;
+
+    canvas.drawImageRect(
+      image,
+      Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
+      rect,
+      paint,
+    );
+
+    final ui.Image circularImage =
+        await recorder.endRecording().toImage(size, size);
+    final ByteData? byteData =
+        await circularImage.toByteData(format: ui.ImageByteFormat.png);
+
+    return byteData!.buffer.asUint8List();
   }
 
   void centerOnCurrentLocation() {

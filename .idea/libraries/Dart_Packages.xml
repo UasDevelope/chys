@@ -464,6 +464,13 @@
             </list>
           </value>
         </entry>
+        <entry key="logging">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/logging-1.3.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="matcher">
           <value>
             <list>
@@ -615,6 +622,20 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../../sdk/flutter/bin/cache/pkg/sky_engine/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="socket_io_client">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/socket_io_client-3.1.2/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="socket_io_common">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/socket_io_common-3.1.1/lib" />
             </list>
           </value>
         </entry>
@@ -845,6 +866,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-3.0.8/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/leak_tracker_testing-3.0.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/lints-2.1.1/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/logging-1.3.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/matcher-0.12.16+1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/material_color_utilities-0.11.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/meta-1.15.0/lib" />
@@ -866,6 +888,8 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/sanitize_html-2.1.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/share_plus-11.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/share_plus_platform_interface-6.0.0/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/socket_io_client-3.1.2/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/socket_io_common-3.1.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/source_span-1.10.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/sprintf-7.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/stack_trace-1.12.0/lib" />
