@@ -71,61 +71,52 @@ class ChatDetailView extends GetView<ChatController> {
       ),
       body: Obx(() {
         if (controller.isChatLoading.value) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (controller.messages.isEmpty) {
-          return const Center(
-            child: Text("No messages yet"),
-          );
+          return const Center(child: CircularProgressIndicator());
         } else {
           return Column(
             children: [
               Expanded(
-                child: Obx(() {
-                  return ListView.builder(
-                    controller: controller.scrollController,
-                    padding: const EdgeInsets.all(16),
-                    itemCount: controller.messages.length,
-                    itemBuilder: (context, index) {
-                      final message = controller.messages[index];
-                      final isMe = message['senderId'] ==
-                          controller.profileController.profile.value?.id;
+                child: controller.messages.isEmpty
+                    ? const Center(child: Text("No messages yet"))
+                    : ListView.builder(
+                        controller: controller.scrollController,
+                        padding: const EdgeInsets.all(16),
+                        itemCount: controller.messages.length,
+                        itemBuilder: (context, index) {
+                          final message = controller.messages[index];
+                          final isMe = message['senderId'] ==
+                              controller.profileController.profile.value?.id;
 
-                      return _buildMessage(
-                        message['message'],
-                        DateTimeService.formatTime(message[
-                            'timestamp']), // Create this method to format time
-                        isMe: isMe,
-                      );
-                    },
-                  );
-                }),
+                          return _buildMessage(
+                            message['message'],
+                            DateTimeService.formatTime(message['timestamp']),
+                            isMe: isMe,
+                          );
+                        },
+                      ),
               ),
+              // ✅ Always show message input at bottom
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(
-                      16), // if not circular, remove for full square
+                  borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black
-                          .withOpacity(0.1), // slightly darker for visibility
+                      color: Colors.black.withOpacity(0.1),
                       blurRadius: 12,
                       spreadRadius: 1,
-                      offset: const Offset(0, 4), // subtle bottom shadow
+                      offset: const Offset(0, 4),
                     ),
                     BoxShadow(
                       color: Colors.black.withOpacity(0.03),
                       blurRadius: 4,
                       spreadRadius: 1,
-                      offset: const Offset(0, 1), // soft ambient top shadow
+                      offset: const Offset(0, 1),
                     ),
                   ],
                 ),
                 child: Row(
-                  spacing: AppSize.h2,
                   children: [
                     Expanded(
                       child: CustomTextField(
@@ -141,11 +132,9 @@ class ChatDetailView extends GetView<ChatController> {
                         shape: BoxShape.circle,
                       ),
                       child: IconButton(
-                        icon: AppImages.send.toSvg(
-                            color: Colors
-                                .white), // ensure white icon inside blue bg
+                        icon: AppImages.send.toSvg(color: Colors.white),
                         onPressed: () => controller.sendPrivateMessage(),
-                        iconSize: 20, // optional: tweak size
+                        iconSize: 20,
                         splashRadius: 24,
                       ),
                     ),
