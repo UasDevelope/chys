@@ -6,7 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../controller/controller.dart';
 
 class AdoredPost extends StatelessWidget {
-final controllerr=Get.put(AddoredPostsController());
+  final controllerr = Get.put(AddoredPostsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,16 +53,8 @@ final controllerr=Get.put(AddoredPostsController());
                 children: [
                   // Gradient overlay
                   Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(24),
-                      gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.center,
-                        colors: [
-                          Colors.black.withValues(alpha: 0.6),
-                          Colors.transparent,
-                        ],
-                      ),
-                    ),
+                    decoration: BoxDecoration(
+                     ),
                   ),
 
                   // Text content

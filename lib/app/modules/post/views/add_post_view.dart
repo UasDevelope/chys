@@ -235,7 +235,7 @@ class AddPostView extends GetView<PostController> {
                     style: const TextStyle(
                       fontFamily: 'Hellix',
                       fontWeight: FontWeight.w400,
-                      fontSize: 14,
+                      fontSize: 14 ,
                       height: 1.4, // 140%
                       letterSpacing: 0,
                       color: Colors.black54,
@@ -263,7 +263,7 @@ class AddPostView extends GetView<PostController> {
                     ),
                   ),
                   const SizedBox(height: 100), // For button spacing
-                ],
+                ]
               ),
             ),
             // Post button fixed at bottom

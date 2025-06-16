@@ -4,7 +4,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chys/app/core/const/app_image.dart';
 import 'package:chys/app/core/const/app_text.dart';
 import 'package:chys/app/core/utils/app_size.dart';
+import 'package:chys/app/core/widget/app_button.dart';
 import 'package:chys/app/data/models/post.dart';
+import 'package:chys/app/modules/%20home/petGallery.dart';
 import 'package:chys/app/modules/%20home/widget/custom_header.dart';
 import 'package:chys/app/modules/%20home/widget/floating_action_button.dart';
 import 'package:chys/app/modules/adored_posts/controller/controller.dart';
@@ -50,7 +52,7 @@ class HomeView extends GetView<HomeController> {
                             children: [
                               SizedBox(
                                 width: 60,
-                                height: 60,
+                                height: 50,
                                 child: Stack(
                                   clipBehavior: Clip.none,
                                   children: [
@@ -99,17 +101,16 @@ class HomeView extends GetView<HomeController> {
                       },
                     ),
                   ),
-                  Obx(
-                    () => contrroller.isLoading.value
-                        ? const CircularProgressIndicator()
-                        : ListView.builder(
-                            physics: const ScrollPhysics(),
-                            shrinkWrap: true,
-                            padding: EdgeInsets.zero,
-                            // padding: const EdgeInsets.all(16),
-                            itemCount: contrroller.posts.length,
-                            itemBuilder: (context, index) {
-                              return CatQuoteCard(
+                  Obx(() => contrroller.isLoading.value
+                      ? const CircularProgressIndicator()
+                      : ListView.builder(
+                          physics: const ScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          // padding: const EdgeInsets.all(16),
+                          itemCount: contrroller.posts.length,
+                          itemBuilder: (context, index) {
+                            return CatQuoteCard(
                                 posts: contrroller.posts[index],
                                 addoredPostsController: contrroller,
                                 onTapLove: () {
@@ -127,14 +128,57 @@ class HomeView extends GetView<HomeController> {
                                       Get.find<AddoredPostsController>();
                                   controller.showCommentsBottomSheet(
                                       controller.posts[index]);
-                                },
-                              );
-                            }),
-                  )
+                                });
+                          }))
                 ],
               ),
             ),
           ),
+          // See All Posts
+          Positioned(
+            bottom: 20,
+            left: 20,
+            child: GestureDetector(
+              onTap: () {
+                Get.to(PetGalleryScreen());
+              },
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFFff9a9e), Color(0xFFfad0c4)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 6,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.explore, color: Colors.white, size: 20),
+                    const SizedBox(width: 6),
+                    const Text(
+                      'See All Posts',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
           CustomFloatingActionButton(controller: Get.find<MapController>()),
           UserMapButtons(
               bottom: AppSize.getHeight(10),
@@ -175,22 +219,21 @@ class CatQuoteCard extends StatelessWidget {
         //   borderRadius: BorderRadius.circular(24),
         //   image: const DecorationImage(
         //     image: NetworkImage(
-        //         'https://www.gstatic.com/flutter-onestack-prototype/genui/example_1.jpg'),
+        //         'https://www.gstatic.com/flutter-onestack-prototype/genui /example_1.jp g'),
         //     // Placeholder
         //     fit: BoxFit.cover,
         //   ),
         // ),
         child: Stack(
           children: [
+            // See All Posts Button
+
             ClipRRect(
               borderRadius: BorderRadius.circular(24),
               child: CarouselSlider(
                 items: posts.media.map((url) {
-                  return Image.network(
-                    url,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  );
+                  return Image.network(url,
+                      fit: BoxFit.cover, width: double.infinity);
                 }).toList(),
                 options: CarouselOptions(
                   autoPlay: true,

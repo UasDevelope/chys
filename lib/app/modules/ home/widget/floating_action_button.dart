@@ -7,7 +7,7 @@ import '../../../core/const/app_image.dart';
 import '../../../core/utils/app_size.dart';
 import '../../map/controllers/map_controller.dart';
 
-// Reusable button widget
+// Reusable button
 class SvgActionButton extends StatelessWidget {
   final String icon;
   final bool selected;

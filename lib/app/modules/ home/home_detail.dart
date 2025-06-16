@@ -172,11 +172,10 @@ class HomeDetail extends StatelessWidget {
                                 Row(
                                   children: [
                                     AppText(
-                                      text: data.name!,
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                                        text: data.name!,
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
                                     SizedBox(width: AppSize.w2),
                                     AppImages.male.toSvg(color: Colors.black)
                                   ],
@@ -234,10 +233,10 @@ class HomeDetail extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(4),
                                     ),
                                     child: SvgPicture.string(
-                                      '''<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" fill="#9E9E9E" rx="2"/>
-                                    <circle cx="12" cy="9" r="3" fill="white"/>
-                                    <path d="M6 20v-1a6 6 0 0 1 12 0v1" fill="white"/>
+                                      '''<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">    
+                                    <rect width="24" height="24" fill="#9E9E9E" rx="2"/>     
+                                    <circle cx="12" cy="9" r="3" fill="white"/>   
+                                    <path d="M6 20v-1a6 6 0 0 1 12 0v1" fill="white"/>   
                                   </svg>''',
                                     ),
                                   ),
@@ -370,9 +369,9 @@ class HomeDetail extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(4),
                                     ),
                                     child: SvgPicture.string(
-                                      '''<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" fill="#9E9E9E" rx="2"/>
-                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="white"/>
+                                      '''<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/sv g ">     
+                                    <rect width="24" height="24" fill="#9E9E9E" rx="2"/>      
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6 . 18 3.  25L7  14.1 4 2 9.27l6.91-1.01L12 2z" fill="white"/>
                                   </svg>''',
                                     ),
                                   ),
@@ -420,19 +419,18 @@ class HomeDetail extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(4),
                                     ),
                                     child: SvgPicture.string(
-                                      '''<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" fill="#9E9E9E" rx="2"/>
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="white"/>
+                                      '''<svg viewBox="0 0 24 24" xmlns="http://www.w3. org/2000/ svg">    
+                                    <rect width="24" height="24" fill="#9E9E9E" rx="2"/ >     
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10- 4.48 10-1 0S17.52 2  12  2zm-2 15l-5-5   1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="white"/>
                                   </svg>''',
                                     ),
                                   ),
                                   SizedBox(width: AppSize.w3),
                                   const AppText(
-                                    text: "Allergies",
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                  ),
+                                      text: "Allergies",
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black),
                                 ],
                               ),
                               ...data.allergies!.map((allergy) => Padding(
