@@ -140,7 +140,7 @@ class SignupController extends GetxController {
       await EasyLoading.showSuccess('Breeds saved!');
 
       // Navigate to city view and remove previous routes from stack
-      await Get.offAllNamed(AppRoutes.cityView);
+      // await Get.offAllNamed(AppRoutes.cityView);
     } catch (e) {
       print('DEBUG: Error saving breeds: $e');
       await EasyLoading.showError('Failed to save breeds');
@@ -558,7 +558,7 @@ class SignupController extends GetxController {
         // final currentRoute = Get.currentRoute;
         // final nextRoute = AppRoutes.getNextSignupRoute(currentRoute);
 
-        await Get.offNamed(AppRoutes.cityView);
+        await Get.toNamed(AppRoutes.map);
       } else {
         await EasyLoading.showError(
             result['message'] ?? 'Failed to create pet profile');

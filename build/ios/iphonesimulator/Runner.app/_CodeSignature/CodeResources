@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		zqmy7zF6w4OxUkQyUhJprgxpriQ=
+		6PFboHnOhW3tuwYEHxF/ZqpbWdo=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,15 +54,15 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		PP4LtwV4KNMCm4n9F/ao7QDNoRo=
+		duOJLxPftZ+nNZH3NgPlmcyjye4=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<data>
-		c3V31o3lgKAxG9Hop0Xt+VfmRwo=
+		2J0Qw/RPGAKCcSGvL6OUaVkz0QU=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
-		Skvd2fAQnriwzoNilEO7QgaDNRA=
+		ozHi+V4AM34DKHJa2jloyPMfXnA=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
 		<data>
@@ -70,11 +70,15 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/NOTICES.Z</key>
 		<data>
-		amWFIvoiCZssNVK0RdLAiYbh3qE=
+		2oYEGsn0Efv9skdOmGGO0TT0tH8=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/NativeAssetsManifest.json</key>
 		<data>
 		re4p7E8rPLLsN+wzaPN/+AVpXTY=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/images/ArrowLeft.png</key>
+		<data>
+		BQfAX1fJ+u0ysyC96fl+rwAlaY0=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/about.svg</key>
 		<data>
@@ -99,6 +103,10 @@
 		<key>Frameworks/App.framework/flutter_assets/assets/images/chat.svg</key>
 		<data>
 		fpqyk8ukeGBvhzhAUYaNlDpSk4Y=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/images/cloud_upload.png</key>
+		<data>
+		27ay31kjCpaOZzI1sGEDiwdqJy0=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/discount.png</key>
 		<data>
@@ -210,7 +218,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		HakZhW236SdAOnJUIGEpdodKRtQ=
+		Q27a9A6GsqQPVV+Ksquxcqr0Nc0=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -405,6 +413,26 @@
 		Mki0MWtYUFPNFl98TN+2GdET6y0=
 		</data>
 		<key>Frameworks/path_provider_foundation.framework/path_provider_foundation_privacy.bundle/PrivacyInfo.xcprivacy</key>
+		<data>
+		/LX0ZlwxwIAIhjZaDB8EiH5KpXA=
+		</data>
+		<key>Frameworks/share_plus.framework/Info.plist</key>
+		<data>
+		jSMJVve4m6TCb/MQWtRJqFsmxgc=
+		</data>
+		<key>Frameworks/share_plus.framework/_CodeSignature/CodeResources</key>
+		<data>
+		fY0iSREgMLt5bdNsTJhpfH8Qmvg=
+		</data>
+		<key>Frameworks/share_plus.framework/share_plus</key>
+		<data>
+		cXE+C+FBdc/W9sYblLqe2L42zuA=
+		</data>
+		<key>Frameworks/share_plus.framework/share_plus_privacy.bundle/Info.plist</key>
+		<data>
+		1wqxiOAtzWdVMLwuHFmckaKjwn4=
+		</data>
+		<key>Frameworks/share_plus.framework/share_plus_privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
 		/LX0ZlwxwIAIhjZaDB8EiH5KpXA=
 		</data>
@@ -1321,7 +1349,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			r4MAsswdDztTgijJXYAiTU/rQomdwnsqvlNlNyiUKqw=
+			xQzj9X182+sUdWHON5xyDPKBM1NjirTzdQNXDbLLOvc=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -1335,21 +1363,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ky3aTQRH1ujonqvyqkP6vx2N+bL+rSauM4DTO+TQpi0=
+			+K3KMEr5nKiOZg6rTgiduLyElloa8BWF9MswAm8y4Q4=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hBDxkOCm3HXDLmX5tVPY6YqtFIirwMdXFLT+bboj3zU=
+			hw0EfiREC1oojVkYN7VJ1AHA2uusgdynyScEd1WDfi4=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			20q4ss5z6GOas+Xhd5zakeG6BZ+EsGXM3JWuR5bTQrk=
+			8xDt2Nks5EUJZkgb93apkFApASAtvycdmX1HehBM/4k=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
@@ -1363,7 +1391,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			nvVVi4whwsRic4C3dIALjXlMcMN4gpbHlUzN/xn/pUE=
+			3TDOQHGrBjYpq5jYst4A+Oq/wlXUOaRULGfw222KbRw=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/NativeAssetsManifest.json</key>
@@ -1371,6 +1399,13 @@
 			<key>hash2</key>
 			<data>
 			lUijHkoEgTXB2U+Rkyi/tirix7s8q5ZVfHlB2ql3dss=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/images/ArrowLeft.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			WMkq3f7UbM+CPjS47cqYZk3O/GZDKCeMvH85kk96qGY=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/about.svg</key>
@@ -1413,6 +1448,13 @@
 			<key>hash2</key>
 			<data>
 			tjBVGcsg9G8+TSwWCCKyNbJE7piQrxCGsfzxjYOjZyQ=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/images/cloud_upload.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			VuN3pwG4LDBLo46xGprUOB3jyxuw6ZHMYQd+JMw/db0=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/discount.png</key>
@@ -1608,7 +1650,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			DX2Nnvnbwe2SEu3LfVX0xWCCHth4tUgGN76XV6F4lXQ=
+			hlIfiZ0ECqYU3bBgTuWa3T+kBX75AK3Cw9m/5NrMtyg=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -1948,6 +1990,41 @@
 			</data>
 		</dict>
 		<key>Frameworks/path_provider_foundation.framework/path_provider_foundation_privacy.bundle/PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			bS2g2NkwIn1CjB2TY7CtbjoS4sm2jFzilxWKdBL8jDE=
+			</data>
+		</dict>
+		<key>Frameworks/share_plus.framework/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			hjUZETn1/idRmRFJXs8foL7ul3PtmZqzZkQpgS2zhSM=
+			</data>
+		</dict>
+		<key>Frameworks/share_plus.framework/_CodeSignature/CodeResources</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			mfS4EkKXBD7rI0FIujROP4od4gSfWFUNie2G40SBRl8=
+			</data>
+		</dict>
+		<key>Frameworks/share_plus.framework/share_plus</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			udjndK3dbiFf0NCfrQsWGg6mr4qNq8m0PsYrMC7+Roo=
+			</data>
+		</dict>
+		<key>Frameworks/share_plus.framework/share_plus_privacy.bundle/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			I8RYOwCHq/VOgLSoz99o5xlgrPnwqxM09q3SYsoWFD4=
+			</data>
+		</dict>
+		<key>Frameworks/share_plus.framework/share_plus_privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
 			<key>hash2</key>
 			<data>

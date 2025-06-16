@@ -4,8 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../services/api_service.dart';
-
 class PostController extends GetxController {
   final CustomApiService _apiService = Get.put(CustomApiService());
   final descriptionController = TextEditingController();
