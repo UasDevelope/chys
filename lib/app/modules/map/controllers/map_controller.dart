@@ -99,7 +99,7 @@ class MapController extends GetxController {
 
   Future<void> fetchNearbyPet() async {
     isNearbyPetLoading.value = true;
-
+    log("Fetching nearby posts");
     try {
       // Wait until the location is available (with retry + timeout)
       int retries = 0;

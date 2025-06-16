@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a549d0-e38d-47d4-a0e8-788326448361" name="Changes" comment="files updated">
+    <list default="true" id="55a549d0-e38d-47d4-a0e8-788326448361" name="Changes" comment="chat done with socket">
       <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/.filecache" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/.filecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/app.dill" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/app.dill" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/debug_android_application.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/debug_android_application.stamp" afterDir="false" />
@@ -17,16 +17,10 @@
       <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/kernel_snapshot_program.d" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/kernel_snapshot_program.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/kernel_snapshot_program.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/kernel_snapshot_program.stamp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/program.dill" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/334fb161255b7d94cf55514f4a5b35a1/program.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config_subset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/NOTICES.Z" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/NOTICES.Z" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/kernel_blob.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/flutter_assets/NOTICES.Z.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/flutter_assets/NOTICES.Z.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/flutter_assets/kernel_blob.bin.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/flutter_assets/kernel_blob.bin.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/NOTICES.Z" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/NOTICES.Z" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_build.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_build.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
@@ -34,16 +28,8 @@
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk.sha1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/app/modules/ home/home_detail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/ home/home_detail.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/app/modules/ home/home_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/ home/home_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/app/modules/chat/controllers/chat_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/chat/controllers/chat_controller.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/app/modules/chat/views/chat_detail_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/chat/views/chat_detail_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/app/modules/chat/views/chat_list_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/chat/views/chat_list_view.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/app/modules/map/controllers/map_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/modules/map/controllers/map_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/app/routes/app_pages.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/routes/app_pages.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/app/services/date_time_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app/services/date_time_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,13 +129,22 @@
       <option name="project" value="LOCAL" />
       <updated>1749756316757</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="chat done with socket">
+      <option name="closed" value="true" />
+      <created>1749821037341</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1749821037341</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="conflict" />
     <MESSAGE value="gitignore added" />
     <MESSAGE value="files updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="files updated" />
+    <MESSAGE value="chat done with socket" />
+    <option name="LAST_COMMIT_MESSAGE" value="chat done with socket" />
   </component>
 </project>
