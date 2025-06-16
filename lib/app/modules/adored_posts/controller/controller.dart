@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -171,7 +172,12 @@ Shared via CHYS app
                     final comment = post.comments[index];
                     return ListTile(
                       title: Text(comment['message'] ?? ''),
-                      subtitle: Text(comment['createdAt']?.toString() ?? ''),
+                      subtitle: Text(
+                        comment['createdAt'] != null
+                            ? DateFormat('yyyy-MM-dd hh:mm a')
+                                .format(DateTime.parse(comment['createdAt']))
+                            : '',
+                      ),
                     );
                   },
                 );
