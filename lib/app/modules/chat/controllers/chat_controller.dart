@@ -9,6 +9,7 @@ import '../../../routes/app_routes.dart';
 import '../../../services/chat_services.dart';
 
 class ChatController extends GetxController {
+  //
   final searchController = TextEditingController();
   final messageController = TextEditingController();
   final profileController = Get.find<ProfileController>();
