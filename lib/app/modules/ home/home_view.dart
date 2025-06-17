@@ -4,22 +4,26 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chys/app/core/const/app_image.dart';
 import 'package:chys/app/core/const/app_text.dart';
 import 'package:chys/app/core/utils/app_size.dart';
-import 'package:chys/app/core/widget/app_button.dart';
 import 'package:chys/app/data/models/post.dart';
+import 'package:chys/app/data/models/story.dart';
 import 'package:chys/app/modules/%20home/petGallery.dart';
+import 'package:chys/app/modules/%20home/story_view.dart';
 import 'package:chys/app/modules/%20home/widget/custom_header.dart';
 import 'package:chys/app/modules/%20home/widget/floating_action_button.dart';
 import 'package:chys/app/modules/adored_posts/controller/controller.dart';
 import 'package:chys/app/routes/app_routes.dart';
+import 'package:chys/app/services/custom_Api.dart';
 import 'package:chys/app/widget/image/svg_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../map/controllers/map_controller.dart';
 import 'home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   final contrroller = Get.put(AddoredPostsController());
+  final storyController = Get.put(HomeController());
+  final CustomApiService _apiService = Get.put(CustomApiService());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,66 +41,112 @@ class HomeView extends GetView<HomeController> {
                   ),
                   buildCustomHeader(),
                   SizedBox(
-                    height:
-                        AppSize.getHeight(10), // total height including text
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        final imageUrl =
-                            'https://picsum.photos/200?random=$index';
+                    height: AppSize.getHeight(
+                        100), // Adjusted to show both avatar + name
+                    child: FutureBuilder<Map<String, dynamic>>(
+                      future: _apiService
+                          .getRequest('story/public')
+                          .then((res) => res as Map<String, dynamic>),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
 
-                        return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                width: 60,
-                                height: 50,
-                                child: Stack(
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: index == 0
-                                            ? null
-                                            : Border.all(
-                                                color: Colors.blue, width: 5),
-                                      ),
-                                      child: CircleAvatar(
-                                        radius: 30,
-                                        backgroundImage: NetworkImage(imageUrl),
-                                        backgroundColor: Colors.grey.shade300,
-                                      ),
-                                    ),
-                                    if (index == 0)
-                                      Positioned(
-                                        bottom: -2,
-                                        right: -2,
-                                        child: Container(
-                                          height: 24,
-                                          width: 24,
-                                          decoration: BoxDecoration(
-                                            color: Colors.blue,
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                                color: Colors.white, width: 2),
-                                          ),
-                                          child: const Icon(
-                                            Icons.add,
-                                            color: Colors.white,
-                                            size: 16,
-                                          ),
+                        if (snapshot.hasError) {
+                          return const Center(
+                              child: Text('Error loading stories'));
+                        }
+
+                        if (!snapshot.hasData ||
+                            snapshot.data!['success'] != true) {
+                          return const SizedBox.shrink();
+                        }
+
+                        final List<dynamic> storiesData =
+                            snapshot.data!['data'];
+                        final List<UserStory> userStories = storiesData
+                            .map((story) => UserStory.fromMap(story))
+                            .toList();
+
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount:
+                              userStories.length + 1, // +1 for Add Story button
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              // Add Story Button
+                              return GestureDetector(
+                                onTap: () {
+                                  // Navigate to Add Story page or trigger story upload
+                                },
+                                child: Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        width: 60,
+                                        height: 60,
+                                        child: CircleAvatar(
+                                          radius: 30,
+                                          backgroundColor: Colors.grey,
+                                          child: const Icon(Icons.add,
+                                              color: Colors.white),
                                         ),
                                       ),
+                                      const SizedBox(height: 6),
+                                      const AppText(text: "Add Story"),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }
+
+                            final userStory = userStories[index - 1];
+                            final hasStories = userStory.stories.isNotEmpty;
+                            final latestStory =
+                                hasStories ? userStory.stories.first : null;
+
+                            return GestureDetector(
+                              onTap: () {
+                                final storyMediaUrls = userStory.stories
+                                    .map((s) => s.mediaUrl)
+                                    .toList();
+
+                                Get.to(() => StoryPreviewPage(
+                                      mediaUrls: storyMediaUrls,
+                                      userName: userStory.userName,
+                                    ));
+                                // TODO: Show story using `story_view` package
+                              },
+                              child: Container(
+                                margin: EdgeInsets.symmetric(horizontal: 8),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      width: 60,
+                                      height: 60,
+                                      child: CircleAvatar(
+                                        radius: 30,
+                                        backgroundColor: Colors.grey.shade300,
+                                        backgroundImage: latestStory != null
+                                            ? NetworkImage(latestStory.mediaUrl)
+                                            : null,
+                                      ),
+                                    ),
+                                    SizedBox(height: 6),
+                                    AppText(
+                                      text: userStory.userName,
+                                      fontSize: 12,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 6),
-                              const AppText(text: "My Story"),
-                            ],
-                          ),
+                            );
+                          },
                         );
                       },
                     ),

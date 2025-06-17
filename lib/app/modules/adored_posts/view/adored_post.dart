@@ -53,8 +53,7 @@ class AdoredPost extends StatelessWidget {
                 children: [
                   // Gradient overlay
                   Container(
-                    decoration: BoxDecoration(
-                     ),
+                    decoration: BoxDecoration(),
                   ),
 
                   // Text content
@@ -86,21 +85,20 @@ class AdoredPost extends StatelessWidget {
                         ),
                         SizedBox(width: 10),
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Kitty Jenna",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "STUTTGART",
-                              style: TextStyle(
-                                  color: Colors.white70, fontSize: 12),
-                            ),
-                          ],
-                        ),
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Kitty Jenna",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "STUTTGART",
+                                style: TextStyle(
+                                    color: Colors.white70, fontSize: 12),
+                              ),
+                            ]),
                       ],
                     ),
                   ),

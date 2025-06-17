@@ -29,6 +29,7 @@ class CustomApiService extends GetxService {
   /// GET request
   Future<dynamic> getRequest(String endpoint) async {
     final uri = Uri.parse('$baseUrl/$endpoint');
+    log("URI$uri");
     final response = await http.get(uri, headers: getHeaders());
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
@@ -126,6 +127,60 @@ class CustomApiService extends GetxService {
     } else {
       throw Exception(
         'UPLOAD failed: ${streamedResponse.statusCode} → $responseString',
+      );
+    }
+  }
+
+  /// Upload story with media and caption
+  Future<dynamic> uploadStory({
+    required File mediaFile,
+    required String caption,
+  }) async {
+    final uri = Uri.parse('$baseUrl/story');
+    log("📤 [STORY UPLOAD] Request URI: $uri");
+
+    final request = http.MultipartRequest('POST', uri);
+
+    // Get token from storage and add headers
+    final token = StorageService.getToken();
+    if (token != null) {
+      request.headers['Authorization'] = 'Bearer $token';
+      request.headers['Accept'] = 'application/json';
+      log("🔐 [UPLOAD] Using token: Bearer $token");
+    }
+
+    // Add media file
+    final mimeType = lookupMimeType(mediaFile.path);
+    final mediaType = mimeType?.split('/');
+
+    if (mediaType == null || mediaType.length != 2) {
+      throw Exception("❌ Unable to detect MIME type of file: ${mediaFile.path}");
+    }
+
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        'media',
+        mediaFile.path,
+        contentType: MediaType(mediaType[0], mediaType[1]),
+      ),
+    );
+
+    // Add caption
+    request.fields['caption'] = caption;
+
+    // Send the request
+    log("🚀 [STORY UPLOAD] Sending request...");
+    final streamedResponse = await request.send();
+    final responseString = await streamedResponse.stream.bytesToString();
+
+    log("📩 [STORY UPLOAD] Response Code: ${streamedResponse.statusCode}");
+    log("📨 [STORY UPLOAD] Response Body: $responseString");
+
+    if (streamedResponse.statusCode == 200 || streamedResponse.statusCode == 201) {
+      return jsonDecode(responseString);
+    } else {
+      throw Exception(
+        'STORY UPLOAD failed: ${streamedResponse.statusCode} → $responseString',
       );
     }
   }
