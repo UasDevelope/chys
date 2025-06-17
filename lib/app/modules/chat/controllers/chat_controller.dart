@@ -108,7 +108,7 @@ class ChatController extends GetxController {
     messages.add({
       'senderId': senderId,
       'receiverId': receiverId.value,
-      'message': text,
+      'message': messageController.text,
       'timestamp': DateTime.now(),
     });
     _socketService.sendPrivateMessage(receiverId.value, text);
