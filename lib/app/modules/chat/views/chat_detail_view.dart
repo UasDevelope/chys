@@ -133,7 +133,9 @@ class ChatDetailView extends GetView<ChatController> {
                       ),
                       child: IconButton(
                         icon: AppImages.send.toSvg(color: Colors.white),
-                        onPressed: () => controller.sendPrivateMessage(),
+                        onPressed: () => controller.sendPrivateMessage(
+                            controller.profileController.profile.value?.id ??
+                                ""),
                         iconSize: 20,
                         splashRadius: 24,
                       ),

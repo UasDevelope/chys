@@ -9,6 +9,7 @@ import '../../../routes/app_routes.dart';
 import '../../../services/chat_services.dart';
 
 class ChatController extends GetxController {
+  //
   final searchController = TextEditingController();
   final messageController = TextEditingController();
   final profileController = Get.find<ProfileController>();
@@ -66,25 +67,50 @@ class ChatController extends GetxController {
   void _onPrivateMessageReceived(Map<String, dynamic> data) {
     log("📥 Private message listener received: $data");
 
-    messages.add({
-      'senderId': data['senderId'],
-      'receiverId': data['receiverId'],
-      'message': data['message'],
-      'timestamp': DateTime.tryParse(data['timestamp'] ?? '') ?? DateTime.now(),
-    });
+    final senderId = data["senderId"];
+    final receiverIdData = data["receiverId"];
+    final messageText = data["message"];
+    final timestamp =
+        DateTime.tryParse(data["timestamp"] ?? '') ?? DateTime.now();
 
-    log("🆕 Message added to messages: ${messages.last}");
-    scrollToBottom();
+    // Check if message already exists in list
+    final isDuplicate = messages.any((msg) =>
+        msg['senderId'] == senderId &&
+        msg['receiverId'] == receiverIdData &&
+        msg['message'] == messageText &&
+        (msg['timestamp'] as DateTime).difference(timestamp).inSeconds.abs() <
+            2);
+
+    if (!isDuplicate) {
+      if (senderId == Get.find<ProfileController>().profile.value?.id) {
+        messages.add({
+          'senderId': senderId,
+          'receiverId': receiverIdData,
+          'message': messageText,
+          'timestamp': timestamp,
+        });
+
+        log("🆕 Message added to messages: ${messages.last}");
+        scrollToBottom();
+      }
+    } else {
+      log("⚠️ Duplicate message ignored");
+    }
   }
 
-  void sendPrivateMessage() {
+  void sendPrivateMessage(String senderId) {
     if (messageController.text.trim().isEmpty) return;
 
     final text = messageController.text;
     messageController.clear();
 
     log("After adding message ${messages.last}");
-    // Example receiverId, replace with actual conversation partner's id
+    messages.add({
+      'senderId': senderId,
+      'receiverId': receiverId.value,
+      'message': text,
+      'timestamp': DateTime.now(),
+    });
     _socketService.sendPrivateMessage(receiverId.value, text);
     scrollToBottom();
   }
